@@ -1,0 +1,156 @@
+{
+  "bill_id": "iesco-2023-03",
+  "connection_id": "iesco-web-c",
+  "source": "real",
+  "disco": "IESCO",
+  "layout": "pitc_legacy",
+  "connection_type": "conventional",
+  "tariff": "A-1a(01)",
+  "ed_rate_pct": "1.5",
+  "sanctioned_load_kw": "2",
+  "bill_month": "2023-03",
+  "reading_date": "2023-03-28",
+  "issue_date": "2023-03-29",
+  "due_date": "2023-04-13",
+  "registers": [
+    {
+      "name": "import",
+      "previous": "8179",
+      "present": "8572",
+      "mf": "1",
+      "units": 393
+    }
+  ],
+  "legacy_charges": {
+    "units_consumed": 393,
+    "cost_of_electricity": "10033",
+    "fpa": "266.67",
+    "fc_surcharge": "1501.26",
+    "qta": "1262.16",
+    "disco_total": "13063.09",
+    "govt": {
+      "electricity_duty": "169",
+      "tv_fee": "35",
+      "gst": "2334",
+      "gst_on_fpa": "46",
+      "ed_on_fpa": "4"
+    },
+    "govt_total": "2588",
+    "total_fpa": "317",
+    "fpa_parts": [
+      {
+        "ref_month": "2023-01",
+        "units": 558,
+        "rate": null
+      }
+    ],
+    "rate_lines": [
+      {
+        "rate": "25.53",
+        "units": 393
+      }
+    ]
+  },
+  "totals": {
+    "arrears": 0,
+    "current_bill": 15335,
+    "payable_within_due": 15652,
+    "lp_surcharge": 1280,
+    "payable_after_due": 16932
+  },
+  "history": [
+    {
+      "month": "2022-03",
+      "status": null,
+      "units": 315,
+      "bill": 21910,
+      "payment": 0
+    },
+    {
+      "month": "2022-04",
+      "status": "LK",
+      "units": "337.5",
+      "bill": 25571,
+      "payment": 0
+    },
+    {
+      "month": "2022-05",
+      "status": null,
+      "units": 338,
+      "bill": 36084,
+      "payment": 0
+    },
+    {
+      "month": "2022-06",
+      "status": null,
+      "units": 390,
+      "bill": 44936,
+      "payment": 44936
+    },
+    {
+      "month": "2022-07",
+      "status": null,
+      "units": 344,
+      "bill": 13161,
+      "payment": 13161
+    },
+    {
+      "month": "2022-08",
+      "status": null,
+      "units": 446,
+      "bill": 20513,
+      "payment": 20513
+    },
+    {
+      "month": "2022-09",
+      "status": null,
+      "units": 370,
+      "bill": 14452,
+      "payment": 14452
+    },
+    {
+      "month": "2022-10",
+      "status": null,
+      "units": 324,
+      "bill": 11542,
+      "payment": 11542
+    },
+    {
+      "month": "2022-11",
+      "status": null,
+      "units": 468,
+      "bill": 17791,
+      "payment": 17791
+    },
+    {
+      "month": "2022-12",
+      "status": null,
+      "units": 513,
+      "bill": 19902,
+      "payment": 19902
+    },
+    {
+      "month": "2023-01",
+      "status": null,
+      "units": 558,
+      "bill": 21872,
+      "payment": 21872
+    },
+    {
+      "month": "2023-02",
+      "status": null,
+      "units": 535,
+      "bill": 19545,
+      "payment": 19545
+    }
+  ],
+  "uncertain_fields": [
+    "history 2022-04 units printed as 'LK 337.5'"
+  ],
+  "notes": [
+    "Web-generated bill found online (clean digital image, not a phone photo).",
+    "Urdu note: Jan-23 consumption of 558 units, FPA incl. taxes Rs 316.67. FPA rate not printed.",
+    "Line labelled 'QTR TARRIF ADJ/DMC' stored as qta.",
+    "Meter photo on the bill reads 8572 kWh."
+  ]
+}

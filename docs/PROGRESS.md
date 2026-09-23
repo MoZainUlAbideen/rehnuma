@@ -12,14 +12,18 @@
 - [x] FINDINGS.md from real bills
 - [x] Verified ED on FPA against the paper Mar-26 bill (16), diagnosed the resulting Rs 2 anomaly
 - [x] Expected-anomalies registry: real bills must fail exactly their documented checks
-- [ ] You: push to GitHub
+- [x] Pushed to GitHub
 
 ## Milestone 2 — Tariff rates + synthetic generator
-- [ ] Source NEPRA tariff tables (conventional slabs, protected rules, ToU rates, FPA/QTA history)
-- [ ] Tariff engine: compute a bill *from scratch* (not just reconcile it)
-- [ ] Resolve open questions in FINDINGS.md
+- [x] Collect real conventional (non-solar) bills — 3 IESCO bills (2019, 2021, 2023)
+- [x] DISCO-agnostic `pitc_legacy` layout; multi-month FPA; printed rate lines
+- [x] Levy calculator: ED, GST (dated schedule), NJ, FPA tax cascade — zero-delta on 4 bills
+- [x] Tests proving each rule beats its plausible alternative
+- [x] Fixed: recompute tolerance now follows printed precision
+- [x] Fixed: cross-bill checks group by connection_id
+- [ ] Source NEPRA slab tables (protected / unprotected, ToU) so cost is computed without printed rate lines
+- [ ] Resolve open questions in FINDINGS.md (LP surcharge base, status codes, Q1 vs Q3 netting)
 - [ ] Synthetic bill generator: both layouts, both connection types, error injection
-- [ ] Collect 2–3 real conventional (non-solar) bills
 
 ## Milestone 3 — Vision extraction + PII redaction
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic

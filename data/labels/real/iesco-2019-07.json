@@ -1,0 +1,157 @@
+{
+  "bill_id": "iesco-2019-07",
+  "connection_id": "iesco-web-a",
+  "source": "real",
+  "disco": "IESCO",
+  "layout": "pitc_legacy",
+  "connection_type": "conventional",
+  "tariff": "A-1a(01)",
+  "ed_rate_pct": "1.5",
+  "sanctioned_load_kw": "3",
+  "bill_month": "2019-07",
+  "reading_date": "2019-07-12",
+  "issue_date": "2019-07-13",
+  "due_date": "2019-07-22",
+  "registers": [
+    {
+      "name": "import",
+      "previous": "9306",
+      "present": "9509",
+      "mf": "1",
+      "units": 203
+    }
+  ],
+  "legacy_charges": {
+    "units_consumed": 203,
+    "cost_of_electricity": "1652.60",
+    "fpa": "10.19",
+    "fc_surcharge": "87.29",
+    "disco_total": "1750.08",
+    "govt": {
+      "electricity_duty": "24.79",
+      "tv_fee": "35",
+      "gst": "300",
+      "nj_surcharge": "20.30",
+      "gst_on_fpa": "2",
+      "ed_on_fpa": "0.15"
+    },
+    "govt_total": "382.24",
+    "total_fpa": "12.34",
+    "fpa_parts": [
+      {
+        "ref_month": "2019-05",
+        "units": 102,
+        "rate": "0.0999"
+      }
+    ],
+    "rate_lines": [
+      {
+        "rate": "8.11",
+        "units": 200
+      },
+      {
+        "rate": "10.20",
+        "units": 3
+      }
+    ]
+  },
+  "totals": {
+    "arrears": 0,
+    "current_bill": 2120,
+    "payable_within_due": 2132,
+    "lp_surcharge": 176,
+    "payable_after_due": 2308
+  },
+  "history": [
+    {
+      "month": "2018-07",
+      "status": null,
+      "units": 157,
+      "bill": 2561,
+      "payment": 2561
+    },
+    {
+      "month": "2018-08",
+      "status": null,
+      "units": 207,
+      "bill": 2209,
+      "payment": 0
+    },
+    {
+      "month": "2018-09",
+      "status": null,
+      "units": 175,
+      "bill": 3971,
+      "payment": 0
+    },
+    {
+      "month": "2018-10",
+      "status": null,
+      "units": 137,
+      "bill": 5512,
+      "payment": 5512
+    },
+    {
+      "month": "2018-11",
+      "status": null,
+      "units": 70,
+      "bill": 565,
+      "payment": 609
+    },
+    {
+      "month": "2018-12",
+      "status": null,
+      "units": 55,
+      "bill": 488,
+      "payment": 0
+    },
+    {
+      "month": "2019-01",
+      "status": null,
+      "units": 58,
+      "bill": 957,
+      "payment": 0
+    },
+    {
+      "month": "2019-02",
+      "status": null,
+      "units": 68,
+      "bill": 1539,
+      "payment": 1539
+    },
+    {
+      "month": "2019-03",
+      "status": null,
+      "units": 122,
+      "bill": 1098,
+      "payment": 0
+    },
+    {
+      "month": "2019-04",
+      "status": null,
+      "units": 67,
+      "bill": 1746,
+      "payment": 1746
+    },
+    {
+      "month": "2019-05",
+      "status": null,
+      "units": 102,
+      "bill": 768,
+      "payment": 0
+    },
+    {
+      "month": "2019-06",
+      "status": null,
+      "units": 176,
+      "bill": 2402,
+      "payment": 2402
+    }
+  ],
+  "uncertain_fields": [],
+  "notes": [
+    "Web-generated bill found online (clean digital image, not a phone photo).",
+    "FPA units not printed; the bill says 'FPA for MAY-19 @ 0.0999/kWh' and the history row for May-19 shows 102 units.",
+    "Meter photo on the bill reads 9509.5 kWh."
+  ]
+}

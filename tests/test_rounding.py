@@ -21,3 +21,15 @@ def test_compare_tolerance():
     assert compare("x", None, 3171, 3170, tolerance=1).status == Status.PASS
     assert compare("x", None, 3172, 3170, tolerance=1).status == Status.FAIL
     assert compare("x", None, 3171, 3170).status == Status.FAIL  # default: exact
+
+
+
+def test_recomputed_tolerance_follows_printed_precision():
+    """Regression: a Rs 1 tolerance let ED 5.41 pass for a printed 5.04."""
+    from rehnuma.engine.checks import compare_printed, printed_step
+
+    assert printed_step(Decimal("5.04")) == Decimal("0.01")
+    assert printed_step(Decimal("1164")) == Decimal("1")
+    computed = Decimal("5.0373")
+    assert compare_printed("ed", "x", computed, Decimal("5.41"), "ED").status == Status.FAIL
+    assert compare_printed("ed", "x", computed, Decimal("5.04"), "ED").status == Status.PASS

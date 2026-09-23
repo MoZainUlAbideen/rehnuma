@@ -6,8 +6,8 @@ from tests.conftest import conventional_bill_dict
 
 
 def test_all_real_labels_load(real_bills):
-    assert len(real_bills) == 4
-    assert {b.layout for b in real_bills} == {Layout.PESCO_LEGACY, Layout.PESCO_V2_2026}
+    assert len(real_bills) == 7
+    assert {b.layout for b in real_bills} == {Layout.PITC_LEGACY, Layout.PESCO_V2_2026}
 
 
 def test_real_labels_contain_no_identifiers(real_bills):

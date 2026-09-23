@@ -1,0 +1,163 @@
+{
+  "bill_id": "iesco-2021-01",
+  "connection_id": "iesco-web-b",
+  "source": "real",
+  "disco": "IESCO",
+  "layout": "pitc_legacy",
+  "connection_type": "conventional",
+  "tariff": "A-1a(01)",
+  "ed_rate_pct": "1.5",
+  "sanctioned_load_kw": "2",
+  "bill_month": "2021-01",
+  "reading_date": "2021-02-06",
+  "issue_date": "2021-02-07",
+  "due_date": "2021-02-17",
+  "registers": [
+    {
+      "name": "import",
+      "previous": "4084",
+      "present": "4142",
+      "mf": "1",
+      "units": 58
+    }
+  ],
+  "legacy_charges": {
+    "units_consumed": 58,
+    "cost_of_electricity": "335.82",
+    "fpa": "78.09",
+    "fc_surcharge": "24.94",
+    "disco_total": "438.85",
+    "govt": {
+      "electricity_duty": "5.04",
+      "tv_fee": "35",
+      "gst": "62",
+      "nj_surcharge": "5.80",
+      "gst_on_fpa": "14",
+      "ed_on_fpa": "1.17"
+    },
+    "govt_total": "123.01",
+    "total_fpa": "93.26",
+    "fpa_parts": [
+      {
+        "ref_month": "2020-10",
+        "units": 117,
+        "rate": "0.2925"
+      },
+      {
+        "ref_month": "2020-11",
+        "units": 57,
+        "rate": "0.7696"
+      }
+    ],
+    "rate_lines": [
+      {
+        "rate": "5.79",
+        "units": 58
+      }
+    ]
+  },
+  "totals": {
+    "arrears": 0,
+    "current_bill": 469,
+    "payable_within_due": 562,
+    "lp_surcharge": 37,
+    "payable_after_due": 599
+  },
+  "history": [
+    {
+      "month": "2020-01",
+      "status": null,
+      "units": 52,
+      "bill": 572,
+      "payment": 572
+    },
+    {
+      "month": "2020-02",
+      "status": "LK",
+      "units": 66,
+      "bill": 386,
+      "payment": 386
+    },
+    {
+      "month": "2020-03",
+      "status": "LK",
+      "units": 66,
+      "bill": 134,
+      "payment": 0
+    },
+    {
+      "month": "2020-04",
+      "status": null,
+      "units": 66,
+      "bill": 269,
+      "payment": 1066
+    },
+    {
+      "month": "2020-05",
+      "status": null,
+      "units": 155,
+      "bill": 0,
+      "payment": 0
+    },
+    {
+      "month": "2020-06",
+      "status": null,
+      "units": 211,
+      "bill": 2435,
+      "payment": 2435
+    },
+    {
+      "month": "2020-07",
+      "status": null,
+      "units": 185,
+      "bill": 1895,
+      "payment": 0
+    },
+    {
+      "month": "2020-08",
+      "status": null,
+      "units": 183,
+      "bill": 3909,
+      "payment": 3909
+    },
+    {
+      "month": "2020-09",
+      "status": null,
+      "units": 226,
+      "bill": 2653,
+      "payment": 2653
+    },
+    {
+      "month": "2020-10",
+      "status": null,
+      "units": 117,
+      "bill": 1387,
+      "payment": 1387
+    },
+    {
+      "month": "2020-11",
+      "status": null,
+      "units": 57,
+      "bill": 810,
+      "payment": 810
+    },
+    {
+      "month": "2020-12",
+      "status": null,
+      "units": 56,
+      "bill": 753,
+      "payment": 753
+    }
+  ],
+  "uncertain_fields": [
+    "history 2020-05 (bill printed as 0)",
+    "history 2020-04 status (no LK printed, units 66 same as LK months)"
+  ],
+  "notes": [
+    "Web-generated bill found online (clean digital image, not a phone photo).",
+    "Bill month Jan-21 but read on 06-Feb-21.",
+    "Two FPA months on one bill: Oct-20 @ 0.2925 and Nov-20 @ 0.7696.",
+    "Second rate line printed as 00.0000 x 0 and omitted.",
+    "Meter photo on the bill reads 4142.9 kWh."
+  ]
+}

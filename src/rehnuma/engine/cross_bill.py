@@ -42,7 +42,7 @@ def check_bill_in_later_history(a: Bill, b: Bill) -> list[Finding]:
         return [skip("bill_in_later_history", _pair_id(a, b), f"{a.bill_month} not in history")]
     out = [compare(f"bill_in_later_history[{a.bill_month}.bill]", _pair_id(a, b),
                    a.totals.payable_within_due, row.bill, TOL)]
-    if a.layout == Layout.PESCO_LEGACY:
+    if a.layout == Layout.PITC_LEGACY:
         out.append(compare(f"bill_in_later_history[{a.bill_month}.units]", _pair_id(a, b),
                            a.legacy_charges.units_consumed, row.units))
     return out

@@ -23,7 +23,10 @@ what to do next.
 ## Status
 
 **Milestone 1: deterministic reconciliation engine** — done.
-Four real PESCO bills (two layouts) reconcile with 0 failures. See
+**Milestone 2 (in progress): from-scratch levy calculator** — ED, GST, NJ surcharge and the
+FPA tax calculation are recomputed from first principles and match every legacy-layout bill
+(3 IESCO + 1 PESCO, 2019–2026) with zero delta. All 7 real bills (solar and non-solar)
+reconcile; the one failure is a real Rs 2 inconsistency printed on a PESCO bill. See
 [`docs/FINDINGS.md`](docs/FINDINGS.md) for what the real bills taught us and
 [`docs/PROGRESS.md`](docs/PROGRESS.md) for the roadmap.
 

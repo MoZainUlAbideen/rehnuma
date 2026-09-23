@@ -56,6 +56,60 @@ Each one is either verified by a test or listed as an open question.
 - **Implied netting value.** Mar-26: −3,012 for −204 net units ≈ Rs 14.76/kWh. What rate is
   that? Verify against NEPRA tariffs before claiming anything.
 - **The `SS` status on Nov-25** — meaning unknown.
-- **GST 18% and ED 1.5% are inferred** (they reproduce the bill exactly), not yet sourced.
+- **ED 1.5% is read from the bill header, not yet sourced.** GST is now a dated schedule in
+  `engine/taxes.py` (18% from 14-Feb-2023).
 - **Prediction to test when the Oct-26 bill arrives:** history row for Sep-26 should show net
   units of about −1,320 (off-peak −1,833, peak +513).
+
+
+---
+
+# Findings from IESCO bills (conventional, 2019 / 2021 / 2023)
+
+Three web-generated IESCO bills of three different non-solar households (A-1a(01)).
+Every tax line is now **recomputed from first principles** by `engine/calculator.py`
+and matches the printed value with **zero delta** on all of them.
+
+## Verified rules (each tested against a rejected alternative in `tests/test_calculator.py`)
+
+7. **The PITC legacy layout is shared across DISCOs.** IESCO and PESCO print the same
+   bill; the layout is now `pitc_legacy`, not PESCO-specific.
+8. **Electricity duty = 1.5% x (cost of electricity + QTA).** FC surcharge is *not* in the
+   base (IESCO Mar-23: printed 169; including FC would give 192).
+9. **GST = rate x (cost + FC surcharge + QTA + ED)**, at the rate for the bill month:
+   17% in 2019/2021, 18% in 2023 (18% took effect 14-Feb-2023).
+10. **NJ surcharge = Rs 0.10/kWh** on the 2019 and 2021 bills; absent in 2023.
+11. **FPA is charged on the units of an earlier reference month**, and those units match
+    the bill's own history table (Jul-19 bill -> May-19's 102 units).
+12. **One bill can carry FPA for two months** (Jan-21: Oct-20 and Nov-20).
+13. **GST on FPA is rounded to whole rupees per FPA month.** Jan-21: 6 + 8 = 14 as printed;
+    rounding once would give 13.
+14. **GST on FPA uses the rate of the FPA's reference month.** Mar-23 bill (18% era) taxes
+    Jan-23 FPA at 17%: printed 46 (18% would give 49). Consistent with all 4 legacy bills.
+15. **Unrounded computation again.** Mar-23 prints cost 10,033 but only the unrounded
+    25.53 x 393 = 10,033.29 reproduces ED, GST and the current bill. Same pattern as
+    PESCO FPA, so it looks PITC-wide.
+
+## Bugs found while building this
+
+- **Recomputed lines were compared with a flat Rs 1 tolerance.** An injected wrong ED of
+  5.41 passed against the printed 5.04 (a 7% error). Tolerance for recomputed lines is now
+  one step of the printed precision (Rs 0.01 for paisa, Rs 1 for rupees). Caught by
+  `test_ed_on_wrong_base_is_caught`; regression test in `test_rounding.py`.
+- **Cross-bill checks grouped bills by (DISCO, tariff, type).** Three different IESCO
+  households share all three, so they would have been checked as one meter. Bills now
+  carry a pseudonymous `connection_id`. (`test_different_households_are_never_cross_checked`)
+
+## Product idea
+
+Every IESCO bill prints a photo of the meter, and all three match the printed reading
+(9509.5 / 4142.9 / 8572). Comparing the meter photo with the printed reading is a
+candidate vision feature: wrong or estimated readings are a common source of overbilling.
+
+## Open questions (added)
+
+- **Late-payment surcharge base.** 10% x (cost + FC + ED) fits 2019 and 2021, not 2023
+  (1,280 fits 10% x (cost + FC + QTA)). Rule changed, or different base? Needs a source.
+- **Status codes.** `LK` (Feb-Mar 2020, likely COVID-era locked/estimated readings) and
+  "LK 337.5" (Apr-22), plus `SS` from PESCO. Need an official code list.
+- **GST 17% start date** is recorded as Jul-2013 and still needs a primary source.

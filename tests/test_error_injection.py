@@ -24,7 +24,7 @@ def test_inflated_taxes(bill_by_id):
 
 def test_wrong_fpa_rate(bill_by_id):
     b = bill_by_id("pesco-2026-03")
-    b.legacy_charges.fpa_rate = Decimal("1.9274")
+    b.legacy_charges.fpa_parts[0].rate = Decimal("1.9274")
     assert {"fpa_line", "fpa_tax_cascade"} <= _failed(audit_bill(b))
 
 

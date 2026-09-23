@@ -5,7 +5,7 @@
   "tariff": "A-1b(03)T",
   "sanctioned_load_kw": "7.00",
   "bill_id": "pesco-2026-03",
-  "layout": "pesco_legacy",
+  "layout": "pitc_legacy",
   "bill_month": "2026-03",
   "reading_date": "2026-03-01",
   "issue_date": "2026-03-12",
@@ -65,16 +65,20 @@
     "fixed_charges": 2140,
     "fpa": 972,
     "qta": 0,
-    "pesco_total": 100,
+    "disco_total": 100,
     "govt": {
       "gst_on_fpa": 178,
       "ed_on_fpa": 16
     },
     "govt_total": 193,
     "total_fpa": 1164,
-    "fpa_ref_month": "2026-01",
-    "fpa_units": 597,
-    "fpa_rate": "1.6274"
+    "fpa_parts": [
+      {
+        "ref_month": "2026-01",
+        "units": 597,
+        "rate": "1.6274"
+      }
+    ]
   },
   "totals": {
     "arrears": -80037,

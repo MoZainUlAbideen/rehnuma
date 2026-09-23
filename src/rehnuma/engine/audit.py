@@ -19,9 +19,12 @@ def audit_bill(bill: Bill) -> list[Finding]:
 
 
 def audit_series(bills: list[Bill]) -> list[Finding]:
-    """Cross-bill checks, run separately for each connection (disco + tariff + type)."""
-    def key(b: Bill) -> tuple[str, str, str]:
-        return (b.disco, b.tariff, b.connection_type.value)
+    """Cross-bill checks, run separately for each connection. Bills are grouped by
+    connection_id; without one we fall back to (disco, tariff, connection type)."""
+    def key(b: Bill) -> tuple[str, ...]:
+        if b.connection_id:
+            return ("id", b.connection_id)
+        return ("fallback", b.disco, b.tariff, b.connection_type.value)
 
     out: list[Finding] = []
     for _, group in groupby(sorted(bills, key=key), key=key):

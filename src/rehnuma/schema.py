@@ -4,12 +4,14 @@ One schema covers both user groups Rehnuma serves:
   * conventional households (no solar)  -> connection_type = "conventional"
   * solar prosumers (net metering)      -> connection_type = "net_metering"
 
-and both PESCO layouts seen in real bills:
-  * "pesco_legacy"   — the older PITC-style bill (seen up to Mar-2026)
-  * "pesco_v2_2026"  — the redesigned bill with QR code (seen from Jul-2026)
+and the layouts seen in real bills:
+  * "pitc_legacy"    — the PITC-generated bill shared by ex-WAPDA DISCOs
+                       (seen on IESCO 2019-2023 and PESCO up to Mar-2026)
+  * "pesco_v2_2026"  — PESCO's redesigned bill with QR code (seen from Jul-2026)
 
-Money is stored as whole rupees (int) because that is what the bill prints.
-Meter readings are Decimal so subtraction never picks up float noise.
+Charge lines are Decimal because legacy bills print paisa (e.g. 1,652.60) while
+newer bills print whole rupees; the engine compares at the precision printed.
+Totals the consumer pays are whole rupees (int).
 """
 
 from __future__ import annotations
@@ -24,7 +26,7 @@ MONTH_PATTERN = r"^\d{4}-(0[1-9]|1[0-2])$"
 
 
 class Layout(StrEnum):
-    PESCO_LEGACY = "pesco_legacy"
+    PITC_LEGACY = "pitc_legacy"
     PESCO_V2_2026 = "pesco_v2_2026"
 
 
@@ -79,27 +81,44 @@ class NetMetering(BaseModel):
         return self
 
 
-class LegacyCharges(BaseModel):
-    """Charge lines on the legacy PESCO layout.
+class FpaPart(BaseModel):
+    """One month's fuel price adjustment. A bill can carry several
+    (IESCO Jan-2021 charged FPA for both Oct-20 and Nov-20)."""
 
-    `govt` holds government-charge lines by key; keys ending in `_on_fpa`
-    are the taxes levied on the fuel price adjustment.
+    ref_month: str = Field(pattern=MONTH_PATTERN)
+    units: int
+    rate: Decimal | None = None  # Rs/kWh; None when the bill doesn't print it
+
+
+class RateLine(BaseModel):
+    """One line of the printed 'Bill Calculation' block: rate x units."""
+
+    rate: Decimal
+    units: int
+
+
+class LegacyCharges(BaseModel):
+    """Charge lines on the PITC legacy layout.
+
+    `govt` holds government-charge lines by key (electricity_duty, tv_fee, gst,
+    nj_surcharge, ...). Keys ending in `_on_fpa` are the taxes levied on the FPA.
     """
 
     units_consumed: int
-    cost_of_electricity: int
-    meter_rent: int = 0
-    service_rent: int = 0
-    fixed_charges: int = 0
-    fpa: int = 0
-    qta: int = 0
-    pesco_total: int | None = None
-    govt: dict[str, int] = Field(default_factory=dict)
-    govt_total: int | None = None
-    total_fpa: int = 0
-    fpa_ref_month: str | None = Field(default=None, pattern=MONTH_PATTERN)
-    fpa_units: int | None = None
-    fpa_rate: Decimal | None = None
+    cost_of_electricity: Decimal
+    meter_rent: Decimal = Decimal(0)
+    service_rent: Decimal = Decimal(0)
+    fixed_charges: Decimal = Decimal(0)
+    fpa: Decimal = Decimal(0)
+    fc_surcharge: Decimal = Decimal(0)
+    tr_surcharge: Decimal = Decimal(0)
+    qta: Decimal = Decimal(0)
+    disco_total: Decimal | None = None
+    govt: dict[str, Decimal] = Field(default_factory=dict)
+    govt_total: Decimal | None = None
+    total_fpa: Decimal = Decimal(0)
+    fpa_parts: list[FpaPart] = Field(default_factory=list)
+    rate_lines: list[RateLine] = Field(default_factory=list)
 
 
 class V2Charges(BaseModel):
@@ -124,13 +143,14 @@ class Totals(BaseModel):
 class HistoryEntry(BaseModel):
     month: str = Field(pattern=MONTH_PATTERN)
     status: str | None = None
-    units: int
+    units: Decimal  # usually whole units, but IESCO printed "LK 337.5" once
     bill: int
     payment: int = 0
 
 
 class Bill(BaseModel):
     bill_id: str
+    connection_id: str | None = None  # pseudonymous id of the household/meter
     source: Source
     disco: str
     layout: Layout
@@ -153,7 +173,7 @@ class Bill(BaseModel):
 
     @model_validator(mode="after")
     def _layout_and_connection_consistency(self) -> Bill:
-        if self.layout == Layout.PESCO_LEGACY and self.legacy_charges is None:
+        if self.layout == Layout.PITC_LEGACY and self.legacy_charges is None:
             raise ValueError("legacy layout requires legacy_charges")
         if self.layout == Layout.PESCO_V2_2026 and self.v2_charges is None:
             raise ValueError("pesco_v2_2026 layout requires v2_charges")
