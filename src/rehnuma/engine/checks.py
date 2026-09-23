@@ -12,8 +12,6 @@ Two kinds of check live here:
 
 from __future__ import annotations
 
-from __future__ import annotations
-
 from collections.abc import Callable
 from decimal import ROUND_HALF_UP, Decimal
 
