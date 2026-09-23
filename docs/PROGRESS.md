@@ -40,7 +40,10 @@
 - [x] Fixed: summary said Mar-26 "credited Rs 872"; it actually added Rs 292 (FPA billed separately)
 - [x] LLM summary (Groq) + deterministic critic (numbers, must-mention facts, language), 2 retries with feedback, template fallback
 - [x] Summary eval on real bills (`rehnuma-eval-summary`): first-draft pass rate, fallback rate, faithfulness, coverage, language
-- [ ] Run the Groq eval and record the honest numbers (Urdu vs English)
+- [x] Groq model comparison (allam-2-7b / gpt-oss-120b / qwen3.8-27b), findings in SUMMARY_EVAL.md
+- [x] Critic v2: structure check (loops), no due date on credit bills, readable dates
+- [ ] Re-run gpt-oss-120b and qwen3.8-27b under critic v2
+- [ ] Human review of Urdu summaries (native reader) -> pick the production model
 
 ## Milestone 3 — Vision extraction + PII redaction
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic

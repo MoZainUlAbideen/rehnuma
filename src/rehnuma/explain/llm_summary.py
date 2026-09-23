@@ -16,7 +16,7 @@ import time
 from dataclasses import asdict, dataclass, field
 
 from rehnuma.explain.quality import Quality, assess, required_numbers
-from rehnuma.explain.render import summarize
+from rehnuma.explain.render import day, summarize
 from rehnuma.explain.story import BillStory
 from rehnuma.llm.client import LLMClient, LLMError
 
@@ -36,7 +36,13 @@ yourself. If a number is not in the FACTS, do not state it.
 
 def facts_payload(story: BillStory, lang: str) -> str:
     facts = asdict(story)
-    facts["due_date"] = story.due_date.isoformat() if story.due_date else None
+    # Dates the way people read them. No due date at all on a credit bill: given one,
+    # both large models claimed the credit was "kept until" that date - which is false.
+    if story.is_credit or story.due_date is None:
+        facts.pop("due_date")
+        facts.pop("payable_after_due")
+    else:
+        facts["due_date"] = day(story.due_date, lang)
     return json.dumps({
         "language": LANG_NAME[lang],
         "must_mention": required_numbers(story),
@@ -54,8 +60,9 @@ def _feedback(q: Quality, lang: str) -> str:
         parts.append("You left out: " + ", ".join(q.missing))
     if not q.language_ok:
         parts.append(f"Write the whole summary in {LANG_NAME[lang]}.")
+    if not q.structure_ok:
+        parts.append("Write 5 to 8 different lines; never repeat a line.")
     return "Your previous draft was rejected. " + " ".join(parts) + " Write it again."
-
 
 @dataclass
 class SummaryResult:
@@ -85,7 +92,8 @@ def llm_summary(story: BillStory, client: LLMClient, lang: str = "ur",
                                  time.perf_counter() - start)
         rejected.append({"attempt": attempt, "text": draft,
                          "unsupported": [str(x) for x in q.unsupported],
-                         "missing": q.missing, "language_ok": q.language_ok})
+                           "missing": q.missing, "language_ok": q.language_ok,
+                         "structure_ok": q.structure_ok})
         user = facts_payload(story, lang) + "\n\n" + _feedback(q, lang)
     text = "\n".join(f"- {line}" for line in summarize(story, lang))
     return SummaryResult(text, "template_fallback", max_attempts, assess(text, story, lang),

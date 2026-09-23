@@ -107,7 +107,8 @@ def render_markdown(report: dict) -> str:
             f"#{d['attempt']}: " + ", ".join(
                 ([f"invented {', '.join(d['unsupported'])}"] if d["unsupported"] else [])
                 + ([f"missed {', '.join(d['missing'])}"] if d["missing"] else [])
-                + ([] if d["language_ok"] else ["wrong language"]))
+                + ([] if d["language_ok"] else ["wrong language"])
+                + ([] if d.get("structure_ok", True) else ["repeated/too many lines"]))
             for d in r["rejected_drafts"]) or "-"
         lines.append(f"| {r['bill_id']} | {r['lang']} | {r['source']} | {r['attempts']} | {why} |")
     return "\n".join(lines) + "\n"

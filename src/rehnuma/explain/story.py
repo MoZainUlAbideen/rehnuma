@@ -112,7 +112,9 @@ class BillStory:
                            PROTECTED_LIMIT_KWH, PROTECTED_LOOKBACK_MONTHS]
         y, m = (int(p) for p in self.bill_month.split("-"))
         vals += [y, m]
-        if self.due_date:
+        if self.due_date and not self.is_credit:
+            # On a credit bill the due date is meaningless; allowing it let gpt-oss and
+            # qwen write "your credit is kept until 24 September" (false) and still pass.
             vals += [self.due_date.day, self.due_date.month, self.due_date.year]
         for opt in (self.units, self.last_year_units, self.fpa_rs):
             if opt is not None:

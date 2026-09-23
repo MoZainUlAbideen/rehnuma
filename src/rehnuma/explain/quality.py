@@ -3,6 +3,10 @@
   * faithfulness - every number stated comes from the BillStory (faithfulness.py)
   * coverage     - the numbers a household MUST hear are actually there
   * language     - an Urdu summary is really in Urdu
+  * structure    - 3-14 lines, none repeated (allam-2-7b looped one line 20+ times)
+
+None of these can tell whether a sentence MEANS the right thing - allam-2-7b passed with
+"114,756 پانی" ("water") for a credit. Meaning still needs human review.
 """
 
 from __future__ import annotations
@@ -14,6 +18,7 @@ from rehnuma.explain.faithfulness import check_faithfulness, numbers_in
 from rehnuma.explain.story import BillStory
 
 URDU_MIN_SHARE = 0.6    # share of letters that must be Urdu script in an Urdu summary
+MIN_LINES, MAX_LINES = 3, 14   # longest real template summary: 12 lines; allam loops: 20+
 
 
 def required_numbers(story: BillStory) -> dict[str, int]:
@@ -32,6 +37,11 @@ def required_numbers(story: BillStory) -> dict[str, int]:
     return req
 
 
+def structure_ok(text: str) -> bool:
+    lines = [ln.strip(" -\t") for ln in text.splitlines() if ln.strip(" -\t")]
+    return MIN_LINES <= len(lines) <= MAX_LINES and len(set(lines)) == len(lines)
+
+
 def urdu_share(text: str) -> float:
     letters = [ch for ch in text if ch.isalpha()]
     if not letters:
@@ -45,6 +55,7 @@ class Quality:
     unsupported: list[Decimal]
     missing: list[str]
     language_ok: bool
+    structure_ok: bool = True
 
     @property
     def coverage(self) -> float:
@@ -54,7 +65,8 @@ class Quality:
 
     @property
     def passed(self) -> bool:
-        return not self.unsupported and not self.missing and self.language_ok
+        return (not self.unsupported and not self.missing and self.language_ok
+                and self.structure_ok)
 
 
 def assess(text: str, story: BillStory, lang: str) -> Quality:
@@ -63,4 +75,5 @@ def assess(text: str, story: BillStory, lang: str) -> Quality:
     req = required_numbers(story)
     missing = [name for name, value in req.items() if Decimal(value) not in stated]
     lang_ok = urdu_share(text) >= URDU_MIN_SHARE if lang == "ur" else urdu_share(text) < 0.05
-    return Quality(f.score, f.unsupported, missing, lang_ok, _n_required=len(req))
+    return Quality(f.score, f.unsupported, missing, lang_ok, structure_ok(text),
+                   _n_required=len(req))
