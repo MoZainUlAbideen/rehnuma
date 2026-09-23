@@ -50,11 +50,16 @@ line numbering). The drafts themselves showed:
   safeguard (below). A future option: an LLM judge scored against human ratings.
 - Re-run gpt-oss-120b and qwen3.8-27b under critic v2 (Round 2).
 
-## Human review (Round 2, to fill in)
+## Round 2: critic v2 (Urdu, 7 real bills)
 
-| Bill | Model | Factually right? | Natural Urdu? | Notes |
-|---|---|---|---|---|
-| pesco-2026-09 | gpt-oss-120b | | | |
-| pesco-2026-09 | qwen3.8-27b | | | |
-| iesco-2023-03 | gpt-oss-120b | | | |
-| iesco-2023-03 | qwen3.8-27b | | | |
+| Model | First draft passed critic | Fell back to template | Time / summary |
+|---|---|---|---|
+| openai/gpt-oss-120b | 100% | 0% | 1.4 s (was 8.5 s before the reasoning/token fixes) |
+| qwen/qwen3.8-27b | 100% | 0% | 2.9 s |
+
+**Human check:** the bill owner (native Urdu reader) said the summaries of his own bills
+look good. One reader so far, see `USER_RESEARCH.md`.
+
+**Production model: `openai/gpt-oss-120b`.** Both models tied on the critic; gpt-oss is 2x
+faster. A line-by-line meaning review of both models is still worth doing before launch,
+since the critic cannot check meaning.

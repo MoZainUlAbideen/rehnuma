@@ -42,8 +42,10 @@
 - [x] Summary eval on real bills (`rehnuma-eval-summary`): first-draft pass rate, fallback rate, faithfulness, coverage, language
 - [x] Groq model comparison (allam-2-7b / gpt-oss-120b / qwen3.8-27b), findings in SUMMARY_EVAL.md
 - [x] Critic v2: structure check (loops), no due date on credit bills, readable dates
-- [ ] Re-run gpt-oss-120b and qwen3.8-27b under critic v2
-- [ ] Human review of Urdu summaries (native reader) -> pick the production model
+- [x] Critic v2 rerun: gpt-oss-120b and qwen3.8-27b 100% first-draft on Urdu
+- [x] Production model: gpt-oss-120b (tied on critic, 2x faster: 1.4 s/summary)
+- [x] First reader check: bill owner (native Urdu speaker) says the summaries look good (n=1)
+- [ ] Broader check: 3–5 neighbours, incl. households without solar
 
 ## Milestone 3 — Vision extraction + PII redaction
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic
