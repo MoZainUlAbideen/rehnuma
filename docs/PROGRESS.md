@@ -10,7 +10,8 @@
 - [x] Synthetic conventional bill test (non-solar path)
 - [x] `rehnuma-audit` CLI
 - [x] FINDINGS.md from real bills
-- [ ] You: verify the flagged `uncertain_fields` against the paper Mar-26 bill
+- [x] Verified ED on FPA against the paper Mar-26 bill (16), diagnosed the resulting Rs 2 anomaly
+- [x] Expected-anomalies registry: real bills must fail exactly their documented checks
 - [ ] You: push to GitHub
 
 ## Milestone 2 — Tariff rates + synthetic generator

@@ -18,10 +18,19 @@ Each one is either verified by a test or listed as an open question.
    printed current bill 3,170. → tolerance is Rs 1, and near-misses are always *reported*,
    never hidden. (`test_known_rs1_rounding_gap_is_reported_not_hidden`)
 
-4. **FPA taxes are computed unrounded and rounded once at the end.** Mar-26 printed lines
-   FPA 972 + GST 178 + ED 15 = 1,165, but printed Total FPA is 1,164.
-   (597 × 1.6274) × 1.015 × 1.18 = 1,163.63 → **1,164 exactly**.
-   (`test_fpa_tax_cascade_is_exact_when_rounded_once`)
+4. **Real anomaly: the Mar-26 FPA lines don't add up to the Total FPA.** Printed:
+   FPA 972 + GST on FPA 178 + ED on FPA **16** (verified on paper) = 1,166, but Total FPA is
+   printed as **1,164**, a Rs 2 gap that exceeds rounding tolerance.
+   The total is reproduced exactly by computing unrounded and rounding once:
+   (597 × 1.6274) × 1.015 × 1.18 = 1,163.63 → **1,164**, which implies ED ≈ 14.57, not 16.
+   A brute-force search (ED 1.00–2.50%, GST on FPA or FPA+ED, rounded/unrounded FPA) found
+   **no rule** that prints ED 16, GST 178 and total 1,164 together, so the bill contradicts
+   itself. The engine flags it, and it is recorded in `data/eval/expected_anomalies.json`.
+   Tests require every real bill to fail *exactly* its documented anomalies.
+   (`test_fpa_total_follows_unrounded_cascade_not_printed_lines`)
+   *How it was found:* the first transcription read ED as 15 and everything passed; the owner
+   checked the paper bill, corrected it to 16, and the check failed. The label was
+   corrected, not the tolerance.
 
 5. **Net metering banks units across a 3-month cycle.** `Mnt Cnt` runs 1/3 → 2/3 → 3/3.
    Inside the cycle, remaining = previous remaining − net (off-peak 0 → 834 → 1,326); at 3/3 the

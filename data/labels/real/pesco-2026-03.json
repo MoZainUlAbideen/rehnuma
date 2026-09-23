@@ -68,7 +68,7 @@
     "pesco_total": 100,
     "govt": {
       "gst_on_fpa": 178,
-      "ed_on_fpa": 15
+      "ed_on_fpa": 16
     },
     "govt_total": 193,
     "total_fpa": 1164,
@@ -170,8 +170,8 @@
     }
   ],
   "uncertain_fields": [
-    "legacy_charges.govt.ed_on_fpa (photo reads 15 or 16; 15 fits the tax cascade)",
-    "legacy_charges.govt keys (which printed line carries 178 vs 15)",
+    "legacy_charges.govt.ed_on_fpa 16",
+    "legacy_charges.govt keys 178 vs 16",
     "registers.export_peak (4th meter row not visible; box shows export peak = 1)",
     "ed_rate_pct (the '1.5%' in the header strip is assumed to be the ED rate)"
   ],

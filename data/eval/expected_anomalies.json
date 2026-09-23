@@ -1,0 +1,11 @@
+{
+  "_about": "Real bills that genuinely contradict themselves. Labels transcribe what is printed; this file records which checks we EXPECT to fail and why. A real bill must fail exactly these checks - no more, no fewer.",
+  "pesco-2026-03": [
+    {
+      "check": "fpa_total_from_lines",
+      "printed": "FPA 972 + GST on FPA 178 + ED on FPA 16 = 1,166, but Total FPA printed as 1,164 (Rs 2 gap)",
+      "diagnosis": "Total FPA matches ED at 1.5% computed unrounded (14.57) exactly: (597 x 1.6274) x 1.015 x 1.18 = 1,163.63 -> 1,164. The printed ED line of 16 is inconsistent with the total it feeds. Brute-force search over ED 1.00-2.50%, GST on FPA or FPA+ED, rounded/unrounded FPA found no rule producing ED=16, GST=178, total=1,164 together.",
+      "verified_by": "owner checked the paper bill: ED on FPA reads 16"
+    }
+  ]
+}
