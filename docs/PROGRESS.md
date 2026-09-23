@@ -38,8 +38,9 @@
 - [x] Template summary, Urdu by default, English with `--lang en` (`rehnuma-summary`)
 - [x] Numeric-faithfulness check: every number in a summary must come from the engine
 - [x] Fixed: summary said Mar-26 "credited Rs 872"; it actually added Rs 292 (FPA billed separately)
-- [ ] Show Urdu summaries to 3–5 neighbours, record feedback
-- [ ] LLM summary (Groq) + critic, scored against the template baseline
+- [x] LLM summary (Groq) + deterministic critic (numbers, must-mention facts, language), 2 retries with feedback, template fallback
+- [x] Summary eval on real bills (`rehnuma-eval-summary`): first-draft pass rate, fallback rate, faithfulness, coverage, language
+- [ ] Run the Groq eval and record the honest numbers (Urdu vs English)
 
 ## Milestone 3 — Vision extraction + PII redaction
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic
