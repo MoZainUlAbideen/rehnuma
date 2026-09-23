@@ -32,6 +32,15 @@
 - [ ] Resolve open questions in FINDINGS.md (LP surcharge base, status codes, Q1 vs Q3 netting)
 - [ ] Render synthetic bills as images (feeds milestone 3)
 
+## Milestone 2.5 — Plain-language summary (from user research)
+- [x] Neighbourhood conversations recorded in USER_RESEARCH.md
+- [x] BillStory: verified facts people care about (solar sent/used/banked; flat vs ToU; 200-unit limit)
+- [x] Template summary, Urdu by default, English with `--lang en` (`rehnuma-summary`)
+- [x] Numeric-faithfulness check: every number in a summary must come from the engine
+- [x] Fixed: summary said Mar-26 "credited Rs 872"; it actually added Rs 292 (FPA billed separately)
+- [ ] Show Urdu summaries to 3–5 neighbours, record feedback
+- [ ] LLM summary (Groq) + critic, scored against the template baseline
+
 ## Milestone 3 — Vision extraction + PII redaction
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic
 ## Milestone 5 — Forecasting (both segments) + solar planner (PVGIS, 2026 net billing)

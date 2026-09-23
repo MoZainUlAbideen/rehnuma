@@ -41,6 +41,8 @@ uv run pytest                            # run the test suite
 uv run rehnuma-audit data/labels/real    # audit all real bills
 uv run rehnuma-audit data/labels/real --all   # include every passing check
 uv run rehnuma-eval-auditor --n 2000 --seed 42  # auditor eval on synthetic bills
+uv run rehnuma-summary data/labels/real          # plain summary, Urdu (default)
+uv run rehnuma-summary data/labels/real --lang en --out summary.md
 ```
 
 ## How it's built
