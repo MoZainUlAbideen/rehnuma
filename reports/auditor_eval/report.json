@@ -1,0 +1,126 @@
+{
+  "seed": 42,
+  "n_bills": 2000,
+  "overall": {
+    "detection_rate": 1.0,
+    "localisation_rate": 1.0,
+    "false_positive_rate": 0.0,
+    "n_error_bills": 1286,
+    "n_clean_bills": 585,
+    "n_undetectable_bills": 129
+  },
+  "per_type": {
+    "gst_inflated": {
+      "name": "gst_inflated",
+      "expected_check": "gst_on_energy",
+      "n": 161,
+      "detected": 161,
+      "localised": 161,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "wrong_ed_rate": {
+      "name": "wrong_ed_rate",
+      "expected_check": "electricity_duty",
+      "n": 149,
+      "detected": 149,
+      "localised": 149,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "fpa_on_wrong_month": {
+      "name": "fpa_on_wrong_month",
+      "expected_check": "fpa_units_vs_history",
+      "n": 144,
+      "detected": 144,
+      "localised": 144,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "fpa_line_inflated": {
+      "name": "fpa_line_inflated",
+      "expected_check": "fpa_line",
+      "n": 137,
+      "detected": 137,
+      "localised": 137,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "current_bill_arithmetic": {
+      "name": "current_bill_arithmetic",
+      "expected_check": "legacy_current_bill",
+      "n": 126,
+      "detected": 126,
+      "localised": 126,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "arrears_not_in_history": {
+      "name": "arrears_not_in_history",
+      "expected_check": "arrears_vs_history",
+      "n": 153,
+      "detected": 153,
+      "localised": 153,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "lp_surcharge_mismatch": {
+      "name": "lp_surcharge_mismatch",
+      "expected_check": "payable_after_due",
+      "n": 140,
+      "detected": 140,
+      "localised": 140,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "units_not_matching_meter": {
+      "name": "units_not_matching_meter",
+      "expected_check": "register_units",
+      "n": 134,
+      "detected": 134,
+      "localised": 134,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "protected_billed_as_unprotected": {
+      "name": "protected_billed_as_unprotected",
+      "expected_check": "tariff_rates",
+      "n": 48,
+      "detected": 48,
+      "localised": 48,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "next_slab_rate": {
+      "name": "next_slab_rate",
+      "expected_check": "tariff_rates",
+      "n": 94,
+      "detected": 94,
+      "localised": 94,
+      "missed_examples": [],
+      "detection_rate": 1.0,
+      "localisation_rate": 1.0
+    },
+    "inflated_meter_reading": {
+      "name": "inflated_meter_reading",
+      "expected_check": null,
+      "n": 129,
+      "detected": 0,
+      "localised": 0,
+      "missed_examples": [],
+      "detection_rate": 0.0,
+      "localisation_rate": 0.0
+    }
+  },
+  "false_positive_checks": {},
+  "clean_examples": []
+}

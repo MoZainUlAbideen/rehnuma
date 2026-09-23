@@ -113,3 +113,50 @@ candidate vision feature: wrong or estimated readings are a common source of ove
 - **Status codes.** `LK` (Feb-Mar 2020, likely COVID-era locked/estimated readings) and
   "LK 337.5" (Apr-22), plus `SS` from PESCO. Need an official code list.
 - **GST 17% start date** is recorded as Jul-2013 and still needs a primary source.
+
+
+---
+
+# Tariff schedules, protected status and the auditor eval
+
+## Tariff data quality (a finding in itself)
+
+- Secondary sources disagree. An explainer site lists 2026 slab rates "per S.R.O. 279(I)/2026"
+  (effective 12-Feb-2026), but those per-unit rates are identical to NEPRA's **July-2025**
+  decision, while Express Tribune (11-Feb-2026) reports Feb-2026 per-unit **cuts** of
+  Rs 0.49–1.53. Both agree on the new per-kW fixed charges.
+- So every schedule in `src/rehnuma/data/tariff_schedules.json` carries a `confidence`
+  (`official` / `secondary` / `observed`) and a `source`. The 2026 schedule is `secondary`
+  until the SRO itself is read. Nothing is `official` yet.
+
+## Slab rules confirmed on real bills
+
+16. **2019: every consumer got one-previous-slab benefit** (IESCO Jul-19: 8.11 x 200 + 10.20 x 3).
+17. **2023: unprotected consumers pay the rate of the slab reached on every unit** (IESCO Mar-23:
+    25.53 x 393). Only protected consumers keep the one-previous-slab benefit.
+18. The 2023 household's last 6 months were all above 200 units, so the engine independently
+    classifies it as unprotected, matching what was charged.
+
+The rates in the `observed` schedules came from these same bills, so these tests check the
+slab *structure* (which units get which rate), not the rates themselves.
+
+## Auditor eval (synthetic) — `uv run rehnuma-eval-auditor`
+
+Seed 42, 2,000 bills: 100% detection, 100% localisation, 0% false positives. Also 100% on
+seeds 7 and 2026.
+
+**How to read that 100%:** the generator and the auditor share `calculator.py`, so on synthetic
+data the auditor is checking bills built from its own rules. The number mainly shows that every
+error type is wired to a check that fires for the right reason, and that clean bills produce no
+false alarms. It is **not** a real-world accuracy figure. That needs the vision extractor
+(milestone 3) running on real bills.
+
+What the eval did find:
+
+- **A bug in the generator, not the auditor.** The first run missed 2/81 `fpa_on_wrong_month`
+  bills. On both, the "wrong" month had the same units as the right one (98 vs 98, 50 vs 50),
+  so no error had actually been planted. Fixed, and the eval now refuses to count any planted
+  error that leaves the bill unchanged.
+- **A class of error no single bill can reveal.** An inflated meter reading makes the whole bill
+  consistent (0% detected, by design). Catching it needs the next month's reading
+  (cross-bill continuity, already built) or the meter photo (milestone 3).

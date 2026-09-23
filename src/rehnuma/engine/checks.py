@@ -12,13 +12,16 @@ Two kinds of check live here:
 
 from __future__ import annotations
 
+from __future__ import annotations
+
 from collections.abc import Callable
 from decimal import ROUND_HALF_UP, Decimal
 
 from rehnuma.engine import calculator as calc
-from rehnuma.engine.findings import Finding, compare, skip, to_rupees
+from rehnuma.engine.findings import Finding, Status, compare, skip, to_rupees
 from rehnuma.engine.rates import AMOUNT_TOLERANCE_RS
 from rehnuma.schema import Bill, ConnectionType, Layout, shift_month
+from rehnuma.tariffs import UnknownRate, protected_eligible, schedule_for, slab_rate_lines
 
 TOL = AMOUNT_TOLERANCE_RS
 
@@ -192,6 +195,43 @@ def check_rate_lines(bill: Bill) -> list[Finding]:
                            what="units across rate lines"))
     return out
 
+def check_tariff_rates(bill: Bill) -> list[Finding]:
+    """Were the right slab rates applied? Protected status comes from the bill's own
+    6-month history; rates come from the tariff schedule in force that month.
+    This is what catches a protected household billed at unprotected rates."""
+    if (s := _legacy_only("tariff_rates", bill)):
+        return [s]
+    c, bid = bill.legacy_charges, bill.bill_id
+    if bill.connection_type != ConnectionType.CONVENTIONAL:
+        return [skip("tariff_rates", bid, "net-metering / ToU slabs not modelled yet")]
+    if not c.rate_lines:
+        return [skip("tariff_rates", bid, "no Bill Calculation block printed")]
+    schedule = schedule_for(bill.tariff, bill.bill_month)
+    if schedule is None:
+        return [skip("tariff_rates", bid,
+                     f"no tariff schedule for {bill.tariff} {bill.bill_month}")]
+    protected = False
+    if schedule.has_protected:
+        eligible = protected_eligible(bill.history, bill.bill_month, bill.tariff)
+        if eligible is None:
+            return [skip("tariff_rates", bid, "fewer than 6 months of history")]
+        protected = eligible
+    try:
+        expected = slab_rate_lines(c.units_consumed, schedule, protected)
+    except UnknownRate as e:
+        return [skip("tariff_rates", bid, str(e))]
+    as_text = lambda lines: " + ".join(f"{ln.rate}x{ln.units}" for ln in lines)  # noqa: E731
+    status = "protected" if protected else "unprotected"
+    what = f"{status}, schedule {schedule.id} ({schedule.confidence})"
+    same = [(ln.rate, ln.units) for ln in expected] == [(ln.rate, ln.units) for ln in c.rate_lines]
+    if same:
+        return [Finding("tariff_rates", Status.PASS, f"{what}: {as_text(expected)}", bid)]
+    exp_cost = calc.cost_of_electricity(expected)
+    act_cost = calc.cost_of_electricity(c.rate_lines)
+    return [Finding("tariff_rates", Status.FAIL,
+                    f"{what}: expected {as_text(expected)} = {exp_cost}, "
+                    f"charged {as_text(c.rate_lines)} = {act_cost} "
+                    f"(overcharge {act_cost - exp_cost:+})", bid, exp_cost, act_cost)]
 
 def _unrounded_cost(bill: Bill) -> Decimal:
     """Prefer the unrounded cost from the rate lines; bills print it rounded."""
@@ -323,6 +363,7 @@ SINGLE_BILL_CHECKS: list[Callable[[Bill], list[Finding]]] = [
     check_legacy_current_bill,
     check_legacy_section_totals,
     check_rate_lines,
+    check_tariff_rates,
     check_levies,
     check_fpa,
     check_v2_charges,

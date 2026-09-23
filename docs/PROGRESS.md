@@ -21,9 +21,16 @@
 - [x] Tests proving each rule beats its plausible alternative
 - [x] Fixed: recompute tolerance now follows printed precision
 - [x] Fixed: cross-bill checks group by connection_id
-- [ ] Source NEPRA slab tables (protected / unprotected, ToU) so cost is computed without printed rate lines
+- [x] Tariff schedules with source + confidence (2026 domestic from secondary sources; 2019/2021/2023 observed)
+- [x] Slab engine: one-previous-slab benefit, unprotected band-reached rule, protected status from 6-month history
+- [x] `tariff_rates` check: catches a protected household billed at unprotected rates
+- [x] Synthetic generator: conventional households on the legacy layout, 11 planted error types
+- [x] Auditor eval (`rehnuma-eval-auditor`): detection / localisation / false-positive rate
+- [x] Fixed: eval found a generator bug (no-op planted error), now guarded
+- [ ] Get S.R.O. 279(I)/2026 itself and upgrade the 2026 schedule to `official`
+- [ ] ToU (A-1b) and net-metering slabs; fixed charges and their GST treatment
 - [ ] Resolve open questions in FINDINGS.md (LP surcharge base, status codes, Q1 vs Q3 netting)
-- [ ] Synthetic bill generator: both layouts, both connection types, error injection
+- [ ] Render synthetic bills as images (feeds milestone 3)
 
 ## Milestone 3 — Vision extraction + PII redaction
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic

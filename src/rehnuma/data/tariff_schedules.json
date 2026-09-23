@@ -1,0 +1,52 @@
+{
+  "_about": "Domestic tariff schedules. 'confidence' says how far to trust each one: 'official' = read from the SRO/NEPRA document itself; 'secondary' = reported by news/explainer sites; 'observed' = inferred from rates printed on real bills (only the bands those bills used are known). The auditor never tells a user their bill is wrong based on a 'secondary' rate without saying so.",
+  "schedules": [
+    {
+      "id": "observed-2019",
+      "tariff_prefix": "A-1a",
+      "effective_from": "2019-07-01",
+      "confidence": "observed",
+      "source": "IESCO Jul-2019 bill: 8.11 x 200 + 10.20 x 3",
+      "slab_benefit": "all",
+      "has_protected": false,
+      "unprotected": [[100, null], [200, "8.11"], [300, "10.20"], [700, null], [null, null]]
+    },
+    {
+      "id": "observed-2021",
+      "tariff_prefix": "A-1a",
+      "effective_from": "2021-01-01",
+      "confidence": "observed",
+      "source": "IESCO Jan-2021 bill: 5.79 x 58",
+      "slab_benefit": "all",
+      "has_protected": false,
+      "unprotected": [[100, "5.79"], [200, null], [300, null], [700, null], [null, null]]
+    },
+    {
+      "id": "observed-2023",
+      "tariff_prefix": "A-1a",
+      "effective_from": "2023-03-01",
+      "confidence": "observed",
+      "source": "IESCO Mar-2023 bill: 25.53 x 393 (unprotected, no slab benefit)",
+      "slab_benefit": "protected_only",
+      "has_protected": true,
+      "protected": [[100, null], [200, null]],
+      "unprotected": [[100, null], [200, null], [300, null], [400, "25.53"], [500, null], [600, null], [700, null], [null, null]]
+    },
+    {
+      "id": "a1-2026-02",
+      "tariff_prefix": "A-1a",
+      "effective_from": "2026-02-12",
+      "confidence": "secondary",
+      "source": "S.R.O. 279(I)/2026 as reported by ebillpakistan.pk; fixed charges corroborated by Express Tribune (11-Feb-2026)",
+      "caveat": "Per-unit rates equal NEPRA's July-2025 decision (Pakistan Observer), yet Tribune reports Feb-2026 per-unit cuts of Rs 0.49-1.53. Unverified until the SRO itself is read.",
+      "slab_benefit": "protected_only",
+      "has_protected": true,
+      "protected": [[100, "10.54"], [200, "13.01"]],
+      "unprotected": [[100, "22.44"], [200, "28.91"], [300, "33.10"], [400, "36.46"], [500, "38.95"], [600, "40.22"], [700, "41.85"], [null, "47.20"]],
+      "fixed_charges_per_kw": {
+        "protected": [[100, 200], [200, 300]],
+        "unprotected": [[100, 275], [200, 300], [300, 350], [400, 400], [500, 500], [600, 675], [700, 675], [null, 675]]
+      }
+    }
+  ]
+}

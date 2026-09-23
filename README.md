@@ -26,7 +26,10 @@ what to do next.
 **Milestone 2 (in progress): from-scratch levy calculator** — ED, GST, NJ surcharge and the
 FPA tax calculation are recomputed from first principles and match every legacy-layout bill
 (3 IESCO + 1 PESCO, 2019–2026) with zero delta. All 7 real bills (solar and non-solar)
-reconcile; the one failure is a real Rs 2 inconsistency printed on a PESCO bill. See
+reconcile; the one failure is a real Rs 2 inconsistency printed on a PESCO bill.
+A slab engine checks protected status from the bill's own 6-month history, and an auditor
+eval over 2,000 synthetic bills with 11 planted error types reports detection, localisation
+and false-positive rates ([`reports/auditor_eval/report.md`](reports/auditor_eval/report.md)). See
 [`docs/FINDINGS.md`](docs/FINDINGS.md) for what the real bills taught us and
 [`docs/PROGRESS.md`](docs/PROGRESS.md) for the roadmap.
 
@@ -37,6 +40,7 @@ uv sync                                  # create .venv and install everything
 uv run pytest                            # run the test suite
 uv run rehnuma-audit data/labels/real    # audit all real bills
 uv run rehnuma-audit data/labels/real --all   # include every passing check
+uv run rehnuma-eval-auditor --n 2000 --seed 42  # auditor eval on synthetic bills
 ```
 
 ## How it's built

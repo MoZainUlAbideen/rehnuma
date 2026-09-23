@@ -9,6 +9,7 @@ dependencies = [
 ]
 
 [project.scripts]
+rehnuma-eval-auditor = "rehnuma.evals.auditor_eval:main"
 rehnuma-audit = "rehnuma.cli:main"
 
 [dependency-groups]
