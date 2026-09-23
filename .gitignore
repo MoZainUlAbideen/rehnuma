@@ -1,0 +1,21 @@
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+
+# Secrets
+.env
+
+# REAL BILL PHOTOS CONTAIN PII (reference no., consumer ID, address) — never commit
+data/real/*
+!data/real/.gitkeep
+!data/real/README.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

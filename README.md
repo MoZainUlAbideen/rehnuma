@@ -1,0 +1,63 @@
+# Rehnuma (رہنما)
+
+**An AI copilot that audits Pakistani electricity bills and guides solar decisions — in Urdu or English.**
+
+Pakistani electricity bills stack slab rates, protected/unprotected status, FPA, QTA,
+fixed charges, ED, GST and more into one page almost nobody can read. On top of that,
+NEPRA's 2026 Prosumer Regulations moved new solar users from net metering to net billing,
+so the "is solar worth it?" math changed overnight.
+
+Rehnuma reads a photo of your bill, **re-computes it rupee by rupee with a deterministic
+engine**, explains every line with citations to the NEPRA rules behind it, and tells you
+what to do next.
+
+## Two kinds of households, one product
+
+| | Conventional household (no solar) | Solar prosumer (net metering / net billing) |
+|---|---|---|
+| **Main question** | "Is my bill correct? Why is it so high?" | "Is my export credit correct? What is it worth?" |
+| **Key checks** | slab, protected status, FPA, taxes, arrears | import/export/net, banked units, quarterly settlement |
+| **Forecast** | next 12 months of bills | credit balance and settlement trajectory |
+| **Solar** | Should I install? Payback under 2026 net billing | Should I expand / add batteries? |
+
+## Status
+
+**Milestone 1: deterministic reconciliation engine** — done.
+Four real PESCO bills (two layouts) reconcile with 0 failures. See
+[`docs/FINDINGS.md`](docs/FINDINGS.md) for what the real bills taught us and
+[`docs/PROGRESS.md`](docs/PROGRESS.md) for the roadmap.
+
+## Quickstart
+
+```bash
+uv sync                                  # create .venv and install everything
+uv run pytest                            # run the test suite
+uv run rehnuma-audit data/labels/real    # audit all real bills
+uv run rehnuma-audit data/labels/real --all   # include every passing check
+```
+
+## How it's built
+
+```
+src/rehnuma/
+  schema.py            # Pydantic model of a bill (both layouts, both connection types)
+  loader.py            # JSON label loading (UTF-8, Windows-safe globbing)
+  cli.py               # rehnuma-audit command
+  engine/
+    checks.py          # single-bill checks: meter, net-metering bank, charges, FPA, totals
+    cross_bill.py      # multi-bill checks: meter continuity, arrears, history agreement
+    findings.py        # PASS / FAIL / SKIP result type + half-up rounding
+    rates.py           # constants, each with its source (INFERRED ones flagged)
+data/
+  labels/real/         # hand-verified ground truth, PII removed (committed)
+  real/                # original photos (git-ignored)
+```
+
+**Design rule:** the LLM never does arithmetic. Every number Rehnuma shows comes from
+this engine; the LLM's job (later milestones) is extraction and explanation.
+
+## Privacy
+
+Real bill photos contain the reference number, consumer ID and address. They live in
+`data/real/`, which is git-ignored. Labels in `data/labels/real/` carry no identifiers, and a
+test enforces this.

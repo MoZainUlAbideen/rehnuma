@@ -1,0 +1,183 @@
+{
+  "source": "real",
+  "disco": "PESCO",
+  "connection_type": "net_metering",
+  "tariff": "A-1b(03)T",
+  "sanctioned_load_kw": "7.00",
+  "bill_id": "pesco-2026-03",
+  "layout": "pesco_legacy",
+  "bill_month": "2026-03",
+  "reading_date": "2026-03-01",
+  "issue_date": "2026-03-12",
+  "due_date": "2026-03-26",
+  "ed_rate_pct": "1.5",
+  "registers": [
+    {
+      "name": "import_offpeak",
+      "previous": "6876.51",
+      "present": "7071.29",
+      "mf": "1",
+      "units": 195
+    },
+    {
+      "name": "import_peak",
+      "previous": "2153.23",
+      "present": "2254.05",
+      "mf": "1",
+      "units": 101
+    },
+    {
+      "name": "export_offpeak",
+      "previous": "15969.11",
+      "present": "16468.6",
+      "mf": "1",
+      "units": 499
+    }
+  ],
+  "net_metering": {
+    "dg_capacity_kw": "9.50",
+    "import_kwh": {
+      "offpeak": 195,
+      "peak": 101
+    },
+    "export_kwh": {
+      "offpeak": 499,
+      "peak": 1
+    },
+    "net_kwh": {
+      "offpeak": -304,
+      "peak": 100
+    },
+    "month_count": 3,
+    "cycle_length": 3,
+    "remaining_prev": {
+      "offpeak": 0,
+      "peak": 0
+    },
+    "remaining_present": {
+      "offpeak": 0,
+      "peak": 0
+    }
+  },
+  "legacy_charges": {
+    "units_consumed": -204,
+    "cost_of_electricity": -3012,
+    "fixed_charges": 2140,
+    "fpa": 972,
+    "qta": 0,
+    "pesco_total": 100,
+    "govt": {
+      "gst_on_fpa": 178,
+      "ed_on_fpa": 15
+    },
+    "govt_total": 193,
+    "total_fpa": 1164,
+    "fpa_ref_month": "2026-01",
+    "fpa_units": 597,
+    "fpa_rate": "1.6274"
+  },
+  "totals": {
+    "arrears": -80037,
+    "current_bill": -872,
+    "payable_within_due": -79745,
+    "lp_surcharge": 0,
+    "payable_after_due": -79745
+  },
+  "history": [
+    {
+      "month": "2025-03",
+      "status": null,
+      "units": -151,
+      "bill": -31840,
+      "payment": 0
+    },
+    {
+      "month": "2025-04",
+      "status": null,
+      "units": 0,
+      "bill": -30762,
+      "payment": 0
+    },
+    {
+      "month": "2025-05",
+      "status": null,
+      "units": 0,
+      "bill": -29547,
+      "payment": 0
+    },
+    {
+      "month": "2025-06",
+      "status": null,
+      "units": -3005,
+      "bill": -106348,
+      "payment": 0
+    },
+    {
+      "month": "2025-07",
+      "status": null,
+      "units": 0,
+      "bill": -105168,
+      "payment": 0
+    },
+    {
+      "month": "2025-08",
+      "status": null,
+      "units": 0,
+      "bill": -103988,
+      "payment": 0
+    },
+    {
+      "month": "2025-09",
+      "status": null,
+      "units": -1185,
+      "bill": -123277,
+      "payment": 0
+    },
+    {
+      "month": "2025-10",
+      "status": null,
+      "units": 0,
+      "bill": -122097,
+      "payment": 0
+    },
+    {
+      "month": "2025-11",
+      "status": "SS",
+      "units": 0,
+      "bill": -120917,
+      "payment": 0
+    },
+    {
+      "month": "2025-12",
+      "status": null,
+      "units": -873,
+      "bill": -136921,
+      "payment": 0
+    },
+    {
+      "month": "2026-01",
+      "status": null,
+      "units": 597,
+      "bill": -102994,
+      "payment": 0
+    },
+    {
+      "month": "2026-02",
+      "status": null,
+      "units": 383,
+      "bill": -80037,
+      "payment": 0
+    }
+  ],
+  "uncertain_fields": [
+    "legacy_charges.govt.ed_on_fpa (photo reads 15 or 16; 15 fits the tax cascade)",
+    "legacy_charges.govt keys (which printed line carries 178 vs 15)",
+    "registers.export_peak (4th meter row not visible; box shows export peak = 1)",
+    "ed_rate_pct (the '1.5%' in the header strip is assumed to be the ED rate)"
+  ],
+  "notes": [
+    "Legacy PITC-style layout.",
+    "Current bill excludes FPA; FPA + its taxes are billed as 'Total FPA'.",
+    "FPA is for Jan-26 @ 1.6274/kWh on Jan's 597 units."
+  ]
+}

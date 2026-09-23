@@ -1,0 +1,172 @@
+{
+  "source": "real",
+  "disco": "PESCO",
+  "connection_type": "net_metering",
+  "tariff": "A-1b(03)T",
+  "sanctioned_load_kw": "7.00",
+  "bill_id": "pesco-2026-07",
+  "layout": "pesco_v2_2026",
+  "bill_month": "2026-07",
+  "reading_date": "2026-07-01",
+  "issue_date": "2026-07-08",
+  "due_date": "2026-07-22",
+  "registers": [
+    {
+      "name": "import_offpeak",
+      "previous": "7665.26",
+      "present": "8031.61",
+      "mf": "1",
+      "units": 366
+    },
+    {
+      "name": "import_peak",
+      "previous": "2455.13",
+      "present": "2589.27",
+      "mf": "1",
+      "units": 134
+    },
+    {
+      "name": "export_offpeak",
+      "previous": "19414.39",
+      "present": "20614.71",
+      "mf": "1",
+      "units": 1200
+    },
+    {
+      "name": "export_peak",
+      "previous": "9.08",
+      "present": "9.08",
+      "mf": "1",
+      "units": 0
+    }
+  ],
+  "net_metering": {
+    "dg_capacity_kw": null,
+    "import_kwh": {
+      "offpeak": 366,
+      "peak": 134
+    },
+    "export_kwh": {
+      "offpeak": 1200,
+      "peak": 0
+    },
+    "net_kwh": {
+      "offpeak": -834,
+      "peak": 134
+    },
+    "month_count": 1,
+    "cycle_length": 3,
+    "remaining_prev": {
+      "offpeak": 0,
+      "peak": 0
+    },
+    "remaining_present": {
+      "offpeak": 834,
+      "peak": -134
+    }
+  },
+  "v2_charges": {
+    "total_electricity_charges": 2687,
+    "subsidies": 0,
+    "net_electricity_charges": 2687,
+    "taxes": 484
+  },
+  "totals": {
+    "arrears": -121199,
+    "current_bill": 3170,
+    "payable_within_due": -118029,
+    "lp_surcharge": 0,
+    "payable_after_due": -118029
+  },
+  "history": [
+    {
+      "month": "2025-07",
+      "status": null,
+      "units": 0,
+      "bill": -105168,
+      "payment": 0
+    },
+    {
+      "month": "2025-08",
+      "status": null,
+      "units": 0,
+      "bill": -103988,
+      "payment": 0
+    },
+    {
+      "month": "2025-09",
+      "status": null,
+      "units": -1185,
+      "bill": -123277,
+      "payment": 0
+    },
+    {
+      "month": "2025-10",
+      "status": null,
+      "units": 0,
+      "bill": -122097,
+      "payment": 0
+    },
+    {
+      "month": "2025-11",
+      "status": "SS",
+      "units": 0,
+      "bill": -120917,
+      "payment": 0
+    },
+    {
+      "month": "2025-12",
+      "status": null,
+      "units": -873,
+      "bill": -136921,
+      "payment": 0
+    },
+    {
+      "month": "2026-01",
+      "status": null,
+      "units": 597,
+      "bill": -102994,
+      "payment": 0
+    },
+    {
+      "month": "2026-02",
+      "status": null,
+      "units": 383,
+      "bill": -80037,
+      "payment": 0
+    },
+    {
+      "month": "2026-03",
+      "status": null,
+      "units": -204,
+      "bill": -79745,
+      "payment": 0
+    },
+    {
+      "month": "2026-04",
+      "status": null,
+      "units": 0,
+      "bill": -76304,
+      "payment": 0
+    },
+    {
+      "month": "2026-05",
+      "status": null,
+      "units": 0,
+      "bill": -73517,
+      "payment": 0
+    },
+    {
+      "month": "2026-06",
+      "status": null,
+      "units": -2151,
+      "bill": -121199,
+      "payment": 0
+    }
+  ],
+  "uncertain_fields": [],
+  "notes": [
+    "Redesigned 2026 PESCO layout (QR code, 'Bill Charges Breakdown' block).",
+    "Printed percentages 84.73% / 15.27% not modelled yet."
+  ]
+}
