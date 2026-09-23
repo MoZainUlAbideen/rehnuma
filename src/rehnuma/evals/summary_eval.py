@@ -2,6 +2,7 @@
 
   uv run rehnuma-eval-summary                     # template baseline (offline)
   uv run rehnuma-eval-summary --provider groq     # needs GROQ_API_KEY in .env
+  uv run rehnuma-eval-summary --provider groq --model qwen/qwen3.8-27b
 
 For every real bill x language it records:
   * first-draft pass rate  - did the LLM's FIRST draft pass the critic?
@@ -38,10 +39,11 @@ class TemplateClient:
         return "\n".join(f"- {line}" for line in summarize(self.story, self.lang))
 
 
-def run(bill_paths: list[str], provider: str, langs: list[str]) -> dict:
+def run(bill_paths: list[str], provider: str, langs: list[str],
+        model: str | None = None) -> dict:
     if provider == "groq":
         from rehnuma.llm.client import GroqClient
-        client = GroqClient()
+        client = GroqClient(model=model)
     else:
         client = TemplateClient()
     rows = []
@@ -75,6 +77,9 @@ def run(bill_paths: list[str], provider: str, langs: list[str]) -> dict:
             "mean_coverage": sum(r["coverage"] for r in rows) / n,
             "language_ok_rate": share("language_ok"),
             "mean_attempts": sum(r["attempts"] for r in rows) / n,
+            "llm_error_rate": sum(any(d.get("error") for d in r["rejected_drafts"])
+                                  for r in rows) / n,
+            "mean_latency_s": sum(r["latency_s"] for r in rows) / n,
         },
         "rows": rows,
     }
@@ -91,11 +96,14 @@ def render_markdown(report: dict) -> str:
         f"| Faithfulness (final) | {o['mean_faithfulness']:.1%} |",
         f"| Coverage of must-mention facts (final) | {o['mean_coverage']:.1%} |",
         f"| Correct language (final) | {o['language_ok_rate']:.1%} |",
-        f"| Mean attempts | {o['mean_attempts']:.2f} |", "",
+        f"| Mean attempts | {o['mean_attempts']:.2f} |",
+        f"| LLM errors (fell back safely) | {o['llm_error_rate']:.1%} |",
+        f"| Mean time per summary | {o['mean_latency_s']:.1f} s |", "",
         "| Bill | Lang | Source | Attempts | Rejected drafts |", "|---|---|---|---|---|",
     ]
     for r in report["rows"]:
         why = "; ".join(
+            f"#{d['attempt']}: LLM error" if d.get("error") else
             f"#{d['attempt']}: " + ", ".join(
                 ([f"invented {', '.join(d['unsupported'])}"] if d["unsupported"] else [])
                 + ([f"missed {', '.join(d['missing'])}"] if d["missing"] else [])
@@ -105,25 +113,39 @@ def render_markdown(report: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _sample(r: dict) -> str:
+    """Final text plus every rejected draft, so failures can be diagnosed, not guessed."""
+    out = [f"### {r['bill_id']} ({r['lang']}) - final: {r['source']}", "", r["text"]]
+    for d in r["rejected_drafts"]:
+        if d.get("error"):
+            out += ["", f"LLM error on attempt #{d['attempt']}: `{d['error']}`"]
+            continue
+        out += ["", f"<details><summary>Rejected draft #{d['attempt']}: unsupported "
+                f"{d['unsupported'] or '-'}, missing {d['missing'] or '-'}, language_ok "
+                f"{d['language_ok']}</summary>", "", "```", d.get("text", ""), "```",
+                "</details>"]
+    return "\n".join(out)
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Evaluate bill summaries on real bills.")
     ap.add_argument("paths", nargs="*", default=["data/labels/real"])
     ap.add_argument("--provider", choices=["template", "groq"], default="template")
+    ap.add_argument("--model", default=None, help="Groq model id (overrides .env)")
     ap.add_argument("--langs", default="ur,en")
     ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
-    report = run(args.paths, args.provider, args.langs.split(","))
-    out = Path(args.out or f"reports/summary_eval/{args.provider}")
+    report = run(args.paths, args.provider, args.langs.split(","), args.model)
+    slug = report["provider"].replace(":", "_").replace("/", "_")
+    out = Path(args.out or f"reports/summary_eval/{slug}")
     out.mkdir(parents=True, exist_ok=True)
     (out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False),
                                      encoding="utf-8")
     md = render_markdown(report)
     (out / "report.md").write_text(md, encoding="utf-8")
-    samples = "\n\n".join(f"### {r['bill_id']} ({r['lang']}, {r['source']})\n\n{r['text']}"
-                          for r in report["rows"])
+    samples = "\n\n".join(_sample(r) for r in report["rows"])
     (out / "samples.md").write_text(samples + "\n", encoding="utf-8")
     print(md)
     return 0

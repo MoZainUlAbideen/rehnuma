@@ -19,7 +19,11 @@ from pathlib import Path
 from typing import Protocol
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-DEFAULT_MODEL = "llama-3.3-70b-versatile"
+DEFAULT_MODEL = "openai/gpt-oss-120b"   # available on Groq as of Sep-2026
+
+
+class LLMError(RuntimeError):
+    """Any failure talking to the LLM. Callers fall back to the template summary."""
 
 
 class LLMClient(Protocol):
@@ -43,23 +47,34 @@ def load_dotenv(path: str | Path = ".env") -> None:
 
 class GroqClient:
     def __init__(self, model: str | None = None, temperature: float = 0.2,
-                 max_retries: int = 4, timeout: float = 60.0):
+                 max_retries: int = 4, timeout: float = 60.0, max_tokens: int = 1024):
         load_dotenv()
         self.api_key = os.environ.get("GROQ_API_KEY")
         if not self.api_key:
-            raise RuntimeError("GROQ_API_KEY is not set (add it to .env)")
+            raise LLMError("GROQ_API_KEY is not set (add it to .env)")
         self.model = model or os.environ.get("REHNUMA_LLM_MODEL", DEFAULT_MODEL)
         self.name = f"groq:{self.model}"
         self.temperature = temperature
         self.max_retries = max_retries
         self.timeout = timeout
+        # Groq counts max_tokens against the tokens-per-minute limit. Unset, a request
+        # reserves the model's full default output: allam-2-7b asked for 6,260 tokens
+        # against a 6,000 TPM free-tier limit and got HTTP 413. A summary needs ~300.
+        self.max_tokens = max_tokens
 
-    def complete(self, system: str, user: str) -> str:
-        body = json.dumps({
+    def payload(self, system: str, user: str) -> dict:
+        body = {
             "model": self.model, "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": user}],
-        }).encode("utf-8")
+        }
+        if self.model.startswith("openai/gpt-oss"):
+            body["reasoning_effort"] = "low"   # reasoning model: don't think for minutes
+        return body
+
+    def complete(self, system: str, user: str) -> str:
+        body = json.dumps(self.payload(system, user)).encode("utf-8")
         for attempt in range(self.max_retries + 1):
             req = urllib.request.Request(GROQ_URL, data=body, method="POST", headers={
                 "Authorization": f"Bearer {self.api_key}",
@@ -76,5 +91,7 @@ class GroqClient:
                     wait = float(e.headers.get("retry-after") or 2 ** attempt * 2)
                     time.sleep(min(wait, 30))
                     continue
-                raise RuntimeError(f"Groq HTTP {e.code}: {detail}") from e
-        raise RuntimeError("Groq: retries exhausted")
+                raise LLMError(f"Groq HTTP {e.code}: {detail}") from e
+            except (urllib.error.URLError, TimeoutError) as e:
+                raise LLMError(f"Groq unreachable: {e}") from e
+        raise LLMError("Groq: retries exhausted")

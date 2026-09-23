@@ -9,6 +9,7 @@ from rehnuma.explain import build_story
 from rehnuma.explain.llm_summary import SYSTEM, facts_payload, llm_summary
 from rehnuma.explain.quality import assess, required_numbers, urdu_share
 from rehnuma.explain.render import summarize
+from rehnuma.llm.client import GroqClient, LLMError
 
 
 class ScriptedLLM:
@@ -47,6 +48,7 @@ def test_invented_number_is_rejected_then_fixed(sep):
     res = llm_summary(sep, llm, "en")
     assert res.source == "llm" and res.attempts == 2
     assert res.drafts_rejected[0]["unsupported"] == ["20000"]
+    assert res.drafts_rejected[0]["text"] == bad          # kept for diagnosis    
     assert "20000" in llm.prompts[1] and "NOT in the facts" in llm.prompts[1]
 
 
@@ -101,3 +103,26 @@ def test_template_baseline_eval_is_perfect():
     assert report["n"] == 14
     assert o["mean_faithfulness"] == o["mean_coverage"] == o["language_ok_rate"] == 1.0
     assert o["fallback_rate"] == 0.0
+
+
+
+class FailingLLM:
+    name = "failing"
+
+    def complete(self, system, user):
+        raise LLMError("Groq HTTP 413: Request too large")
+
+
+def test_llm_error_falls_back_instead_of_crashing(sep):
+    """Regression: a 413 from Groq used to crash the whole eval."""
+    res = llm_summary(sep, FailingLLM(), "ur")
+    assert res.source == "template_fallback" and res.quality.passed
+    assert "413" in res.drafts_rejected[0]["error"]
+
+
+def test_groq_request_caps_output_tokens(monkeypatch):
+    monkeypatch.setenv("GROQ_API_KEY", "test")
+    body = GroqClient(model="allam-2-7b").payload("s", "u")
+    assert body["max_tokens"] == 1024 and "reasoning_effort" not in body
+    gpt = GroqClient(model="openai/gpt-oss-120b").payload("s", "u")
+    assert gpt["reasoning_effort"] == "low"

@@ -18,7 +18,7 @@ from dataclasses import asdict, dataclass, field
 from rehnuma.explain.quality import Quality, assess, required_numbers
 from rehnuma.explain.render import summarize
 from rehnuma.explain.story import BillStory
-from rehnuma.llm.client import LLMClient
+from rehnuma.llm.client import LLMClient, LLMError
 
 LANG_NAME = {"ur": "Urdu (Urdu script, simple everyday words)", "en": "simple English"}
 
@@ -73,12 +73,18 @@ def llm_summary(story: BillStory, client: LLMClient, lang: str = "ur",
     user = facts_payload(story, lang)
     rejected: list[dict] = []
     for attempt in range(1, max_attempts + 1):
-        draft = client.complete(SYSTEM, user).strip()
+        try:
+            draft = client.complete(SYSTEM, user).strip()
+        except LLMError as e:          # rate limit, too large, network... -> template
+            rejected.append({"attempt": attempt, "text": "", "error": str(e)[:300],
+                             "unsupported": [], "missing": [], "language_ok": False})
+            break
         q = assess(draft, story, lang)
         if q.passed:
             return SummaryResult(draft, "llm", attempt, q, rejected,
                                  time.perf_counter() - start)
-        rejected.append({"attempt": attempt, "unsupported": [str(x) for x in q.unsupported],
+        rejected.append({"attempt": attempt, "text": draft,
+                         "unsupported": [str(x) for x in q.unsupported],
                          "missing": q.missing, "language_ok": q.language_ok})
         user = facts_payload(story, lang) + "\n\n" + _feedback(q, lang)
     text = "\n".join(f"- {line}" for line in summarize(story, lang))
