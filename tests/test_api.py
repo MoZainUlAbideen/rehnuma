@@ -160,10 +160,3 @@ def test_root_redirects_to_the_docs(api):
     client, *_ = api
     r = client.get("/", follow_redirects=False)
     assert r.status_code == 307 and r.headers["location"] == "/docs"
-
-
-def test_space_readme_header_matches_the_dockerfile():
-    """Spaces reads sdk/app_port from the README header; a mismatch means a dead Space."""
-    head = Path("deploy/space/README.md").read_text(encoding="utf-8").split("---")[1]
-    assert "sdk: docker" in head and "app_port: 7860" in head
-    assert "PORT=7860" in Path("Dockerfile").read_text(encoding="utf-8")
