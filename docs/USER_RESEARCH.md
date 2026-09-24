@@ -41,8 +41,10 @@ ones (2026 schedule, secondary-source rates).
   validation. It supports the Round 1 decisions (summary first, Urdu default, solar
   sent vs used) but doesn't prove them.
 
-## Next round
+## Round 3: neighbourhood check (Sep 2026)
 
-- Show the Urdu summaries to 3–5 neighbours, including at least 2 households **without**
-  solar, and ask: *what did you understand, what was confusing, what's missing?*
-  Record the answers here.
+- **Who:** ~5 people from the neighbourhood.
+- **What they saw:** the Urdu bill summaries.
+- **Verdict:** most found the summary OK and understandable.
+- **Weight:** small, informal sample, but it's the target audience, and together with Round 2
+  it supports the summary-first, Urdu-default design.

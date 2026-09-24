@@ -14,7 +14,7 @@
 - [x] Expected-anomalies registry: real bills must fail exactly their documented checks
 - [x] Pushed to GitHub
 
-## Milestone 2 — Tariff rates + synthetic generator
+## Milestone 2 — Tariff rates + synthetic generator ✅ (core complete)
 - [x] Collect real conventional (non-solar) bills — 3 IESCO bills (2019, 2021, 2023)
 - [x] DISCO-agnostic `pitc_legacy` layout; multi-month FPA; printed rate lines
 - [x] Levy calculator: ED, GST (dated schedule), NJ, FPA tax cascade — zero-delta on 4 bills
@@ -27,12 +27,8 @@
 - [x] Synthetic generator: conventional households on the legacy layout, 11 planted error types
 - [x] Auditor eval (`rehnuma-eval-auditor`): detection / localisation / false-positive rate
 - [x] Fixed: eval found a generator bug (no-op planted error), now guarded
-- [ ] Get S.R.O. 279(I)/2026 itself and upgrade the 2026 schedule to `official`
-- [ ] ToU (A-1b) and net-metering slabs; fixed charges and their GST treatment
-- [ ] Resolve open questions in FINDINGS.md (LP surcharge base, status codes, Q1 vs Q3 netting)
-- [ ] Render synthetic bills as images (feeds milestone 3)
 
-## Milestone 2.5 — Plain-language summary (from user research)
+## Milestone 2.5 — Plain-language summary (from user research) ✅
 - [x] Neighbourhood conversations recorded in USER_RESEARCH.md
 - [x] BillStory: verified facts people care about (solar sent/used/banked; flat vs ToU; 200-unit limit)
 - [x] Template summary, Urdu by default, English with `--lang en` (`rehnuma-summary`)
@@ -45,10 +41,21 @@
 - [x] Critic v2 rerun: gpt-oss-120b and qwen3.8-27b 100% first-draft on Urdu
 - [x] Production model: gpt-oss-120b (tied on critic, 2x faster: 1.4 s/summary)
 - [x] First reader check: bill owner (native Urdu speaker) says the summaries look good (n=1)
-- [ ] Broader check: 3–5 neighbours, incl. households without solar
 
 ## Milestone 3 — Vision extraction + PII redaction
+- [ ] Render synthetic bills as images (clean + phone-photo augmentation) — eval data for extraction
+- [ ] Vision extractor: bill photo -> Bill JSON (both layouts)
+- [ ] Extraction eval: field accuracy on real bills (headline) vs synthetic (stress test), per layout
+- [ ] PII redaction before anything is stored
+- [ ] Meter-photo check: printed reading vs the meter photo on IESCO bills
+
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic
 ## Milestone 5 — Forecasting (both segments) + solar planner (PVGIS, 2026 net billing)
 ## Milestone 6 — LLMOps: Langfuse tracing, evals in CI, tariff-change watcher
 ## Milestone 7 — Live FastAPI backend + Next.js frontend, deploy
+
+## Backlog — waiting on sources or data
+- [ ] Get S.R.O. 279(I)/2026 itself and upgrade the 2026 schedule to `official` — *needs the official PDF*
+- [ ] ToU (A-1b) and net-metering slabs; fixed charges and their GST treatment — *needs the same SRO*
+- [ ] Open questions in FINDINGS.md: LP surcharge base, status codes (`LK`, `SS`), Q1 vs Q3 netting — *needs regulation text / more bills*
+- [ ] Broader user check: 3–5 neighbours, incl. households without solar
