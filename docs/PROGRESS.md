@@ -100,8 +100,12 @@
 - [x] p4/p4-ur now also must say billing moves to net billing (reg. 14) - completeness the critic can't enforce, measured by the eval
 - [x] Full answer eval: held-out 100% answered (EN+UR), 91-100% cite gold; dev 88% EN / 67% UR; out-of-scope 6/6 refused
 - [x] Fixed: 3 correct answers fell back on per-sentence tagging - neighbour rule (7 of 8 tag rejections now pass; replayed on the real drafts)
-- [ ] Re-run dev (Urdu fallbacks should clear) - then milestone 4 answer layer is done
-- [ ] Completeness: p4 answers omit the switch to net billing (reg. 14) - measured, not yet fixed
+- [x] Dev re-run: 0 fallbacks (Urdu was 33%); 2 questions hit Groq's rate limit - reported as errors, not scored
+- [x] Router (`rehnuma-ask`): bill -> engine facts (numbers checked, template fallback), policy -> cited clauses, both -> two labelled sections, needs-bill -> asks for a photo
+- [x] Router eval (`rehnuma-eval-route`): held-out batch 1 EN 9/10 UR 4/6 (fixed, moved to dev); batch 2 EN 3/5 UR 5/5 (misses left as measurement)
+- [x] Works without an LLM: bill questions get the template summary; rules questions get the clause list, or "unavailable" for Urdu
+- [ ] Known limits: p4 omits the switch to net billing; router misses "legally" / "import"; c3-ur and c5 to re-run after the rate limit
+- [ ] Real questions from neighbours (round 4) through `rehnuma-ask` - the real router test
 - [ ] Route bill questions to the engine (RAG explains rules, the engine does the arithmetic)
 
 ## Milestone 5 — Forecasting (both segments) + solar planner

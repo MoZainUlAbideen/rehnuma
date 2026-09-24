@@ -18,6 +18,8 @@ rehnuma-audit = "rehnuma.cli:main"
 rehnuma-policy = "rehnuma.policy.cli:main"
 rehnuma-eval-policy = "rehnuma.evals.policy_retrieval_eval:main"
 rehnuma-eval-answer = "rehnuma.evals.policy_answer_eval:main"
+rehnuma-eval-route = "rehnuma.evals.route_eval:main"
+rehnuma-ask = "rehnuma.assistant.cli:main"
 [project.optional-dependencies]
 # Dense multilingual retrieval (HF embeddings) - optional: pulls torch (CPU build)
 dense = ["sentence-transformers>=3.0"]

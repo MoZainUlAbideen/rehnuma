@@ -1,0 +1,319 @@
+{
+ "_note": "Router eval. Written BEFORE the routing rules. route: bill = about the user's own bill (engine answers); policy = about rules (policy guide answers); both = a rule applied to the user's bill. split=dev may be used while writing rules; split=heldout must not be. Caveat: questions, labels and rules share an author - real user questions (neighbourhood round 4) are the real test. Held-out run 1 (EN 90%, UR 67%) failed hb4, hx1, hx2; they were moved to dev and a second held-out batch (h2*) was written before fixing the rules.",
+ "questions": [
+  {
+   "id": "b1",
+   "split": "dev",
+   "lang": "en",
+   "route": "bill",
+   "q": "Why is my bill so high this month?"
+  },
+  {
+   "id": "b2",
+   "split": "dev",
+   "lang": "en",
+   "route": "bill",
+   "q": "How much do I have to pay and by when?"
+  },
+  {
+   "id": "b3",
+   "split": "dev",
+   "lang": "en",
+   "route": "bill",
+   "q": "How many units did my solar send to the grid this month?"
+  },
+  {
+   "id": "b4",
+   "split": "dev",
+   "lang": "ur",
+   "route": "bill",
+   "q": "اس مہینے میرا بل اتنا زیادہ کیوں آیا ہے؟"
+  },
+  {
+   "id": "b5",
+   "split": "dev",
+   "lang": "ur",
+   "route": "bill",
+   "q": "مجھے کتنے پیسے دینے ہیں اور آخری تاریخ کیا ہے؟"
+  },
+  {
+   "id": "b6",
+   "split": "dev",
+   "lang": "en",
+   "route": "bill",
+   "q": "Is there any mistake in my bill?"
+  },
+  {
+   "id": "b7",
+   "split": "dev",
+   "lang": "ur",
+   "route": "bill",
+   "q": "میرے بل میں کوئی غلطی تو نہیں؟"
+  },
+  {
+   "id": "b8",
+   "split": "dev",
+   "lang": "en",
+   "route": "bill",
+   "q": "How much credit do I have left in my bank of units?"
+  },
+  {
+   "id": "p1",
+   "split": "dev",
+   "lang": "en",
+   "route": "policy",
+   "q": "Can my solar system be bigger than my sanctioned load?"
+  },
+  {
+   "id": "p2",
+   "split": "dev",
+   "lang": "en",
+   "route": "policy",
+   "q": "How long can the DISCO take to replace a defective meter?"
+  },
+  {
+   "id": "p3",
+   "split": "dev",
+   "lang": "ur",
+   "route": "policy",
+   "q": "نیٹ بلنگ میں بھیجے گئے یونٹ کس ریٹ پر گنے جاتے ہیں؟"
+  },
+  {
+   "id": "p4",
+   "split": "dev",
+   "lang": "en",
+   "route": "policy",
+   "q": "What is a detection bill and how many months can it cover?"
+  },
+  {
+   "id": "p5",
+   "split": "dev",
+   "lang": "ur",
+   "route": "policy",
+   "q": "بجلی کی شکایت کتنے دن میں حل ہونی چاہیے؟"
+  },
+  {
+   "id": "p6",
+   "split": "dev",
+   "lang": "en",
+   "route": "policy",
+   "q": "How long is a prosumer agreement?"
+  },
+  {
+   "id": "x1",
+   "split": "dev",
+   "lang": "en",
+   "route": "both",
+   "q": "Is the FPA charged on my bill allowed by NEPRA rules?"
+  },
+  {
+   "id": "x2",
+   "split": "dev",
+   "lang": "ur",
+   "route": "both",
+   "q": "کیا میرے بل میں اوسط بل لگانا قانون کے مطابق ہے؟"
+  },
+  {
+   "id": "x3",
+   "split": "dev",
+   "lang": "en",
+   "route": "both",
+   "q": "My bill shows arrears I already paid - what does the rule say I can do?"
+  },
+  {
+   "id": "hb1",
+   "split": "heldout",
+   "lang": "en",
+   "route": "bill",
+   "q": "What does the FPA line on my bill mean?"
+  },
+  {
+   "id": "hb2",
+   "split": "heldout",
+   "lang": "en",
+   "route": "bill",
+   "q": "Did I use more electricity than last month?"
+  },
+  {
+   "id": "hb3",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "bill",
+   "q": "پچھلے مہینے کے مقابلے میں اس بار کتنے یونٹ زیادہ استعمال ہوئے؟"
+  },
+  {
+   "id": "hb4",
+   "split": "dev",
+   "lang": "ur",
+   "route": "bill",
+   "q": "میرے سولر نے کتنی بجلی واپس بھیجی؟",
+   "note": "moved to dev after failing held-out run 1 (rules fixed on it)"
+  },
+  {
+   "id": "hb5",
+   "split": "heldout",
+   "lang": "en",
+   "route": "bill",
+   "q": "Am I still a protected consumer?"
+  },
+  {
+   "id": "hb6",
+   "split": "heldout",
+   "lang": "en",
+   "route": "bill",
+   "q": "What happens if I pay after the due date?"
+  },
+  {
+   "id": "hb7",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "bill",
+   "q": "یہ بل صحیح ہے یا نہیں؟"
+  },
+  {
+   "id": "hp1",
+   "split": "heldout",
+   "lang": "en",
+   "route": "policy",
+   "q": "Can I get a bi-directional meter without installing solar?"
+  },
+  {
+   "id": "hp2",
+   "split": "heldout",
+   "lang": "en",
+   "route": "policy",
+   "q": "What security deposit is needed for a new connection?"
+  },
+  {
+   "id": "hp3",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "policy",
+   "q": "سولر معاہدہ کتنے سال کا ہوتا ہے؟"
+  },
+  {
+   "id": "hp4",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "policy",
+   "q": "کیا بجلی کمپنی میرا کنکشن بغیر نوٹس کے کاٹ سکتی ہے؟"
+  },
+  {
+   "id": "hp5",
+   "split": "heldout",
+   "lang": "en",
+   "route": "policy",
+   "q": "Who pays for the meter when I install solar?"
+  },
+  {
+   "id": "hp6",
+   "split": "heldout",
+   "lang": "en",
+   "route": "policy",
+   "q": "Under the 2015 rules, was excess solar credit paid quarterly?"
+  },
+  {
+   "id": "hx1",
+   "split": "dev",
+   "lang": "en",
+   "route": "both",
+   "q": "Was I charged correctly for my exported units under the new net billing rules?",
+   "note": "moved to dev after failing held-out run 1 (rules fixed on it)"
+  },
+  {
+   "id": "hx2",
+   "split": "dev",
+   "lang": "ur",
+   "route": "both",
+   "q": "میرا میٹر خراب تھا، کیا اس بل میں اوسط یونٹ لگانا ٹھیک ہے؟",
+   "note": "moved to dev after failing held-out run 1 (rules fixed on it)"
+  },
+  {
+   "id": "hx3",
+   "split": "heldout",
+   "lang": "en",
+   "route": "both",
+   "q": "According to NEPRA, should my bill be using the protected rate?"
+  },
+  {
+   "id": "h2b1",
+   "split": "heldout",
+   "lang": "en",
+   "route": "bill",
+   "q": "How many units did I import from the grid?",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2b2",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "bill",
+   "q": "میں نے اس دفعہ کتنے یونٹ استعمال کیے؟",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2b3",
+   "split": "heldout",
+   "lang": "en",
+   "route": "bill",
+   "q": "Why does my bill show a negative amount?",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2b4",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "bill",
+   "q": "میرا بل منفی کیوں ہے؟",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2p1",
+   "split": "heldout",
+   "lang": "en",
+   "route": "policy",
+   "q": "Can the DISCO disconnect me for not paying one bill?",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2p2",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "policy",
+   "q": "نیا میٹر لگوانے کے لیے کتنی سیکیورٹی جمع کرانی پڑتی ہے؟",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2p3",
+   "split": "heldout",
+   "lang": "en",
+   "route": "policy",
+   "q": "What is the late payment surcharge rule?",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2p4",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "policy",
+   "q": "کیا سولر لگانے کے لیے نیپرا کی منظوری ضروری ہے؟",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2x1",
+   "split": "heldout",
+   "lang": "en",
+   "route": "both",
+   "q": "Was my bill averaged legally after my meter broke?",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  },
+  {
+   "id": "h2x2",
+   "split": "heldout",
+   "lang": "ur",
+   "route": "both",
+   "q": "کیا میرے بل پر لگا ہوا ایف پی اے قانون کے مطابق ہے؟",
+   "note": "held-out batch 2, written before the round-2 rule fixes"
+  }
+ ]
+}

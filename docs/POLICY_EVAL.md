@@ -227,6 +227,34 @@ Known critic limit (seen in a dry run): the number check asks whether a number a
 *anywhere* in the cited clause, not in the sentence it supports - an answer citing the wrong
 sub-clause can pass the critic. The eval's "cites gold" column is what catches it.
 
+### Sixth run - dev after the neighbour rule
+
+Zero fallbacks (Urdu dev was 33% fallback the run before). Two questions (c3-ur, c5) hit
+Groq's free-tier limit (HTTP 429) and are reported as **errors**, not scored as wrong.
+p4/p4-ur still omit the switch to net billing (completeness fact "no") - a measured limit.
+
+## Router - one assistant, three destinations
+
+`rehnuma-ask` routes each question: **bill** (about the user's own bill -> the engine's
+verified facts, numbers checked, template fallback), **policy** (rules -> cited clauses),
+**both** (a rule applied to the user's bill -> two labelled sections), or **needs bill**
+(asks for a photo instead of guessing). Rules, not an LLM: instant, free, works when Groq
+is down. Ownership signals ("my bill", "this month", "did I use", Urdu agentive "my solar
+DID send") vs rule signals ("allowed", "NEPRA", "can the DISCO", "is it right to apply").
+
+| Router eval (`rehnuma-eval-route`, no API) | English | Urdu |
+|---|---|---|
+| dev (rules written from these) | 12/12 | 8/8 |
+| held-out batch 1 (run once, before fixes) | 9/10 | 4/6 |
+| held-out batch 2 (written before round-2 fixes) | 3/5 | 5/5 |
+
+Batch-1 failures (Urdu agentive "my solar did send", "was I charged", "is it right to apply
+average units") were fixed and moved to dev; batch 2 was written before re-running. Batch-2
+misses are left unfixed so it stays a measurement: "legally" (only "legal" matches) and "did
+I import". The costly direction is bill -> policy (the user gets the rule but not their own
+numbers). Caveat: questions, labels and rules share an author; real user questions are the
+real test.
+
 ## Reproduce
 
 ```powershell

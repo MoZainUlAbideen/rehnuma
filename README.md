@@ -53,6 +53,9 @@ uv run rehnuma-eval-policy --rewrite all         # + Groq rewrites questions int
 uv sync --extra dense; uv run rehnuma-eval-policy --dense   # + multilingual HF embeddings
 uv run rehnuma-policy ask "کیا میرا سولر منظور شدہ لوڈ سے بڑا ہو سکتا ہے؟"   # cited answer
 uv run rehnuma-eval-answer --split heldout       # cited answers + critic + refusals
+uv run rehnuma-ask "Why is my bill negative?" --bill data/labels/real/pesco-2026-09.json
+uv run rehnuma-ask "کیا میرے بل پر لگا ہوا ایف پی اے قانون کے مطابق ہے؟" --bill data/labels/real/pesco-2026-03.json
+uv run rehnuma-eval-route                        # does each question reach the right part?
 ```
 
 ## How it's built

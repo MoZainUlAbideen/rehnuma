@@ -376,13 +376,20 @@ def answer(question: str, index: PolicyIndex, client: LLMClient, lang: str | Non
     lang = lang or detect_lang(question)
     docs = docs or {d.id: d for d in load_sources()}
     calls = 0
-    if rewritten is None:
+    if rewritten is None and client is not None:
         rewritten, _err = rewrite(question, client, mode="all")
         calls += 1
     primary, also = search_queries(question, rewritten)
     sources = make_sources([h.chunk for h in index.search(primary, k=k, also=also)], docs,
                            corpus=index.chunks)
     ans = Answer(question, lang, "fallback", "", sources, [], rewritten)
+    if client is None:               # no LLM (no key / offline): the clauses, honestly labelled
+        # an Urdu question cannot be rewritten without the LLM and matches no English clause:
+        # an empty clause list would look like an answer, so say the service is unavailable
+        ans.text = _fallback_text(lang, sources) if sources else UNAVAILABLE[lang]
+        ans.status = "fallback" if sources else "error"
+        ans.seconds = time.perf_counter() - start
+        return ans
 
     feedback, previous = None, None
     for _ in range(max_attempts):
