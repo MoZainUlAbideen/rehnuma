@@ -95,7 +95,10 @@
 - [x] Fixed: referenced annexures/schedules added to sources (c5 had "as per Annexure - IV" without the rates); partial answers allowed
 - [x] Found: a correct first draft (power until term end, energy for renewals) was rejected for tags and the from-scratch retry got it wrong - retry now fixes its own draft
 - [x] Found: that run used stale files (parallel copy + write shipped old versions) - delivery now sequential, verified by read-back
-- [ ] Re-run `ask` + the 4-question check on the verified code
+- [x] Verified-code run: the family's question answered correctly (power price until the agreement ends, energy on renewal, citing 21(2)); retry kept the correct draft; rate rule caught p4-ur
+- [x] Fixed: critic split sentences at "Rs." / "etc.", demanded tags on "the sources do not cover X", and broke on a trailing NOT_FOUND - c5's good partial answer fell back
+- [x] p4/p4-ur now also must say billing moves to net billing (reg. 14) - completeness the critic can't enforce, measured by the eval
+- [ ] Full answer eval (dev + held-out + out-of-scope) on the next Groq allowance
 - [ ] Route bill questions to the engine (RAG explains rules, the engine does the arithmetic)
 
 ## Milestone 5 — Forecasting (both segments) + solar planner

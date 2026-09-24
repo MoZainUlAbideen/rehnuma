@@ -1,5 +1,5 @@
 {
-  "_note": "Answer eval. Answerable questions come from retrieval_questions.json (same ids, same gold clauses). `facts`: for some questions, the fact the answer must state - any one alternative per list, case-insensitive; Urdu alternatives included. Facts are mostly numbers because they are checkable in both languages. `out_of_scope`: questions the NEPRA documents do not answer - the correct behaviour is to refuse. Rate names are checked in English only (the answer must write them verbatim, rule 8): an earlier Urdu alternative, 'qaumi ausat' (national average), matched BOTH rates and scored a wrong answer as correct.",
+  "_note": "Answer eval. Answerable questions come from retrieval_questions.json (same ids, same gold clauses). `facts`: for some questions, the fact the answer must state - any one alternative per list, case-insensitive; Urdu alternatives included. Facts are mostly numbers because they are checkable in both languages. `out_of_scope`: questions the NEPRA documents do not answer - the correct behaviour is to refuse. Rate names are checked in English only (the answer must write them verbatim, rule 8): an earlier Urdu alternative, 'qaumi ausat' (national average), matched BOTH rates and scored a wrong answer as correct. p4/p4-ur must state all three parts of Prosumer Regs 21(2): power price until the agreement ends, energy price on renewal, and that billing itself moves to net billing (reg. 14).",
   "facts": {
     "p1": [
       [
@@ -30,6 +30,15 @@
     "p4": [
       [
         "power purchase price"
+      ],
+      [
+        "energy purchase price"
+      ],
+      [
+        "net billing",
+        "regulation 14",
+        "reg. 14",
+        "نیٹ بلنگ"
       ]
     ],
     "p6": [
@@ -135,6 +144,15 @@
     "p4-ur": [
       [
         "power purchase price"
+      ],
+      [
+        "energy purchase price"
+      ],
+      [
+        "net billing",
+        "regulation 14",
+        "reg. 14",
+        "نیٹ بلنگ"
       ]
     ]
   },

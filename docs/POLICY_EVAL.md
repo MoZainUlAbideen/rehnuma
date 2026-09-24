@@ -174,6 +174,27 @@ allows a partial answer instead of all-or-nothing NOT_FOUND.
   success. Found by reading the machine's files back and diffing. Deliveries are now
   sequential and verified by read-back.
 
+### Fourth run (verified code) - the family's question answered correctly
+
+The family's question now gets: exports billed at the national average **power** purchase
+price until the agreement ends, then the national average **energy** purchase price on
+renewal - both names in English, citing Prosumer Regs 21(2). The first draft was already
+right; the retry (which now sees its own draft) only merged two sentences so both carried a
+tag. p4-ur: the rate-name rule rejected a draft without the English names; the retry added
+them.
+
+Still incomplete: the answer says the agreement "still runs under the repealed 2015 rules"
+but not that 21(2) moves the **billing** to net billing (reg. 14 of 2026). The critic cannot
+enforce completeness, so p4/p4-ur now carry a third fact (net billing / regulation 14) that
+the eval measures.
+
+c5 fell back although both drafts were good partial answers (Annexure IV's real rates, and
+"the sources do not provide connection-charge amounts"). Three critic bugs: the sentence
+splitter broke on "Rs." and "etc."; a sentence stating what the sources do NOT cover was
+required to carry a tag; and a partial answer ending in "NOT_FOUND." was not cleaned. All
+three fixed. Trade-off: a sentence phrased as an absence ("... not given ...") is exempt
+from the tag rule - its numbers are still checked.
+
 Known critic limit (seen in a dry run): the number check asks whether a number appears
 *anywhere* in the cited clause, not in the sentence it supports - an answer citing the wrong
 sub-clause can pass the critic. The eval's "cites gold" column is what catches it.

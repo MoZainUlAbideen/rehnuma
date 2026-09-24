@@ -251,3 +251,38 @@ def test_referenced_annexure_is_added_to_the_sources():
     csm = Document("csm", "Consumer Service Manual", "CSM 2025", "2025", "in_force", "manual", "u")
     src = make_sources([c for c in corpus if c.clause == "5.1.1"], {"csm": csm}, corpus=corpus)
     assert [s.chunk.clause for s in src] == ["5.1.1", "Annex-IV"]
+
+
+# --- c5: a good partial answer the critic wrongly rejected -------------------------------
+C5_DRAFT = ("The security deposit for a new connection is required according to the rate "
+            "approved by NEPRA and listed in Annex-IV; the rates are per kilowatt of load and "
+            "differ by consumer type, for example Residential A-1 Urban = Rs. 1,220/kW, "
+            "Residential A-1 Rural = Rs. 610/kW, Commercial A-2 Urban = Rs. 1,810/kW, etc. "
+            "[S1]\nThe sources do not provide any information about connection-charge amounts "
+            "for a new connection.")
+
+
+def test_abbreviations_do_not_split_sentences():
+    from rehnuma.policy.answer import sentences
+    parts = sentences(C5_DRAFT)
+    assert len(parts) == 2 and "[S1]" in parts[0]
+
+
+def test_saying_what_the_sources_do_not_cover_needs_no_tag():
+    from rehnuma.policy.parse import parse_manual
+    corpus = parse_manual("csm", [clean(
+        "CHAPTER 5\nSECURITY DEPOSIT\n5.1 SECURITY DEPOSIT\n5.1.1 Rates as per Annexure - IV.\n"
+        "Annexure - IV\nResidential A-1 Urban Rs. 1,220/kW Rural Rs. 610/kW Commercial A-2 "
+        "Urban Rs. 1,810/kW\n")])
+    csm = Document("csm", "Consumer Service Manual", "CSM 2025", "2025", "in_force", "manual", "u")
+    src = make_sources([c for c in corpus if c.clause == "Annex-IV"], {"csm": csm})
+    c = check(C5_DRAFT, src, "en")
+    assert c.uncited == [] and c.passed, c.problems()
+
+
+def test_partial_answer_with_a_trailing_not_found_is_kept():
+    llm = ScriptedLLM("The agreement lasts 5 years from commissioning [S1]. The sources do not "
+                      "say whether it can be extended. NOT_FOUND.")
+    a = answer("how long is the prosumer agreement term", _index(), llm, rewritten="",
+               docs=DOCS)
+    assert a.status == "answered" and "NOT_FOUND" not in a.text

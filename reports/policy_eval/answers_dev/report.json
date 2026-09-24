@@ -2,16 +2,16 @@
   "model": "groq:openai/gpt-oss-120b",
   "n": 22,
   "rewrites": "replayed",
-  "calls": 23,
-  "mean_seconds": 7.263636363636365,
-  "wall_seconds": 202,
+  "calls": 27,
+  "mean_seconds": 10.159090909090908,
+  "wall_seconds": 266,
   "summary": {
     "dev/en": {
       "n": 16,
       "answered": 0.875,
-      "first_draft_pass": 0.8125,
-      "fallback": 0.0,
-      "false_refusal": 0.125,
+      "first_draft_pass": 0.75,
+      "fallback": 0.0625,
+      "false_refusal": 0.0625,
       "error": 0.0,
       "gold_retrieved": 0.9375,
       "cites_gold": [
@@ -19,25 +19,25 @@
         14
       ],
       "fact_ok": [
-        0.8888888888888888,
+        0.7777777777777778,
         9
       ]
     },
     "dev/ur": {
       "n": 6,
-      "answered": 1.0,
-      "first_draft_pass": 1.0,
-      "fallback": 0.0,
+      "answered": 0.6666666666666666,
+      "first_draft_pass": 0.6666666666666666,
+      "fallback": 0.3333333333333333,
       "false_refusal": 0.0,
       "error": 0.0,
       "gold_retrieved": 1.0,
       "cites_gold": [
         1.0,
-        6
+        4
       ],
       "fact_ok": [
-        0.75,
-        4
+        1.0,
+        3
       ]
     }
   },
@@ -48,13 +48,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 3.9,
+      "seconds": 8.1,
       "calls": 1,
       "rewrite": "net billing price for kWh supplied by prosumer to licensee",
-      "answer": "Under a net‑billing arrangement, the kilowatt‑hours you export to the licensee are billed at the national average energy purchase price [S1].\n\n[S1] Prosumer Regs 2026, reg. 14(1), p. 6",
+      "answer": "Under a net‑billing arrangement, the kilowatt‑hours that you export to the licensee are billed at the **national average energy purchase price** [S1].  \n\nIf you have a distributed‑generator agreement that was executed under the repealed Net Metering Regulations, the savings clause says you are billed at the **national average power purchase price** until that agreement expires, and thereafter at the **national average energy purchase price** for any renewals [S6].\n\n[S1] Prosumer Regs 2026, reg. 14(1), p. 6\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
       "drafts": [
         {
-          "text": "Under a net‑billing arrangement, the kilowatt‑hours you export to the licensee are billed at the national average energy purchase price [S1].",
+          "text": "Under a net‑billing arrangement, the kilowatt‑hours that you export to the licensee are billed at the **national average energy purchase price** [S1].  \n\nIf you have a distributed‑generator agreement that was executed under the repealed Net Metering Regulations, the savings clause says you are billed at the **national average power purchase price** until that agreement expires, and thereafter at the **national average energy purchase price** for any renewals [S6].",
           "problems": []
         }
       ],
@@ -77,13 +77,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 7.8,
+      "seconds": 7.3,
       "calls": 1,
       "rewrite": "net billing rate for kWh supplied by distributed generation facility to licensee (prosumer export price)",
-      "answer": "نیٹ بلنگ کے تحت جب آپ کا سولر سسٹم گرڈ کو یونٹ بھیجتا ہے تو اس کی قیمت قومی اوسط توانائی خریداری کی قیمت پر لگتی ہے [S1]۔\n\n[S1] Prosumer Regs 2026, reg. 14(1), p. 6",
+      "answer": "نیٹ بلنگ کے تحت آپ کے سولر سسٹم سے گرڈ کو بھیجی گئی یونٹوں کی قیمت \"national average energy purchase price\" پر لگتی ہے [S1]۔\n\n[S1] Prosumer Regs 2026, reg. 14(1), p. 6",
       "drafts": [
         {
-          "text": "نیٹ بلنگ کے تحت جب آپ کا سولر سسٹم گرڈ کو یونٹ بھیجتا ہے تو اس کی قیمت قومی اوسط توانائی خریداری کی قیمت پر لگتی ہے [S1]۔",
+          "text": "نیٹ بلنگ کے تحت آپ کے سولر سسٹم سے گرڈ کو بھیجی گئی یونٹوں کی قیمت \"national average energy purchase price\" پر لگتی ہے [S1]۔",
           "problems": []
         }
       ],
@@ -98,7 +98,7 @@
       "first_draft_pass": true,
       "gold_retrieved": true,
       "cites_gold": true,
-      "fact_ok": false
+      "fact_ok": true
     },
     {
       "id": "p2",
@@ -106,13 +106,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 9.2,
+      "seconds": 7.2,
       "calls": 1,
       "rewrite": "net billing surplus kWh carry forward to next billing cycle versus payment to prosumer",
-      "answer": "If the value of the exported kWh is higher than the value of the imported kWh, the net amount can either be carried as a credit to the prosumer’s next billing cycle or be paid to the prosumer by the licensee on a quarterly basis [S2].\n\n[S2] Prosumer Regs 2026, reg. 14(2), p. 6",
+      "answer": "If the value of the exported kWh is higher than the value of the imported kWh, the net amount can either be carried forward as a credit to the prosumer’s next billing cycle **or** the licensee may pay the prosumer that amount on a quarterly basis [S2].\n\n[S2] Prosumer Regs 2026, reg. 14(2), p. 6",
       "drafts": [
         {
-          "text": "If the value of the exported kWh is higher than the value of the imported kWh, the net amount can either be carried as a credit to the prosumer’s next billing cycle or be paid to the prosumer by the licensee on a quarterly basis [S2].",
+          "text": "If the value of the exported kWh is higher than the value of the imported kWh, the net amount can either be carried forward as a credit to the prosumer’s next billing cycle **or** the licensee may pay the prosumer that amount on a quarterly basis [S2].",
           "problems": []
         }
       ],
@@ -135,13 +135,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 7.9,
+      "seconds": 9.7,
       "calls": 1,
       "rewrite": "net billing surplus credit carry forward or refund of excess payment for kWh supplied by prosumer versus kWh consumed",
-      "answer": "اگر آپ کے بھیجے گئے یونٹ کی رقم استعمال شدہ بجلی سے زیادہ ہو تو اضافی رقم یا تو آپ کے اگلے بل میں کریڈٹ کی جائے گی یا لائسنس دہندہ کی طرف سے آپ کو سہ ماہی بنیاد پر ادا کی جائے گی [S1]۔\n\n[S1] Prosumer Regs 2026, reg. 14(2), p. 6",
+      "answer": "اگر آپ کے بھیجے گئے یونٹ کی رقم استعمال شدہ بجلی سے زیادہ ہو تو اس کا خالص رقم یا تو آپ کے اگلے بل میں کریڈٹ کر دی جائے گی یا لائسنس دہندہ کی طرف سے آپ کو سہ ماہی بنیاد پر ادا کی جائے گی [S1]۔\n\n[S1] Prosumer Regs 2026, reg. 14(2), p. 6",
       "drafts": [
         {
-          "text": "اگر آپ کے بھیجے گئے یونٹ کی رقم استعمال شدہ بجلی سے زیادہ ہو تو اضافی رقم یا تو آپ کے اگلے بل میں کریڈٹ کی جائے گی یا لائسنس دہندہ کی طرف سے آپ کو سہ ماہی بنیاد پر ادا کی جائے گی [S1]۔",
+          "text": "اگر آپ کے بھیجے گئے یونٹ کی رقم استعمال شدہ بجلی سے زیادہ ہو تو اس کا خالص رقم یا تو آپ کے اگلے بل میں کریڈٹ کر دی جائے گی یا لائسنس دہندہ کی طرف سے آپ کو سہ ماہی بنیاد پر ادا کی جائے گی [S1]۔",
           "problems": []
         }
       ],
@@ -164,13 +164,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 9.3,
+      "seconds": 7.1,
       "calls": 1,
       "rewrite": "net billing rate amendment existing net metering agreement before 2026",
-      "answer": "Yes, NEPRA may revise the export rate during the term of the agreement, and the revised rate will be deemed part of the agreement [S1].\n\n[S1] Prosumer Regs 2026, reg. 14(3), p. 6",
+      "answer": "Yes, NEPRA (the Authority) can revise the export rate during the term of an existing agreement, and the revised rate will be considered part of that agreement [S1].\n\n[S1] Prosumer Regs 2026, reg. 14(3), p. 6",
       "drafts": [
         {
-          "text": "Yes, NEPRA may revise the export rate during the term of the agreement, and the revised rate will be deemed part of the agreement [S1].",
+          "text": "Yes, NEPRA (the Authority) can revise the export rate during the term of an existing agreement, and the revised rate will be considered part of that agreement [S1].",
           "problems": []
         }
       ],
@@ -192,13 +192,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 6.1,
+      "seconds": 7.0,
       "calls": 1,
       "rewrite": "net billing price exported kWh prosumer agreement before 2026",
-      "answer": "Your exported units will be billed at the national average power purchase price for the remainder of the term of your original agreement [S2]. After that term ends, any renewal will be billed at the national average energy purchase price [S2][S4].\n\n[S2] Prosumer Regs 2026, reg. 21(2), p. 7\n[S4] Prosumer Regs 2026, reg. 14(1), p. 6",
+      "answer": "Your exported units will be billed at the national average power purchase price until the expiry of the term of your original agreement; after that, any renewal will be billed at the national average energy purchase price [S2].\n\n[S2] Prosumer Regs 2026, reg. 21(2), p. 7",
       "drafts": [
         {
-          "text": "Your exported units will be billed at the national average power purchase price for the remainder of the term of your original agreement [S2]. After that term ends, any renewal will be billed at the national average energy purchase price [S2][S4].",
+          "text": "Your exported units will be billed at the national average power purchase price until the expiry of the term of your original agreement; after that, any renewal will be billed at the national average energy purchase price [S2].",
           "problems": []
         }
       ],
@@ -212,22 +212,30 @@
       "first_draft_pass": true,
       "gold_retrieved": true,
       "cites_gold": true,
-      "fact_ok": true
+      "fact_ok": false
     },
     {
       "id": "p4-ur",
       "lang": "ur",
       "split": "dev",
-      "status": "answered",
-      "attempts": 1,
-      "seconds": 7.0,
-      "calls": 1,
+      "status": "fallback",
+      "attempts": 2,
+      "seconds": 14.8,
+      "calls": 2,
       "rewrite": "net metering export rate for distributed generation facility installed before 2026",
-      "answer": "آپ کے نیٹ میٹرنگ معاہدے کے تحت بھیجے گئے یونٹوں کی قیمت قومی اوسط خریداری قیمت کے مطابق بل کی جائے گی جب تک معاہدے کی مدت ختم نہیں ہوتی، اور اس کے بعد تجدید کے لیے قومی اوسط توانائی خریداری قیمت کے مطابق بل کیا جائے گا [S6].\n\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
+      "answer": "میں اس سوال کا تصدیق شدہ جواب نہیں بنا سکا۔ متعلقہ قواعد یہ ہیں:\n- Net Metering Regs 2015, reg. 12(3), p. 7 (repealed)\n- Prosumer Regs 2026, reg. 12(3), p. 5\n- Net Metering Regs 2015, reg. 3(9), p. 3 (repealed)",
       "drafts": [
         {
-          "text": "آپ کے نیٹ میٹرنگ معاہدے کے تحت بھیجے گئے یونٹوں کی قیمت قومی اوسط خریداری قیمت کے مطابق بل کی جائے گی جب تک معاہدے کی مدت ختم نہیں ہوتی، اور اس کے بعد تجدید کے لیے قومی اوسط توانائی خریداری قیمت کے مطابق بل کیا جائے گا [S6].",
-          "problems": []
+          "text": "آپ کے نیٹ میٹرنگ معاہدے جو 2026 سے پہلے ہوا تھا، اس کی بلنگ قومی اوسط پاور خرید قیمت کے مطابق ہوگی جب تک معاہدے کی مدت ختم نہیں ہوتی؛ اس کے بعد کی تجدیدات کے لیے قومی اوسط انرجی خرید قیمت لاگو ہوگی [S6]۔",
+          "problems": [
+            "write these rate names exactly, in English: national average power purchase price; national average energy purchase price"
+          ]
+        },
+        {
+          "text": "آپ کے نیٹ میٹرنگ معاہدے جو 2026 سے پہلے ہوا تھا، اس کی بلنگ **national average power purchase price** کے مطابق ہوگی جب تک معاہدے کی مدت ختم نہیں ہوتی؛ اس کے بعد کی تجدیدات کے لیے **national average energy purchase price** لاگو ہوگی۔ یہ پرانی (repealed) قاعدہ ہے اور اس کا اطلاق Savings Clause کے تحت ہوتا ہے [S6].",
+          "problems": [
+            "1 sentence(s) have no [S#] tag"
+          ]
         }
       ],
       "sources": [
@@ -238,10 +246,9 @@
         "S5 csm-2025:2.4.11",
         "S6 prosumer-2026:21(2)"
       ],
-      "first_draft_pass": true,
+      "first_draft_pass": false,
       "gold_retrieved": true,
-      "cites_gold": true,
-      "fact_ok": true
+      "cites_gold": false
     },
     {
       "id": "p5",
@@ -249,13 +256,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 4.9,
+      "seconds": 7.0,
       "calls": 1,
       "rewrite": "repeal of prior net metering regulations by current prosumer regulations",
-      "answer": "The Prosumer Regulations 2026 repeal the National Electric Power Regulatory Authority (Alternative & Renewable Energy) Distributed Generation and Net Metering Regulations, 2015 [S2].\n\n[S2] Prosumer Regs 2026, reg. 21(1), p. 7",
+      "answer": "The National Electric Power Regulatory Authority (Alternative & Renewable Energy) Distributed Generation and Net Metering Regulations, 2015 are repealed by the new prosumer regulations [S2].\n\n[S2] Prosumer Regs 2026, reg. 21(1), p. 7",
       "drafts": [
         {
-          "text": "The Prosumer Regulations 2026 repeal the National Electric Power Regulatory Authority (Alternative & Renewable Energy) Distributed Generation and Net Metering Regulations, 2015 [S2].",
+          "text": "The National Electric Power Regulatory Authority (Alternative & Renewable Energy) Distributed Generation and Net Metering Regulations, 2015 are repealed by the new prosumer regulations [S2].",
           "problems": []
         }
       ],
@@ -276,13 +283,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 10.0,
+      "seconds": 9.3,
       "calls": 1,
       "rewrite": "distributed generation facility capacity greater than sanctioned load net metering",
-      "answer": "The capacity of a proposed distributed generation (solar) facility must not exceed the sanctioned load of the applicant’s premises, although the Authority may later revise that capacity by notification [S1].\n\n[S1] Prosumer Regs 2026, reg. 3(2), p. 2",
+      "answer": "Under the current Prosumer Regulations 2026, the capacity of a proposed distributed‑generation (solar) facility must not exceed the sanctioned load of the applicant’s premises; the Authority may only increase it later by notification [S1].  \n\nThe earlier Net‑Metering Regulations 2015 (now repealed) had permitted a capacity up to one‑and‑a‑half times the sanctioned load, but that rule no longer applies except for licences and agreements that were executed before the 2026 regulations came into force, as specified in the savings clause of the Prosumer Regulations 2026 [S4][S6].\n\n[S1] Prosumer Regs 2026, reg. 3(2), p. 2\n[S4] NM amendment 2018, text, p. 1 (repealed)\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
       "drafts": [
         {
-          "text": "The capacity of a proposed distributed generation (solar) facility must not exceed the sanctioned load of the applicant’s premises, although the Authority may later revise that capacity by notification [S1].",
+          "text": "Under the current Prosumer Regulations 2026, the capacity of a proposed distributed‑generation (solar) facility must not exceed the sanctioned load of the applicant’s premises; the Authority may only increase it later by notification [S1].  \n\nThe earlier Net‑Metering Regulations 2015 (now repealed) had permitted a capacity up to one‑and‑a‑half times the sanctioned load, but that rule no longer applies except for licences and agreements that were executed before the 2026 regulations came into force, as specified in the savings clause of the Prosumer Regulations 2026 [S4][S6].",
           "problems": []
         }
       ],
@@ -305,13 +312,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 5.9,
+      "seconds": 7.9,
       "calls": 1,
       "rewrite": "distributed generation facility size relative to sanctioned load limit prosumer agreement terms before 2026",
-      "answer": "آپ کا سولر سسٹم منظور شدہ لوڈ سے بڑا نہیں ہو سکتا کیونکہ تجویز کردہ تقسیم شدہ پیداوار کی صلاحیت درخواست دہندہ کی اجازت شدہ لوڈ سے زیادہ نہیں ہو سکتی [S2]۔\n\n[S2] Prosumer Regs 2026, reg. 3(2), p. 2",
+      "answer": "آپ کا سولر سسٹم منظور شدہ لوڈ سے بڑا نہیں ہو سکتا؛ اس کی گنجائش منظور شدہ لوڈ سے زیادہ نہیں ہو سکتی [S2]۔\n\n[S2] Prosumer Regs 2026, reg. 3(2), p. 2",
       "drafts": [
         {
-          "text": "آپ کا سولر سسٹم منظور شدہ لوڈ سے بڑا نہیں ہو سکتا کیونکہ تجویز کردہ تقسیم شدہ پیداوار کی صلاحیت درخواست دہندہ کی اجازت شدہ لوڈ سے زیادہ نہیں ہو سکتی [S2]۔",
+          "text": "آپ کا سولر سسٹم منظور شدہ لوڈ سے بڑا نہیں ہو سکتا؛ اس کی گنجائش منظور شدہ لوڈ سے زیادہ نہیں ہو سکتی [S2]۔",
           "problems": []
         }
       ],
@@ -333,7 +340,7 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 7.9,
+      "seconds": 8.9,
       "calls": 1,
       "rewrite": "billing cycle prosumer distributed generation regulations",
       "answer": "\"billing cycle\" means energy recorded by the meters in a period of thirty days [S3].\n\n[S3] Prosumer Regs 2026, reg. 2(1)(viii), p. 1",
@@ -361,14 +368,20 @@
       "lang": "en",
       "split": "dev",
       "status": "answered",
-      "attempts": 1,
-      "seconds": 7.5,
-      "calls": 1,
+      "attempts": 2,
+      "seconds": 16.7,
+      "calls": 2,
       "rewrite": "maximum capacity of distributed generation facility limit",
-      "answer": "The capacity of a proposed distributed generation facility may not be larger than the sanctioned load of the applicant’s premises [S1].\n\n[S1] Prosumer Regs 2026, reg. 3(2), p. 2",
+      "answer": "The capacity of a proposed distributed generation facility shall not exceed the sanctioned load of the applicant’s premises, and the Authority may revise that capacity at any time through a notification [S1]. The sources do not provide a specific numeric maximum size for a distributed generation facility [S1].\n\n[S1] Prosumer Regs 2026, reg. 3(2), p. 2",
       "drafts": [
         {
-          "text": "The capacity of a proposed distributed generation facility may not be larger than the sanctioned load of the applicant’s premises [S1].",
+          "text": "The capacity of a proposed distributed generation facility may not exceed the sanctioned load of the applicant’s premises, and the Authority can revise that capacity by notification [S1]. No specific numeric maximum size is provided in the sources.",
+          "problems": [
+            "1 sentence(s) have no [S#] tag"
+          ]
+        },
+        {
+          "text": "The capacity of a proposed distributed generation facility shall not exceed the sanctioned load of the applicant’s premises, and the Authority may revise that capacity at any time through a notification [S1]. The sources do not provide a specific numeric maximum size for a distributed generation facility [S1].",
           "problems": []
         }
       ],
@@ -380,7 +393,7 @@
         "S5 nm-2015:2(1)",
         "S6 prosumer-2026:21(2)"
       ],
-      "first_draft_pass": true,
+      "first_draft_pass": false,
       "gold_retrieved": true,
       "cites_gold": false,
       "fact_ok": false
@@ -390,14 +403,20 @@
       "lang": "en",
       "split": "dev",
       "status": "answered",
-      "attempts": 1,
-      "seconds": 6.0,
-      "calls": 1,
+      "attempts": 2,
+      "seconds": 16.5,
+      "calls": 2,
       "rewrite": "net metering agreement term length 2015 regulations",
-      "answer": "The agreement term was three years [S5][S6]. This is the old (repealed) rule, but it still applies according to the savings clause in the Prosumer Regulations 2026 [S6].\n\n[S5] Net Metering Regs 2015, reg. 7(1), p. 5 (repealed)\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
+      "answer": "The term of the net‑metering agreement was three years under the old (repealed) 2015 rule [S5][S6].\n\n[S5] Net Metering Regs 2015, reg. 7(1), p. 5 (repealed)\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
       "drafts": [
         {
-          "text": "The agreement term was three years [S5][S6]. This is the old (repealed) rule, but it still applies according to the savings clause in the Prosumer Regulations 2026 [S6].",
+          "text": "The term of the net‑metering agreement was three years [S5][S6].",
+          "problems": [
+            "S5 is REPEALED; say it is the old rule and when it still applies"
+          ]
+        },
+        {
+          "text": "The term of the net‑metering agreement was three years under the old (repealed) 2015 rule [S5][S6].",
           "problems": []
         }
       ],
@@ -409,7 +428,7 @@
         "S5 nm-2015:7(1)",
         "S6 prosumer-2026:21(2)"
       ],
-      "first_draft_pass": true,
+      "first_draft_pass": false,
       "gold_retrieved": true,
       "cites_gold": true
     },
@@ -419,13 +438,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 7.6,
+      "seconds": 8.2,
       "calls": 1,
       "rewrite": "net metering excess exported kWh carried forward or quarterly payment under pre‑2026 agreement",
-      "answer": "Under the repealed Net‑Metering Regulations 2015, excess exported units were to be credited against the generator’s next billing cycle rather than paid quarterly [S1]. The rule is repealed, but it still applies to existing agreements according to the savings clause in the Prosumer Regulations 2026 [S6].\n\n[S1] Net Metering Regs 2015, reg. 14(3), p. 7 (repealed)\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
+      "answer": "Under the repealed Net‑Metering Regulations 2015, any excess exported units could either be credited against the distributed generator’s next billing cycle or be paid by the distribution company on a quarterly basis [S1]. This old rule still applies to agreements that were executed before the Prosumer Regulations 2026 came into force, as specified in the savings clause of the Prosumer Regulations 2026 [S6].\n\n[S1] Net Metering Regs 2015, reg. 14(3), p. 7 (repealed)\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
       "drafts": [
         {
-          "text": "Under the repealed Net‑Metering Regulations 2015, excess exported units were to be credited against the generator’s next billing cycle rather than paid quarterly [S1]. The rule is repealed, but it still applies to existing agreements according to the savings clause in the Prosumer Regulations 2026 [S6].",
+          "text": "Under the repealed Net‑Metering Regulations 2015, any excess exported units could either be credited against the distributed generator’s next billing cycle or be paid by the distribution company on a quarterly basis [S1]. This old rule still applies to agreements that were executed before the Prosumer Regulations 2026 came into force, as specified in the savings clause of the Prosumer Regulations 2026 [S6].",
           "problems": []
         }
       ],
@@ -447,7 +466,7 @@
       "split": "dev",
       "status": "refused",
       "attempts": 1,
-      "seconds": 7.3,
+      "seconds": 6.9,
       "calls": 1,
       "rewrite": "net metering system capacity limit percentage of sanctioned load amendment 2018",
       "answer": "Sorry, I could not find this in the NEPRA documents I have. Please check with your electricity company (DISCO) or NEPRA.",
@@ -475,13 +494,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 5.9,
+      "seconds": 9.4,
       "calls": 1,
       "rewrite": "defective meter detection bill months DISCO charge average billing cycle",
-      "answer": "DISCO may charge you on an average‑basis for a maximum period of 2 months [S1][S5].\n\n[S1] Consumer Service Manual 2025, clause 4.3.1, p. 39\n[S5] Consumer Service Manual 2025, clause 4.3.2, p. 39",
+      "answer": "DISCO may charge you on an average‑basis for a maximum period of 2 months [S1][S5].\n\n[S1] Consumer Service Manual 2025, clause 4.3.1, p. 39\n[S5] Consumer Service Manual 2025, clause 4.3.2, p. 39",
       "drafts": [
         {
-          "text": "DISCO may charge you on an average‑basis for a maximum period of 2 months [S1][S5].",
+          "text": "DISCO may charge you on an average‑basis for a maximum period of 2 months [S1][S5].",
           "problems": []
         }
       ],
@@ -490,7 +509,8 @@
         "S2 csm-2025:4.3.6",
         "S3 csm-2025:6.4.1",
         "S4 csm-2025:9.1.3",
-        "S5 csm-2025:4.3.2"
+        "S5 csm-2025:4.3.2",
+        "S6 csm-2025:Annex-V"
       ],
       "first_draft_pass": true,
       "gold_retrieved": true,
@@ -503,7 +523,7 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 5.8,
+      "seconds": 7.9,
       "calls": 1,
       "rewrite": "defective meter detection bill billing cycle average bill months DISCO",
       "answer": "اگر میٹر خراب ہو جائے تو ڈسکو زیادہ سے زیادہ دو مہینے تک اوسط بل چارج کر سکتی ہے [S1]۔\n\n[S1] Consumer Service Manual 2025, clause 4.3.1, p. 39",
@@ -518,7 +538,8 @@
         "S2 csm-2025:9.2.3",
         "S3 csm-2025:6.4.1",
         "S4 csm-2025:4.3.6",
-        "S5 csm-2025:9.1.3"
+        "S5 csm-2025:9.1.3",
+        "S6 csm-2025:Annex-V"
       ],
       "first_draft_pass": true,
       "gold_retrieved": true,
@@ -531,7 +552,7 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 7.2,
+      "seconds": 8.0,
       "calls": 1,
       "rewrite": "defective meter replacement timeframe by DISCO",
       "answer": "The DISCO must replace a defective metering installation immediately, or at most within two billing cycles if meters are not available [S4].\n\n[S4] Consumer Service Manual 2025, clause 4.3.1, p. 39",
@@ -558,20 +579,14 @@
       "lang": "en",
       "split": "dev",
       "status": "answered",
-      "attempts": 2,
-      "seconds": 20.4,
-      "calls": 2,
+      "attempts": 1,
+      "seconds": 11.3,
+      "calls": 1,
       "rewrite": "defective meter detection bill units lost past billing cycles",
-      "answer": "Yes, if the meter is found to be running slow the DISCO may charge you for the energy lost, but the charge cannot exceed two previous billing cycles [S2]. The same limit of two months (equivalent to two billing cycles) is also set for charging on an average basis when a meter is defective [S1].\n\n[S2] Consumer Service Manual 2025, clause 4.3.3, p. 40\n[S1] Consumer Service Manual 2025, clause 4.3.1, p. 39",
+      "answer": "Yes, if the meter is found to be running slow the DISCO may charge you for the energy that was not recorded, but the charge cannot extend beyond the two billing cycles immediately before the meter is replaced [S2]. The same limit is stated as a maximum period of two months for charging on an average‑basis when a meter is defective [S1].\n\n[S2] Consumer Service Manual 2025, clause 4.3.3, p. 40\n[S1] Consumer Service Manual 2025, clause 4.3.1, p. 39",
       "drafts": [
         {
-          "text": "Yes, if the meter is found to be running slow the DISCO may charge you for the energy lost, but only for a maximum of two previous billing cycles. The charge can be based on an average of the same months of the previous year or the last eleven months, but it cannot exceed two billing cycles. No charge is allowed for periods before the meter was last correct. [S2][S1]",
-          "problems": [
-            "2 sentence(s) have no [S#] tag"
-          ]
-        },
-        {
-          "text": "Yes, if the meter is found to be running slow the DISCO may charge you for the energy lost, but the charge cannot exceed two previous billing cycles [S2]. The same limit of two months (equivalent to two billing cycles) is also set for charging on an average basis when a meter is defective [S1].",
+          "text": "Yes, if the meter is found to be running slow the DISCO may charge you for the energy that was not recorded, but the charge cannot extend beyond the two billing cycles immediately before the meter is replaced [S2]. The same limit is stated as a maximum period of two months for charging on an average‑basis when a meter is defective [S1].",
           "problems": []
         }
       ],
@@ -580,9 +595,10 @@
         "S2 csm-2025:4.3.3",
         "S3 csm-2025:4.3.4",
         "S4 csm-2025:9.2.3",
-        "S5 csm-2025:9.1.3"
+        "S5 csm-2025:9.1.3",
+        "S6 csm-2025:Annex-V"
       ],
-      "first_draft_pass": false,
+      "first_draft_pass": true,
       "gold_retrieved": true,
       "cites_gold": true,
       "fact_ok": true
@@ -591,16 +607,24 @@
       "id": "c3-ur",
       "lang": "ur",
       "split": "dev",
-      "status": "answered",
-      "attempts": 1,
-      "seconds": 6.1,
-      "calls": 1,
+      "status": "fallback",
+      "attempts": 2,
+      "seconds": 27.6,
+      "calls": 2,
       "rewrite": "defective meter retroactive billing period units charged previous months",
-      "answer": "اگر میٹر خراب ہو کر سست چل رہا ہو تو ڈسکو زیادہ سے زیادہ دو پچھلے بلنگ سائیکل کے یونٹ چارج کر سکتا ہے [S1][S3]۔ یہ دو مہینے کی حد ہے اور اس سے زیادہ چارج نہیں کیا جا سکتا [S1][S3]۔\n\n[S1] Consumer Service Manual 2025, clause 4.3.1, p. 39\n[S3] Consumer Service Manual 2025, clause 4.3.3, p. 40",
+      "answer": "میں اس سوال کا تصدیق شدہ جواب نہیں بنا سکا۔ متعلقہ قواعد یہ ہیں:\n- Consumer Service Manual 2025, clause 4.3.1, p. 39\n- Consumer Service Manual 2025, clause 6.4.1, p. 48\n- Consumer Service Manual 2025, clause 4.3.3, p. 40",
       "drafts": [
         {
-          "text": "اگر میٹر خراب ہو کر سست چل رہا ہو تو ڈسکو زیادہ سے زیادہ دو پچھلے بلنگ سائیکل کے یونٹ چارج کر سکتا ہے [S1][S3]۔ یہ دو مہینے کی حد ہے اور اس سے زیادہ چارج نہیں کیا جا سکتا [S1][S3]۔",
-          "problems": []
+          "text": "اگر میٹر سست چل رہا تھا تو ڈسکو خراب میٹر کی جگہ تک اصل کھپت پر چارج کرنے کے لیے ضربِ عامل بڑھا سکتا ہے اور زیادہ سے زیادہ دو پچھلے بلنگ سائیکل تک یونٹ چارج کر سکتا ہے [S3]۔ اس کے علاوہ، خراب میٹر کی صورت میں ڈسکو اوسط بنیاد پر (پچھلے سال کے اسی مہینے یا پچھلے گیارہ مہینوں کا اوسط) زیادہ سے زیادہ دو مہینوں کے لیے بل جاری کر سکتا ہے [S1]۔ اس لیے زیادہ سے زیادہ دو ماہ کے یونٹ چارج کیے جا سکتے ہیں۔",
+          "problems": [
+            "1 sentence(s) have no [S#] tag"
+          ]
+        },
+        {
+          "text": "اگر میٹر سست چل رہا تھا تو ڈسکو اصل کھپت پر چارج کرنے کے لیے ضربِ عامل بڑھا سکتا ہے اور یہ چارج زیادہ سے زیادہ دو پچھلے بلنگ سائیکل تک محدود ہے [S3]۔ خراب میٹر کی صورت میں ڈسکو اوسط بنیاد پر (پچھلے سال کے اسی مہینے یا پچھلے گیارہ مہینوں کا اوسط) زیادہ سے زیادہ دو مہینوں کے لیے بل جاری کر سکتا ہے [S1]۔ اس لیے زیادہ سے زیادہ دو ماہ کے یونٹ چارج کیے جا سکتے ہیں۔",
+          "problems": [
+            "1 sentence(s) have no [S#] tag"
+          ]
         }
       ],
       "sources": [
@@ -608,11 +632,12 @@
         "S2 csm-2025:6.4.1",
         "S3 csm-2025:4.3.3",
         "S4 csm-2025:4.3.2",
-        "S5 csm-2025:9.1.3"
+        "S5 csm-2025:9.1.3",
+        "S6 csm-2025:Annex-V"
       ],
-      "first_draft_pass": true,
+      "first_draft_pass": false,
       "gold_retrieved": true,
-      "cites_gold": true
+      "cites_gold": false
     },
     {
       "id": "c4",
@@ -620,13 +645,13 @@
       "split": "dev",
       "status": "answered",
       "attempts": 1,
-      "seconds": 5.4,
+      "seconds": 3.1,
       "calls": 1,
       "rewrite": "DISCO meter reading procedures detection bill",
-      "answer": "Meter reading of all DISCO consumers is done each month on a routine basis by DISCO staff, with consumers divided into batches and sub‑batches so that meters in a batch are read on the same dates each month [S2]. For connections equipped with an AMR system, a separate batch is created and billing is performed remotely according to a schedule made by DISCO [S1]. If a force‑majeure event prevents actual reading, the consumer may submit a meter‑reading snapshot or DISCO may issue a provisional bill based on last year’s or average consumption [S3].\n\n[S2] Consumer Service Manual 2025, clause 6.1.1, p. 45\n[S1] Consumer Service Manual 2025, clause 6.3, p. 48\n[S3] Consumer Service Manual 2025, clause 6.1.1.1, p. 45",
+      "answer": "Meter reading of all DISCO consumers is done on a routine monthly basis by DISCO staff, with consumers divided into batches and sub‑batches so that the meters in each batch are normally read on the same dates each month [S2]. For connections that have an AMR system, a separate batch is created and billing is carried out remotely according to a schedule made by DISCO [S1]. If a force majeure prevents actual reading, the consumer may submit a meter‑reading snapshot to DISCO or DISCO may issue a provisional bill based on last year’s or average consumption, with the final bill issued after normalization [S3].\n\n[S2] Consumer Service Manual 2025, clause 6.1.1, p. 45\n[S1] Consumer Service Manual 2025, clause 6.3, p. 48\n[S3] Consumer Service Manual 2025, clause 6.1.1.1, p. 45",
       "drafts": [
         {
-          "text": "Meter reading of all DISCO consumers is done each month on a routine basis by DISCO staff, with consumers divided into batches and sub‑batches so that meters in a batch are read on the same dates each month [S2]. For connections equipped with an AMR system, a separate batch is created and billing is performed remotely according to a schedule made by DISCO [S1]. If a force‑majeure event prevents actual reading, the consumer may submit a meter‑reading snapshot or DISCO may issue a provisional bill based on last year’s or average consumption [S3].",
+          "text": "Meter reading of all DISCO consumers is done on a routine monthly basis by DISCO staff, with consumers divided into batches and sub‑batches so that the meters in each batch are normally read on the same dates each month [S2]. For connections that have an AMR system, a separate batch is created and billing is carried out remotely according to a schedule made by DISCO [S1]. If a force majeure prevents actual reading, the consumer may submit a meter‑reading snapshot to DISCO or DISCO may issue a provisional bill based on last year’s or average consumption, with the final bill issued after normalization [S3].",
           "problems": []
         }
       ],
@@ -645,16 +670,24 @@
       "id": "c5",
       "lang": "en",
       "split": "dev",
-      "status": "refused",
-      "attempts": 1,
-      "seconds": 0.7,
-      "calls": 1,
+      "status": "fallback",
+      "attempts": 2,
+      "seconds": 13.6,
+      "calls": 2,
       "rewrite": "security deposit connection charge new connection licensee/disco",
-      "answer": "Sorry, I could not find this in the NEPRA documents I have. Please check with your electricity company (DISCO) or NEPRA.",
+      "answer": "I could not write an answer I was able to verify. These are the rules that apply:\n- Consumer Service Manual 2025, clause 2.4.9, p. 17\n- Consumer Service Manual 2025, clause 2.4.10, p. 17\n- Consumer Service Manual 2025, Annex-VI, p. 90",
       "drafts": [
         {
-          "text": "NOT_FOUND",
-          "problems": []
+          "text": "For a new connection the security deposit is required according to the rates approved by NEPRA and listed in Annex‑IV. The rates are per kilowatt of load and differ by consumer type, for example Residential A‑l Urban = Rs. 1,220/kW, Residential A‑l Rural = Rs. 610/kW, Commercial A‑2 Urban = Rs. 1,810/kW, etc. [S5][S6]  \n\nThe sources do not provide any information about connection‑charge amounts.",
+          "problems": [
+            "1 sentence(s) have no [S#] tag"
+          ]
+        },
+        {
+          "text": "For a new connection the security deposit is required according to the rates approved by NEPRA and listed in Annex‑IV. The rates are per kilowatt of load and differ by consumer type, for example Residential A‑l Urban = Rs. 1,220/kW, Residential A‑l Rural = Rs. 610/kW, Commercial A‑2 Urban = Rs. 1,810/kW, etc. [S5][S6]  \nThe sources do not provide any information about connection‑charge amounts. [S1][S2][S3][S4][S5][S6]",
+          "problems": [
+            "1 sentence(s) have no [S#] tag"
+          ]
         }
       ],
       "sources": [
@@ -662,7 +695,8 @@
         "S2 csm-2025:2.4.10",
         "S3 csm-2025:Annex-VI",
         "S4 csm-2025:5.2.2",
-        "S5 csm-2025:5.1.1"
+        "S5 csm-2025:5.1.1",
+        "S6 csm-2025:Annex-IV"
       ],
       "first_draft_pass": false,
       "gold_retrieved": true,

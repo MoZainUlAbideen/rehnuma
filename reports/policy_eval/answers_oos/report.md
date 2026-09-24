@@ -1,6 +1,6 @@
 # Policy answer eval (groq:openai/gpt-oss-120b)
 
-6 questions; 12 LLM calls; mean 5.7 s per question. Rewrites: live.
+6 questions; 12 LLM calls; mean 7.0 s per question. Rewrites: live.
 
 | Split/lang | n | answered | first draft | fallback | false refusal | error | gold retrieved | cites gold | fact correct |
 |---|---|---|---|---|---|---|---|---|---|

@@ -184,10 +184,22 @@ def urdu_share(text: str) -> float:
 _TRAILING_TAGS = re.compile(r"([.!?۔؟])\s*((?:\[\s*S\s*\d+\s*\]\s*)+)")
 
 
+# Abbreviations whose full stop does not end a sentence. "Rs. 1,220/kW ... etc." once split
+# a correct, cited answer (c5) into fragments that each looked uncited.
+_ABBREV = re.compile(r"(?i)\b(?:rs|etc|e\.g|i\.e|no|nos|reg|regs|sr|mr|dr|approx|viz|cf)\.")
+
+# Sentences that say what the sources do NOT cover have nothing to cite; the prompt asks for
+# exactly these in a partial answer.
+_ABSENCE = re.compile(r"(?i)(?:do(?:es)? not (?:provide|cover|mention|say|give|specify|state)"
+                      r"|not (?:covered|mentioned|specified|given|provided)|no information"
+                      r"|ذکر نہیں|موجود نہیں|نہیں دی|نہیں ملت|معلومات نہیں)")
+
+
 def sentences(text: str) -> list[str]:
     """Sentences with their tags. Models write "...commissioning. [S1]" - the tag AFTER the
     full stop belongs to that sentence; splitting at the full stop first once marked every
     correctly cited sentence as uncited."""
+    text = _ABBREV.sub(lambda m: m.group(0).replace(".", "\u2024"), text)   # "Rs." is no end
     text = _TRAILING_TAGS.sub(lambda m: f" {m.group(2).strip()}{m.group(1)} ", text)
     parts = re.split(r"(?<=[.!?۔؟])\s+|\n+", text)
     return [p.strip() for p in parts if sum(c.isalpha() for c in TAG.sub("", p)) >= 8]
@@ -242,7 +254,7 @@ def check(text: str, sources: list[Source], lang: str, question: str = "") -> Ch
     c = Check()
     c.no_citation = not cited_tags
     c.bad_tags = sorted({t for t in cited_tags if t not in by_tag})
-    c.uncited = [s for s in sentences(text) if not TAG.search(s)]
+    c.uncited = [s for s in sentences(text) if not TAG.search(s) and not _ABSENCE.search(s)]
     cited = [by_tag[t] for t in dict.fromkeys(cited_tags) if t in by_tag]
     allowed = numbers_in(question)
     for s in cited:                  # exactly what the model was shown for that source
@@ -359,6 +371,9 @@ def answer(question: str, index: PolicyIndex, client: LLMClient, lang: str | Non
             ans.status, ans.text = "error", UNAVAILABLE[lang]
             ans.drafts.append(("", [f"LLM error: {str(e)[:120]}"]))
             break
+        if NOT_FOUND in draft and len(TAG.sub("", draft).strip()) > len(NOT_FOUND) + 5:
+            # partial answer that also appended the marker ("... no information. NOT_FOUND.")
+            draft = re.sub(r"\s*\bNOT_FOUND\b\.?", "", draft).strip()
         if NOT_FOUND in draft and len(TAG.sub("", draft).strip()) <= len(NOT_FOUND) + 5:
             ans.status, ans.text = "refused", REFUSED[lang]
             ans.drafts.append((draft, []))
