@@ -1,0 +1,27 @@
+{
+  "prosumer-2026": {
+    "sha256": "aadaa9f1fe3d0629e29ad752a7c89804e0e3029c56f4b27396f56388dd3f1742",
+    "bytes": 1771337,
+    "url": "https://nepra.org.pk/Legislation/3-Reg/3.35%20NEPRA%20%20Prosumer%20Regulations%202026/NEPRA%20Prosumer%20Regulations%20(SRO%20251(I)2026)%2009-02-26.PDF"
+  },
+  "nm-2015": {
+    "sha256": "7231e5671694261788598d8bae6ed5f9a9c9b460382bbfd30d043489934a78ec",
+    "bytes": 441315,
+    "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/NOTIFICATION%20SRO%20892%20-2015.pdf"
+  },
+  "nm-2015-amend-2017": {
+    "sha256": "cacc25c2fb56dca41b924bb83f09c1ae2849f653e47581c76a883415e63c6fa1",
+    "bytes": 20238,
+    "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/SRO%201025(I)2017%2010-10-2017.pdf"
+  },
+  "nm-2015-amend-2018": {
+    "sha256": "1a25eaeab66119aecfa08218498b6b0d05c612a34e4d9c382d3f9c640ebc862c",
+    "bytes": 29150,
+    "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/S.R.O%201135(I)-2018%2013-09-2018.pdf"
+  },
+  "csm-2025": {
+    "sha256": "16a0e546dd19603869977769a0face5d00bf813599921717577774cbff37f674",
+    "bytes": 4574385,
+    "url": "https://nepra.org.pk/Legislation/7-Manuals/2025/CONSUMER%20SERVICE%20MANUAL%20(CSM)%20REVISED%202025.pdf"
+  }
+}

@@ -1,0 +1,585 @@
+{
+ "_note": "Gold = the clause that answers the question: doc id + clause path prefix (+ optional phrase the clause must contain, whitespace-insensitive). Clause numbers were checked against the official PDFs. Urdu questions share the gold of their English twin. split=dev: the first 22 questions, seen while tuning the parser and retrieval. split=heldout: written from the real clause text BEFORE any glossary/retrieval tuning, never tuned on - report both.",
+ "questions": [
+  {
+   "id": "p1",
+   "lang": "en",
+   "q": "Under net billing, what price do I get for the units my solar system exports to the grid?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "14",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p1-ur",
+   "lang": "ur",
+   "q": "نیٹ بلنگ میں جو یونٹ میرا سولر سسٹم گرڈ کو بھیجتا ہے، ان کی قیمت کس ریٹ پر لگتی ہے؟",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "14",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p2",
+   "lang": "en",
+   "q": "If my exported units are worth more than what I imported, is the extra carried to the next bill or paid to me?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "14",
+      "2"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p2-ur",
+   "lang": "ur",
+   "q": "اگر میرے بھیجے گئے یونٹ کی رقم استعمال شدہ بجلی سے زیادہ ہو تو اضافی رقم اگلے بل میں جائے گی یا مجھے ادا ہوگی؟",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "14",
+      "2"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p3",
+   "lang": "en",
+   "q": "Can NEPRA change the export rate while my agreement is still running?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "14",
+      "3"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p4",
+   "lang": "en",
+   "q": "I got net metering before 2026. At what price will my exported units be billed now?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "21",
+      "2"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p4-ur",
+   "lang": "ur",
+   "q": "میرا نیٹ میٹرنگ 2026 سے پہلے لگا تھا، اب میرے بھیجے گئے یونٹ کس ریٹ پر گنے جائیں گے؟",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "21",
+      "2"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p5",
+   "lang": "en",
+   "q": "Which old regulations did the prosumer regulations repeal?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "21",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p6",
+   "lang": "en",
+   "q": "Can my solar system capacity be larger than my sanctioned load?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "3",
+      "2"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p6-ur",
+   "lang": "ur",
+   "q": "کیا میرا سولر سسٹم میرے منظور شدہ لوڈ سے بڑا ہو سکتا ہے؟",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "3",
+      "2"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p7",
+   "lang": "en",
+   "q": "What does billing cycle mean in the prosumer regulations?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "2"
+     ],
+     "contains": "thirty days"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "p8",
+   "lang": "en",
+   "q": "What is the maximum size of a distributed generation facility?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "2"
+     ],
+     "contains": "MW"
+    },
+    {
+     "doc": "nm-2015",
+     "path": [
+      "2"
+     ],
+     "contains": "MW"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "n1",
+   "lang": "en",
+   "q": "Under the 2015 net metering regulations, how long was the net metering agreement term?",
+   "gold": [
+    {
+     "doc": "nm-2015",
+     "path": [
+      "7"
+     ]
+    },
+    {
+     "doc": "nm-2015-amend-2017",
+     "path": []
+    },
+    {
+     "doc": "nm-2015-amend-2018",
+     "path": []
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "n2",
+   "lang": "en",
+   "q": "Under the old net metering rules, were excess exported units carried forward or paid quarterly?",
+   "gold": [
+    {
+     "doc": "nm-2015",
+     "path": [
+      "14"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "n3",
+   "lang": "en",
+   "q": "After the 2018 amendment, how large could a net metering system be compared to the sanctioned load?",
+   "gold": [
+    {
+     "doc": "nm-2015-amend-2018",
+     "path": [],
+     "contains": "sanctioned load"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c1",
+   "lang": "en",
+   "q": "My meter is defective. For how many months can the DISCO charge me an average bill?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "4",
+      "3",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c1-ur",
+   "lang": "ur",
+   "q": "میرا میٹر خراب ہے، بجلی کمپنی کتنے مہینے اوسط بل چارج کر سکتی ہے؟",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "4",
+      "3",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c2",
+   "lang": "en",
+   "q": "How soon must the DISCO replace a defective meter?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "4",
+      "3",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c3",
+   "lang": "en",
+   "q": "My meter was found running slow. Can they charge me for units lost in past months, and for how many billing cycles?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "4",
+      "3",
+      "3"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c3-ur",
+   "lang": "ur",
+   "q": "میرا میٹر آہستہ چل رہا تھا، کیا وہ پچھلے مہینوں کے یونٹ چارج کر سکتے ہیں، اور کتنے مہینوں کے؟",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "4",
+      "3",
+      "3"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c4",
+   "lang": "en",
+   "q": "How is the meter reading of consumers carried out by the DISCO?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "6",
+      "1",
+      "1"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "c5",
+   "lang": "en",
+   "q": "What security deposit and connection charges do I pay for a new connection?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "2",
+      "4"
+     ]
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "h1",
+   "lang": "en",
+   "split": "heldout",
+   "q": "How many years is the agreement between a prosumer and the DISCO under the 2026 rules?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "7",
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h1-ur",
+   "lang": "ur",
+   "split": "heldout",
+   "q": "نئے قواعد کے تحت سولر لگانے والے اور بجلی کمپنی کا معاہدہ کتنے سال کا ہوتا ہے؟",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "7",
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h2",
+   "lang": "en",
+   "split": "heldout",
+   "q": "Who pays for the meter and the interconnection when I install solar under net billing?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h3",
+   "lang": "en",
+   "split": "heldout",
+   "q": "Does the meter for a solar connection have to measure electricity in both directions?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "13",
+      "1"
+     ]
+    },
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "5",
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h4",
+   "lang": "en",
+   "split": "heldout",
+   "q": "Can I end my solar agreement with the DISCO, and how?",
+   "gold": [
+    {
+     "doc": "prosumer-2026",
+     "path": [
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h5",
+   "lang": "en",
+   "split": "heldout",
+   "q": "Under the old net metering rules, which rate did the DISCO pay for exported units, and were fuel adjustment and taxes included?",
+   "gold": [
+    {
+     "doc": "nm-2015",
+     "path": [
+      "14",
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h6",
+   "lang": "en",
+   "split": "heldout",
+   "q": "If someone is caught stealing electricity, how many months can a detection bill cover?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "9",
+      "1",
+      "3"
+     ]
+    },
+    {
+     "doc": "csm-2025",
+     "path": [
+      "9",
+      "2",
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h6-ur",
+   "lang": "ur",
+   "split": "heldout",
+   "q": "بجلی چوری پکڑی جائے تو ڈیٹیکشن بل زیادہ سے زیادہ کتنے مہینوں کا بن سکتا ہے؟",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "9",
+      "1",
+      "3"
+     ]
+    },
+    {
+     "doc": "csm-2025",
+     "path": [
+      "9",
+      "2",
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h7",
+   "lang": "en",
+   "split": "heldout",
+   "q": "How many days does the DISCO have to settle my complaint about a detection bill?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "10",
+      "3",
+      "1"
+     ],
+     "contains": "15 days"
+    }
+   ]
+  },
+  {
+   "id": "h8",
+   "lang": "en",
+   "split": "heldout",
+   "q": "How can I avoid the late payment surcharge?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "6",
+      "7",
+      "2"
+     ]
+    },
+    {
+     "doc": "csm-2025",
+     "path": [
+      "6",
+      "8",
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h9",
+   "lang": "en",
+   "split": "heldout",
+   "q": "If the meter reading is taken late and the billing period is longer than a month, how are the units charged?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "6",
+      "1",
+      "1",
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h10",
+   "lang": "en",
+   "split": "heldout",
+   "q": "Can a three-phase consumer get a bi-directional meter without installing solar?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "2",
+      "4",
+      "11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "h11",
+   "lang": "en",
+   "split": "heldout",
+   "q": "I am using more load than my sanctioned load. What will the DISCO do?",
+   "gold": [
+    {
+     "doc": "csm-2025",
+     "path": [
+      "8",
+      "2",
+      "10"
+     ]
+    }
+   ]
+  }
+ ]
+}

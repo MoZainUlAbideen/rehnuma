@@ -45,6 +45,10 @@ uv run rehnuma-summary data/labels/real          # plain summary, Urdu (default)
 uv run rehnuma-summary data/labels/real --lang en --out summary.md
 uv run rehnuma-eval-summary --provider groq      # LLM summary + critic (needs .env)
 uv run rehnuma-eval-extract                      # bill photo -> verified bill (needs .env)
+uv run rehnuma-policy fetch                      # download the NEPRA documents
+uv run rehnuma-policy ingest                     # PDFs -> clause-level index
+uv run rehnuma-policy search "can my solar be bigger than my sanctioned load"
+uv run rehnuma-eval-policy                       # retrieval eval (add --rewrite for Urdu)
 ```
 
 ## How it's built

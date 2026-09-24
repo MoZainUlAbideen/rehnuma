@@ -1,0 +1,58 @@
+{
+  "_note": "Official NEPRA documents Rehnuma answers from. `rehnuma-policy fetch` downloads them into data/policy/raw/ (git-ignored) and records a SHA-256 in sources.lock.json; a changed hash on a later fetch means NEPRA replaced the file and the answer layer must be reviewed. `status` and `amends` let answers warn when a clause has been repealed or amended.",
+  "documents": [
+    {
+      "id": "prosumer-2026",
+      "title": "NEPRA (Prosumer) Regulations, 2026 - S.R.O. 251(I)/2026",
+      "short": "Prosumer Regs 2026",
+      "date": "2026-02-09",
+      "status": "in_force",
+      "style": "regulations",
+      "url": "https://nepra.org.pk/Legislation/3-Reg/3.35%20NEPRA%20%20Prosumer%20Regulations%202026/NEPRA%20Prosumer%20Regulations%20(SRO%20251(I)2026)%2009-02-26.PDF"
+    },
+    {
+      "id": "nm-2015",
+      "title": "NEPRA (Alternative & Renewable Energy) Distributed Generation and Net Metering Regulations, 2015 - S.R.O. 892(I)/2015",
+      "short": "Net Metering Regs 2015",
+      "date": "2015-09-01",
+      "status": "repealed",
+      "repealed_by": "prosumer-2026",
+      "style": "regulations",
+      "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/NOTIFICATION%20SRO%20892%20-2015.pdf",
+      "note": "Repealed by the Prosumer Regulations 2026, but agreements signed under it keep their export price until the agreement term ends (Prosumer Regs 2026, reg. 21(2))."
+    },
+    {
+      "id": "nm-2015-amend-2017",
+      "title": "Amendment to the Net Metering Regulations 2015 - S.R.O. 1025(I)/2017",
+      "short": "NM amendment 2017",
+      "date": "2017-10-10",
+      "status": "repealed",
+      "repealed_by": "prosumer-2026",
+      "amends": "nm-2015",
+      "style": "amendment",
+      "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/SRO%201025(I)2017%2010-10-2017.pdf",
+      "note": "Repealed by the Prosumer Regulations 2026, but agreements signed under it keep their export price until the agreement term ends (Prosumer Regs 2026, reg. 21(2))."
+    },
+    {
+      "id": "nm-2015-amend-2018",
+      "title": "Amendment to the Net Metering Regulations 2015 - S.R.O. 1135(I)/2018",
+      "short": "NM amendment 2018",
+      "date": "2018-09-13",
+      "status": "repealed",
+      "repealed_by": "prosumer-2026",
+      "amends": "nm-2015",
+      "style": "amendment",
+      "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/S.R.O%201135(I)-2018%2013-09-2018.pdf",
+      "note": "Repealed by the Prosumer Regulations 2026, but agreements signed under it keep their export price until the agreement term ends (Prosumer Regs 2026, reg. 21(2))."
+    },
+    {
+      "id": "csm-2025",
+      "title": "Consumer Service Manual (CSM), revised 2025",
+      "short": "Consumer Service Manual 2025",
+      "date": "2025-01-01",
+      "status": "in_force",
+      "style": "manual",
+      "url": "https://nepra.org.pk/Legislation/7-Manuals/2025/CONSUMER%20SERVICE%20MANUAL%20(CSM)%20REVISED%202025.pdf"
+    }
+  ]
+}

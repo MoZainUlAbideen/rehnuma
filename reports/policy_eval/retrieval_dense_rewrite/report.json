@@ -1,0 +1,1895 @@
+{
+  "rewrite": "groq:openai/gpt-oss-120b",
+  "dense": "intfloat/multilingual-e5-small",
+  "methods": [
+    "bm25",
+    "char",
+    "hybrid",
+    "dense",
+    "hybrid+dense"
+  ],
+  "n": 35,
+  "not_in_index": [],
+  "summary": {
+    "dev/en": {
+      "bm25": {
+        "n": 16,
+        "hit@1": 0.3125,
+        "hit@5": 0.8125,
+        "mrr": 0.5072916666666667
+      },
+      "char": {
+        "n": 16,
+        "hit@1": 0.25,
+        "hit@5": 0.5625,
+        "mrr": 0.3875
+      },
+      "hybrid": {
+        "n": 16,
+        "hit@1": 0.375,
+        "hit@5": 0.875,
+        "mrr": 0.55625
+      },
+      "dense": {
+        "n": 16,
+        "hit@1": 0.3125,
+        "hit@5": 0.8125,
+        "mrr": 0.45729166666666665
+      },
+      "hybrid+dense": {
+        "n": 16,
+        "hit@1": 0.3125,
+        "hit@5": 0.8125,
+        "mrr": 0.5
+      }
+    },
+    "dev/ur": {
+      "bm25": {
+        "n": 6,
+        "hit@1": 0.3333333333333333,
+        "hit@5": 0.6666666666666666,
+        "mrr": 0.47222222222222227
+      },
+      "char": {
+        "n": 6,
+        "hit@1": 0.16666666666666666,
+        "hit@5": 0.6666666666666666,
+        "mrr": 0.3888888888888889
+      },
+      "hybrid": {
+        "n": 6,
+        "hit@1": 0.3333333333333333,
+        "hit@5": 0.6666666666666666,
+        "mrr": 0.5
+      },
+      "dense": {
+        "n": 6,
+        "hit@1": 0.16666666666666666,
+        "hit@5": 0.5,
+        "mrr": 0.27777777777777773
+      },
+      "hybrid+dense": {
+        "n": 6,
+        "hit@1": 0.5,
+        "hit@5": 0.6666666666666666,
+        "mrr": 0.5833333333333334
+      }
+    },
+    "heldout/en": {
+      "bm25": {
+        "n": 11,
+        "hit@1": 0.45454545454545453,
+        "hit@5": 0.8181818181818182,
+        "mrr": 0.6090909090909091
+      },
+      "char": {
+        "n": 11,
+        "hit@1": 0.5454545454545454,
+        "hit@5": 0.9090909090909091,
+        "mrr": 0.6742424242424243
+      },
+      "hybrid": {
+        "n": 11,
+        "hit@1": 0.6363636363636364,
+        "hit@5": 0.9090909090909091,
+        "mrr": 0.7575757575757577
+      },
+      "dense": {
+        "n": 11,
+        "hit@1": 0.6363636363636364,
+        "hit@5": 0.7272727272727273,
+        "mrr": 0.6590909090909091
+      },
+      "hybrid+dense": {
+        "n": 11,
+        "hit@1": 0.6363636363636364,
+        "hit@5": 0.8181818181818182,
+        "mrr": 0.6848484848484848
+      }
+    },
+    "heldout/ur": {
+      "bm25": {
+        "n": 2,
+        "hit@1": 0.5,
+        "hit@5": 1.0,
+        "mrr": 0.625
+      },
+      "char": {
+        "n": 2,
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "mrr": 0.5
+      },
+      "hybrid": {
+        "n": 2,
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "mrr": 0.375
+      },
+      "dense": {
+        "n": 2,
+        "hit@1": 0.5,
+        "hit@5": 0.5,
+        "mrr": 0.5
+      },
+      "hybrid+dense": {
+        "n": 2,
+        "hit@1": 0.5,
+        "hit@5": 1.0,
+        "mrr": 0.6666666666666666
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "p1",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "Under net billing, what price do I get for the units my solar system exports to the grid?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 4,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 4,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "top": [
+            "nm-2015:14(2)",
+            "nm-2015:14(3)",
+            "prosumer-2026:14(2)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1",
+            "prosumer-2026:14(1)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p1-ur",
+      "lang": "ur",
+      "split": "dev",
+      "in_index": true,
+      "query": "net billing rate for solar units exported to grid NEPRA consumer service manual distributed generation prosumer pricing",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.4.1",
+            "prosumer-2026:14(1)",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "char": {
+          "rank": 3,
+          "top": [
+            "csm-2025:6.4.1",
+            "prosumer-2026:2(1)(ix)",
+            "prosumer-2026:14(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.4.1",
+            "prosumer-2026:14(1)",
+            "prosumer-2026:2(1)(ix)"
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "top": [
+            "prosumer-2026:21(3)",
+            "nm-2015:18",
+            "prosumer-2026:14(1)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(1)",
+            "csm-2025:6.4.1",
+            "nm-2015:18"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p2",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "If my exported units are worth more than what I imported, is the extra carried to the next bill or paid to me?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1"
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "csm-2025:6.8",
+            "csm-2025:6.7"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1",
+            "prosumer-2026:14(2)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p2-ur",
+      "lang": "ur",
+      "split": "dev",
+      "in_index": true,
+      "query": "excess unit payment carryover next billing cycle NEPRA consumer service manual net billing prosumer distributed generation billing cycle DISCO",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "csm-2025:6.1.1.1",
+            "prosumer-2026:14(1)"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "nm-2015:14(3)",
+            "prosumer-2026:14(2)",
+            "prosumer-2026:14(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)",
+            "prosumer-2026:14(1)"
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "top": [
+            "csm-2025:1.4",
+            "csm-2025:6.1.1.1",
+            "prosumer-2026:14(2)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)",
+            "csm-2025:6.1.1.1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p3",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "Can NEPRA change the export rate while my agreement is still running?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(3)",
+            "csm-2025:5.1.1",
+            "csm-2025:16.2.5"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(3)",
+            "csm-2025:15.1",
+            "prosumer-2026:7(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(3)",
+            "csm-2025:15.1",
+            "csm-2025:16.2.5"
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "top": [
+            "csm-2025:5.1.1",
+            "csm-2025:15.1.4",
+            "csm-2025:2.4"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(3)",
+            "csm-2025:5.1.1",
+            "nm-2015:4(1)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p4",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "I got net metering before 2026. At what price will my exported units be billed now?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 5,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 4,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p4-ur",
+      "lang": "ur",
+      "split": "dev",
+      "in_index": true,
+      "query": "net metering rate applicable to units generated before 2026 NEPRA consumer service manual query",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:7.2",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:1.2",
+            "nm-2015:12(3)",
+            "csm-2025:1.2.4"
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "top": [
+            "csm-2025:1.2",
+            "csm-2025:1.1",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "nm-2015:18",
+            "csm-2025:1.4",
+            "prosumer-2026:21(3)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:1.1",
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p5",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "Which old regulations did the prosumer regulations repeal?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:21(1)",
+            "prosumer-2026:21(2)",
+            "prosumer-2026:21(3)"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:21(1)",
+            "prosumer-2026:1(1)",
+            "prosumer-2026:21(2)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:21(1)",
+            "prosumer-2026:21(2)",
+            "prosumer-2026:21(3)"
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "top": [
+            "prosumer-2026:1(1)",
+            "prosumer-2026:21(2)",
+            "prosumer-2026:21(1)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:21(1)",
+            "prosumer-2026:21(2)",
+            "prosumer-2026:1(1)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p6",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "Can my solar system capacity be larger than my sanctioned load?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:3(2)",
+            "nm-2015:18",
+            "prosumer-2026:21(3)"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:3(2)",
+            "csm-2025:7.5.1",
+            "prosumer-2026:2(1)(x)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:3(2)",
+            "nm-2015:18",
+            "csm-2025:7.5.1"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:3(2)",
+            "csm-2025:16.4.4",
+            "csm-2025:2.10.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:3(2)",
+            "csm-2025:2.10.1",
+            "csm-2025:8.2.10"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p6-ur",
+      "lang": "ur",
+      "split": "dev",
+      "in_index": true,
+      "query": "Can my solar system exceed my sanctioned load under NEPRA net metering and prosumer regulations?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 3,
+          "top": [
+            "nm-2015:18",
+            "nm-2015:14(2)",
+            "prosumer-2026:3(2)"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "nm-2015-amend-2018:p1",
+            "prosumer-2026:3(2)",
+            "nm-2015:14(2)"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "nm-2015:18",
+            "prosumer-2026:3(2)",
+            "nm-2015:14(2)"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "nm-2015:preamble",
+            "csm-2025:8.2.9",
+            "nm-2015:18"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 2,
+          "top": [
+            "nm-2015:18",
+            "prosumer-2026:3(2)",
+            "csm-2025:1.4"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p7",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "What does billing cycle mean in the prosumer regulations?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 3,
+          "top": [
+            "prosumer-2026:14(1)",
+            "prosumer-2026:14(2)",
+            "prosumer-2026:2(1)(viii)"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:2(1)(viii)",
+            "prosumer-2026:14(2)",
+            "prosumer-2026:14(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:2(1)(viii)",
+            "prosumer-2026:14(1)",
+            "prosumer-2026:14(2)"
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "top": [
+            "prosumer-2026:14(2)",
+            "prosumer-2026:14(1)",
+            "prosumer-2026:2(1)(viii)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "prosumer-2026:14(2)",
+            "prosumer-2026:14(1)",
+            "prosumer-2026:2(1)(viii)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "p8",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "What is the maximum size of a distributed generation facility?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "prosumer-2026:3(2)",
+            "nm-2015:2(1)",
+            "nm-2015:12(2)"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "nm-2015:6(1)",
+            "nm-2015:9(4)",
+            "prosumer-2026:3(2)"
+          ]
+        },
+        "hybrid": {
+          "rank": 5,
+          "top": [
+            "prosumer-2026:3(2)",
+            "nm-2015:6(1)",
+            "nm-2015:12(2)"
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "top": [
+            "prosumer-2026:3(3)",
+            "prosumer-2026:2(1)(ix)",
+            "nm-2015:2(1)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "nm-2015:6(1)",
+            "prosumer-2026:3(2)",
+            "nm-2015:2(1)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n1",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "Under the 2015 net metering regulations, how long was the net metering agreement term?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "nm-2015:1",
+            "nm-2015:18",
+            "nm-2015:4(1)"
+          ]
+        },
+        "char": {
+          "rank": 5,
+          "top": [
+            "nm-2015:1",
+            "csm-2025:4.2",
+            "nm-2015:13(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 5,
+          "top": [
+            "nm-2015:1",
+            "nm-2015:13(1)",
+            "prosumer-2026:21(1)"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "nm-2015-amend-2017:p1",
+            "nm-2015:1",
+            "prosumer-2026:21(1)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "nm-2015:1",
+            "prosumer-2026:21(1)",
+            "nm-2015-amend-2017:p1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n2",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "Under the old net metering rules, were excess exported units carried forward or paid quarterly?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 3,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1",
+            "nm-2015:14(3)"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "nm-2015:14(3)",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "nm-2015:14(3)",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.8",
+            "csm-2025:6.7"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1",
+            "nm-2015:14(3)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n3",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "After the 2018 amendment, how large could a net metering system be compared to the sanctioned load?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "csm-2025:8.4",
+            "csm-2025:1.4",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "prosumer-2026:21(3)",
+            "nm-2015-amend-2018:p1",
+            "csm-2025:3.4.4"
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "top": [
+            "csm-2025:3.4.4",
+            "prosumer-2026:21(3)",
+            "nm-2015-amend-2017:p1"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:2.14",
+            "nm-2015-amend-2017:p1",
+            "prosumer-2026:21(1)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "nm-2015-amend-2017:p1",
+            "nm-2015-amend-2018:p1",
+            "csm-2025:1.4"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c1",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "My meter is defective. For how many months can the DISCO charge me an average bill?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.6"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.6",
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.2"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.6",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "top": [
+            "csm-2025:4.3.2",
+            "csm-2025:4.3.6",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.6",
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.2"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c1-ur",
+      "lang": "ur",
+      "split": "dev",
+      "in_index": true,
+      "query": "defective meter average billing period how many months can DISCO charge average bill NEPRA regulations Consumer Service Manual",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.2"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.6",
+            "csm-2025:6.4.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.6"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.2",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.2",
+            "csm-2025:4.3.6"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c2",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "How soon must the DISCO replace a defective meter?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.6",
+            "csm-2025:4.3.3"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.6",
+            "csm-2025:4.4",
+            "csm-2025:4.3"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.6",
+            "csm-2025:4.3.1",
+            "csm-2025:4.4"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.2",
+            "csm-2025:4.3.3"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
+            "csm-2025:4.3.6"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c3",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "My meter was found running slow. Can they charge me for units lost in past months, and for how many billing cycles?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
+            "csm-2025:4.3.2"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
+            "csm-2025:9.1.3"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
+            "csm-2025:4.3.4"
+          ]
+        },
+        "dense": {
+          "rank": 5,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:4.3.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 2,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
+            "csm-2025:6.1.1.1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c3-ur",
+      "lang": "ur",
+      "split": "dev",
+      "in_index": true,
+      "query": "net billing retroactive unit charge past months defective meter detection bill DISCO regulated billing cycle",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:9.2.3",
+            "csm-2025:4.3.2"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:9.2.3",
+            "csm-2025:9.1.3"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "How is the meter reading of consumers carried out by the DISCO?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.3",
+            "csm-2025:6.1.1",
+            "csm-2025:6.2"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.3",
+            "csm-2025:6.1.1",
+            "csm-2025:6.2"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.3",
+            "csm-2025:6.1.1",
+            "csm-2025:6.2"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.1.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.1.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.3"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "lang": "en",
+      "split": "dev",
+      "in_index": true,
+      "query": "What security deposit and connection charges do I pay for a new connection?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "csm-2025:2.7.2",
+            "csm-2025:2.4.9",
+            "csm-2025:2.4.10"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "csm-2025:8.6",
+            "csm-2025:5.1",
+            "csm-2025:5.2"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:2.4.9",
+            "csm-2025:2.4.10",
+            "csm-2025:8.6"
+          ]
+        },
+        "dense": {
+          "rank": 5,
+          "top": [
+            "csm-2025:8.6.3",
+            "csm-2025:8.6.2",
+            "csm-2025:8.6.4"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:8.6",
+            "csm-2025:8.6.2",
+            "csm-2025:5.2.2"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h1",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "How many years is the agreement between a prosumer and the DISCO under the 2026 rules?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "prosumer-2026:7(2)",
+            "prosumer-2026:7(1)",
+            "prosumer-2026:21(3)"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:7(1)",
+            "prosumer-2026:7(2)",
+            "prosumer-2026:2(1)(ii)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:7(1)",
+            "prosumer-2026:7(2)",
+            "prosumer-2026:2(1)(ii)"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:8.2.10",
+            "nm-2015:18"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "nm-2015:18",
+            "nm-2015:18",
+            "prosumer-2026:7(1)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h1-ur",
+      "lang": "ur",
+      "split": "heldout",
+      "in_index": true,
+      "query": "NEPRA solar net metering contract duration years DISCO prosumer agreement under new regulations",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 4,
+          "top": [
+            "nm-2015:18",
+            "nm-2015:4(1)",
+            "prosumer-2026:7(2)"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "prosumer-2026:7(2)",
+            "prosumer-2026:7(1)",
+            "nm-2015:4(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 4,
+          "top": [
+            "prosumer-2026:7(2)",
+            "nm-2015:4(1)",
+            "nm-2015:18"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "nm-2015:18",
+            "nm-2015:18",
+            "nm-2015:preamble"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 3,
+          "top": [
+            "nm-2015:18",
+            "nm-2015:18",
+            "prosumer-2026:7(1)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h2",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "Who pays for the meter and the interconnection when I install solar under net billing?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "nm-2015:2(1)",
+            "nm-2015:14(1)",
+            "nm-2015:13(1)"
+          ]
+        },
+        "char": {
+          "rank": null,
+          "top": [
+            "prosumer-2026:2(1)(x)",
+            "csm-2025:6.4",
+            "nm-2015:3(7)"
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "top": [
+            "prosumer-2026:2(1)(x)",
+            "nm-2015:2(1)",
+            "nm-2015:3(9)"
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "top": [
+            "nm-2015:2(1)",
+            "nm-2015:14(1)",
+            "csm-2025:6.7"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "nm-2015:2(1)",
+            "nm-2015:14(1)",
+            "nm-2015:3(9)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h3",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "Does the meter for a solar connection have to measure electricity in both directions?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:13(1)",
+            "nm-2015:13(1)",
+            "prosumer-2026:2(1)(ix)"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:13(1)",
+            "nm-2015:13(1)",
+            "csm-2025:16.5.2"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:13(1)",
+            "nm-2015:13(1)",
+            "prosumer-2026:2(1)(ix)"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:13(1)",
+            "nm-2015:13(1)",
+            "csm-2025:6.2.3"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:13(1)",
+            "nm-2015:13(1)",
+            "csm-2025:16.5.2"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h4",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "Can I end my solar agreement with the DISCO, and how?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": null,
+          "top": [
+            "nm-2015:2(1)",
+            "nm-2015:18",
+            "prosumer-2026:2(1)(x)"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:8(1)",
+            "nm-2015:7(1)",
+            "prosumer-2026:7(1)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "prosumer-2026:8(1)",
+            "nm-2015:2(1)",
+            "nm-2015:18"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:8.2.5",
+            "nm-2015:18",
+            "csm-2025:8.2.6"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 5,
+          "top": [
+            "nm-2015:18",
+            "nm-2015:18",
+            "nm-2015:18"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h5",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "Under the old net metering rules, which rate did the DISCO pay for exported units, and were fuel adjustment and taxes included?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "nm-2015:14(4)",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1"
+          ]
+        },
+        "char": {
+          "rank": 4,
+          "top": [
+            "csm-2025:4.3",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.4.1",
+            "nm-2015:14(4)",
+            "csm-2025:4.3.1"
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:4.3.1",
+            "csm-2025:16.5.3"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": null,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.4.1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h6",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "If someone is caught stealing electricity, how many months can a detection bill cover?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3",
+            "csm-2025:9.2.5"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.4",
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3",
+            "csm-2025:9.2.5"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.2.3",
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3",
+            "csm-2025:9.2.3"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h6-ur",
+      "lang": "ur",
+      "split": "heldout",
+      "in_index": true,
+      "query": "detection bill maximum duration months NEPRA consumer service manual electricity theft detection bill limit",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.5",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "char": {
+          "rank": 2,
+          "top": [
+            "csm-2025:9.2.5",
+            "csm-2025:9.2.3",
+            "csm-2025:9.1.3"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:9.2.5",
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:6.4.1",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3",
+            "csm-2025:9.2.5"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h7",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "How many days does the DISCO have to settle my complaint about a detection bill?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "csm-2025:9.2.5",
+            "csm-2025:10.3.1",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "char": {
+          "rank": 3,
+          "top": [
+            "csm-2025:10.3",
+            "csm-2025:10.3.1",
+            "csm-2025:10.3.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:10.3.1",
+            "csm-2025:9.2.5",
+            "csm-2025:10.3.1"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:10.3.1",
+            "csm-2025:10.3.1",
+            "csm-2025:9.2.3"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:10.3.1",
+            "csm-2025:10.3.1",
+            "csm-2025:9.2.5"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h8",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "How can I avoid the late payment surcharge?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.7.2",
+            "csm-2025:6.8.1",
+            "csm-2025:8.2.4"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.7.2",
+            "csm-2025:6.8.1",
+            "csm-2025:8.2.4"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.7.2",
+            "csm-2025:6.8.1",
+            "csm-2025:8.2.4"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.7.2",
+            "csm-2025:6.8.1",
+            "csm-2025:8.2.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.7.2",
+            "csm-2025:6.8.1",
+            "csm-2025:8.2.4"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h9",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "If the meter reading is taken late and the billing period is longer than a month, how are the units charged?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "char": {
+          "rank": 3,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:6.4",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.1.1.1"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h10",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "Can a three-phase consumer get a bi-directional meter without installing solar?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 1,
+          "top": [
+            "csm-2025:2.4.11",
+            "csm-2025:4.2.8",
+            "csm-2025:4.3.4"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "csm-2025:2.4.11",
+            "csm-2025:4.2.8",
+            "csm-2025:4.3.4"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "csm-2025:2.4.11",
+            "csm-2025:4.2.8",
+            "csm-2025:4.3.4"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:2.4.11",
+            "prosumer-2026:5(1)",
+            "prosumer-2026:12(3)"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:2.4.11",
+            "csm-2025:4.3.4",
+            "csm-2025:4.2.8"
+          ]
+        }
+      }
+    },
+    {
+      "id": "h11",
+      "lang": "en",
+      "split": "heldout",
+      "in_index": true,
+      "query": "I am using more load than my sanctioned load. What will the DISCO do?",
+      "rewrite_error": null,
+      "by_method": {
+        "bm25": {
+          "rank": 5,
+          "top": [
+            "csm-2025:7.5.2",
+            "csm-2025:8.1",
+            "csm-2025:8.4"
+          ]
+        },
+        "char": {
+          "rank": 1,
+          "top": [
+            "csm-2025:8.2.10",
+            "csm-2025:8.1",
+            "csm-2025:7.5.2"
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "top": [
+            "csm-2025:7.5.2",
+            "csm-2025:8.1",
+            "csm-2025:8.2.10"
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:8.2.10",
+            "csm-2025:8.4",
+            "csm-2025:7.5.2"
+          ]
+        },
+        "hybrid+dense": {
+          "rank": 1,
+          "top": [
+            "csm-2025:8.2.10",
+            "csm-2025:7.5.2",
+            "csm-2025:8.4"
+          ]
+        }
+      }
+    }
+  ]
+}

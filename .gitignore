@@ -19,3 +19,7 @@ data/real/*
 .DS_Store
 Thumbs.db
 .vscode/
+
+# NEPRA PDFs: public but large; re-download with `rehnuma-policy fetch` (hashes in sources.lock.json)
+data/policy/raw/
+data/policy/embeddings/
