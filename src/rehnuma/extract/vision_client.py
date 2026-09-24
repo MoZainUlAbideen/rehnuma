@@ -1,0 +1,114 @@
+"""Vision LLM client for any OpenAI-compatible endpoint (standard library only).
+
+Default provider: Google Gemini via its OpenAI-compatible API (free key from AI Studio).
+Configure in `.env`:
+
+    GEMINI_API_KEY=...
+    REHNUMA_VISION_MODEL=gemini-3.8-flash      # optional; list yours with --list-models
+"""
+
+from __future__ import annotations
+
+import base64
+import json
+import os
+import re
+import time
+import urllib.error
+import urllib.request
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Protocol
+
+from rehnuma.llm.client import LLMError, load_dotenv
+
+
+class VisionClient(Protocol):
+    name: str
+
+    def read(self, system: str, prompt: str, image: bytes, mime: str) -> str: ...
+
+
+@dataclass(frozen=True)
+class Provider:
+    base_url: str
+    key_env: str
+    default_model: str
+
+
+PROVIDERS = {
+    "gemini": Provider("https://generativelanguage.googleapis.com/v1beta/openai",
+                       "GEMINI_API_KEY", "gemini-3.5-flash"),
+    "groq": Provider("https://api.groq.com/openai/v1", "GROQ_API_KEY", ""),
+}
+
+
+RETRY_DELAY = re.compile(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"')
+
+
+def retry_after(headers, detail: str, attempt: int) -> float:
+    """Gemini says how long to wait inside the error body ("retryDelay": "37s"). Use it;
+    fixed 3/6/12/24 s waits were far too short for a quota limit."""
+    if headers.get("retry-after"):
+        return float(headers["retry-after"])
+    m = RETRY_DELAY.search(detail)
+    return float(m.group(1)) + 1 if m else 2 ** attempt * 5
+
+
+def mime_for(path: str | Path) -> str:
+    ext = Path(path).suffix.lower()
+    return {".png": "image/png", ".webp": "image/webp"}.get(ext, "image/jpeg")
+
+
+class OpenAICompatVision:
+    def __init__(self, provider: str = "gemini", model: str | None = None,
+                 max_tokens: int = 8192, timeout: float = 120.0, max_retries: int = 4):
+        load_dotenv()
+        p = PROVIDERS[provider]
+        self.key = os.environ.get(p.key_env)
+        if not self.key:
+            raise LLMError(f"{p.key_env} is not set (add it to .env)")
+        self.base_url = p.base_url
+        self.model = model or os.environ.get("REHNUMA_VISION_MODEL") or p.default_model
+        if not self.model:
+            raise LLMError("no vision model given (use --model or REHNUMA_VISION_MODEL)")
+        self.name = f"{provider}:{self.model}"
+        self.max_tokens, self.timeout, self.max_retries = max_tokens, timeout, max_retries
+
+    def _request(self, path: str, body: dict | None = None) -> dict:
+        data = json.dumps(body).encode("utf-8") if body is not None else None
+        for attempt in range(self.max_retries + 1):
+            req = urllib.request.Request(f"{self.base_url}/{path}", data=data,
+                                         method="POST" if data else "GET", headers={
+                "Authorization": f"Bearer {self.key}", "Content-Type": "application/json",
+                "User-Agent": "rehnuma/0.1"})
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                    return json.loads(resp.read().decode("utf-8"))
+            except urllib.error.HTTPError as e:
+                detail = e.read().decode("utf-8", "replace")
+                if e.code in (429, 503) and attempt < self.max_retries:
+                    time.sleep(min(retry_after(e.headers, detail, attempt), 90))
+                    continue
+                message = " ".join(detail.split())[:600]     # keep which quota was hit
+                raise LLMError(f"{self.name} HTTP {e.code}: {message}") from e
+            except (urllib.error.URLError, TimeoutError) as e:
+                raise LLMError(f"{self.name} unreachable: {e}") from e
+        raise LLMError(f"{self.name}: retries exhausted")
+
+    def list_models(self) -> list[str]:
+        return sorted(m["id"] for m in self._request("models")["data"])
+
+    def read(self, system: str, prompt: str, image: bytes, mime: str) -> str:
+        b64 = base64.b64encode(image).decode("ascii")
+        body = {
+            "model": self.model, "temperature": 0, "max_tokens": self.max_tokens,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": [
+                    {"type": "text", "text": prompt},
+                    {"type": "image_url", "image_url": {"url": f"data:{mime};base64,{b64}"}},
+                ]},
+            ],
+        }
+        return self._request("chat/completions", body)["choices"][0]["message"]["content"]

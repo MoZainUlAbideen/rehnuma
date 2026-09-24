@@ -41,12 +41,17 @@
 - [x] Critic v2 rerun: gpt-oss-120b and qwen3.8-27b 100% first-draft on Urdu
 - [x] Production model: gpt-oss-120b (tied on critic, 2x faster: 1.4 s/summary)
 - [x] First reader check: bill owner (native Urdu speaker) says the summaries look good (n=1)
+- [x] Broader user check: ~5 neighbours found the Urdu summaries OK
 
 ## Milestone 3 — Vision extraction + PII redaction
-- [ ] Render synthetic bills as images (clean + phone-photo augmentation) — eval data for extraction
-- [ ] Vision extractor: bill photo -> Bill JSON (both layouts)
-- [ ] Extraction eval: field accuracy on real bills (headline) vs synthetic (stress test), per layout
-- [ ] PII redaction before anything is stored
+- [x] Vision client for any OpenAI-compatible API (Gemini default), stdlib only
+- [x] Extraction prompt + schema derived from `Bill`; PII-free by design (no field for identifiers, extras dropped)
+- [x] Verify loop: the reconciliation engine checks each extraction; failed checks trigger a re-read
+- [x] Fixed: re-read feedback leaked the expected value ("expected 3273") - now names fields only
+- [x] Extraction eval (`rehnuma-eval-extract`): field / key-field accuracy, reconciles rate, per layout, verify on/off
+- [ ] Run on the 7 real photos (verify on vs off) and record the numbers
+- [ ] Render synthetic bills as images (clean + phone-photo augmentation) - stress test
+- [ ] Image-level PII: blur identifiers before the photo leaves the device
 - [ ] Meter-photo check: printed reading vs the meter photo on IESCO bills
 
 ## Milestone 4 — NEPRA visual RAG + agent graph with critic

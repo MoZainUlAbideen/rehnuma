@@ -44,6 +44,7 @@ uv run rehnuma-eval-auditor --n 2000 --seed 42  # auditor eval on synthetic bill
 uv run rehnuma-summary data/labels/real          # plain summary, Urdu (default)
 uv run rehnuma-summary data/labels/real --lang en --out summary.md
 uv run rehnuma-eval-summary --provider groq      # LLM summary + critic (needs .env)
+uv run rehnuma-eval-extract                      # bill photo -> verified bill (needs .env)
 ```
 
 ## How it's built

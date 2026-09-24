@@ -1,0 +1,1343 @@
+{
+  "provider": "gemini:gemini-3.5-flash",
+  "verify": true,
+  "n": 7,
+  "n_read": 6,
+  "overall": {
+    "api_error_rate": 0.14285714285714285,
+    "field_accuracy": 0.9624765478424016,
+    "key_accuracy": 1.0,
+    "reconciles_rate": 0.8333333333333334,
+    "mean_attempts": 1.2857142857142858,
+    "mean_seconds": 44.728571428571435
+  },
+  "by_layout": {
+    "pitc_legacy": 0.9724517906336089,
+    "pesco_v2_2026": 0.9411764705882353
+  },
+  "rows": [
+    {
+      "bill_id": "iesco-2019-07",
+      "layout": "pitc_legacy",
+      "read": true,
+      "field_accuracy": 0.9655172413793104,
+      "key_accuracy": 1.0,
+      "fields": 87,
+      "wrong": [
+        [
+          "legacy_charges.cost_of_electricity",
+          "1652.60",
+          "1652.6"
+        ],
+        [
+          "legacy_charges.govt.nj_surcharge",
+          "20.30",
+          "20.3"
+        ],
+        [
+          "legacy_charges.rate_lines.1.rate",
+          "10.20",
+          "10.2"
+        ]
+      ],
+      "missing": [],
+      "extra": [],
+      "reconciles": true,
+      "failed_checks": [],
+      "attempts": 1,
+      "errors": [],
+      "seconds": 19.3,
+      "extracted": {
+        "bill_id": "iesco-2019-07",
+        "connection_id": null,
+        "source": "real",
+        "disco": "IESCO",
+        "layout": "pitc_legacy",
+        "connection_type": "conventional",
+        "tariff": "A-1a(01)",
+        "sanctioned_load_kw": "3",
+        "bill_month": "2019-07",
+        "reading_date": "2019-07-12",
+        "issue_date": "2019-07-13",
+        "due_date": "2019-07-22",
+        "ed_rate_pct": "1.5",
+        "registers": [
+          {
+            "name": "import",
+            "previous": "9306",
+            "present": "9509",
+            "mf": "1",
+            "units": 203
+          }
+        ],
+        "net_metering": null,
+        "legacy_charges": {
+          "units_consumed": 203,
+          "cost_of_electricity": "1652.6",
+          "meter_rent": "0",
+          "service_rent": "0",
+          "fixed_charges": "0",
+          "fpa": "10.19",
+          "fc_surcharge": "87.29",
+          "tr_surcharge": "0",
+          "qta": "0",
+          "disco_total": "1750.08",
+          "govt": {
+            "electricity_duty": "24.79",
+            "tv_fee": "35",
+            "gst": "300",
+            "nj_surcharge": "20.3",
+            "gst_on_fpa": "2",
+            "ed_on_fpa": "0.15"
+          },
+          "govt_total": "382.24",
+          "total_fpa": "12.34",
+          "fpa_parts": [
+            {
+              "ref_month": "2019-05",
+              "units": 102,
+              "rate": "0.0999"
+            }
+          ],
+          "rate_lines": [
+            {
+              "rate": "8.11",
+              "units": 200
+            },
+            {
+              "rate": "10.2",
+              "units": 3
+            }
+          ]
+        },
+        "v2_charges": null,
+        "totals": {
+          "arrears": 0,
+          "current_bill": 2120,
+          "installment": 0,
+          "adjustments": 0,
+          "payable_within_due": 2132,
+          "lp_surcharge": 176,
+          "payable_after_due": 2308
+        },
+        "history": [
+          {
+            "month": "2018-07",
+            "status": null,
+            "units": "157",
+            "bill": 2561,
+            "payment": 2561
+          },
+          {
+            "month": "2018-08",
+            "status": null,
+            "units": "207",
+            "bill": 2209,
+            "payment": 0
+          },
+          {
+            "month": "2018-09",
+            "status": null,
+            "units": "175",
+            "bill": 3971,
+            "payment": 0
+          },
+          {
+            "month": "2018-10",
+            "status": null,
+            "units": "137",
+            "bill": 5512,
+            "payment": 5512
+          },
+          {
+            "month": "2018-11",
+            "status": null,
+            "units": "70",
+            "bill": 565,
+            "payment": 609
+          },
+          {
+            "month": "2018-12",
+            "status": null,
+            "units": "55",
+            "bill": 488,
+            "payment": 0
+          },
+          {
+            "month": "2019-01",
+            "status": null,
+            "units": "58",
+            "bill": 957,
+            "payment": 0
+          },
+          {
+            "month": "2019-02",
+            "status": null,
+            "units": "68",
+            "bill": 1539,
+            "payment": 1539
+          },
+          {
+            "month": "2019-03",
+            "status": null,
+            "units": "122",
+            "bill": 1098,
+            "payment": 0
+          },
+          {
+            "month": "2019-04",
+            "status": null,
+            "units": "67",
+            "bill": 1746,
+            "payment": 1746
+          },
+          {
+            "month": "2019-05",
+            "status": null,
+            "units": "102",
+            "bill": 768,
+            "payment": 0
+          },
+          {
+            "month": "2019-06",
+            "status": null,
+            "units": "176",
+            "bill": 2402,
+            "payment": 2402
+          }
+        ],
+        "uncertain_fields": [],
+        "notes": []
+      }
+    },
+    {
+      "bill_id": "iesco-2021-01",
+      "layout": "pitc_legacy",
+      "read": true,
+      "field_accuracy": 0.989247311827957,
+      "key_accuracy": 1.0,
+      "fields": 93,
+      "wrong": [
+        [
+          "legacy_charges.govt.nj_surcharge",
+          "5.80",
+          "5.8"
+        ]
+      ],
+      "missing": [],
+      "extra": [],
+      "reconciles": true,
+      "failed_checks": [],
+      "attempts": 1,
+      "errors": [],
+      "seconds": 22.1,
+      "extracted": {
+        "bill_id": "iesco-2021-01",
+        "connection_id": null,
+        "source": "real",
+        "disco": "IESCO",
+        "layout": "pitc_legacy",
+        "connection_type": "conventional",
+        "tariff": "A-1a(01)",
+        "sanctioned_load_kw": "2",
+        "bill_month": "2021-01",
+        "reading_date": "2021-02-06",
+        "issue_date": "2021-02-07",
+        "due_date": "2021-02-17",
+        "ed_rate_pct": "1.5",
+        "registers": [
+          {
+            "name": "import",
+            "previous": "4084",
+            "present": "4142",
+            "mf": "1",
+            "units": 58
+          }
+        ],
+        "net_metering": null,
+        "legacy_charges": {
+          "units_consumed": 58,
+          "cost_of_electricity": "335.82",
+          "meter_rent": "0",
+          "service_rent": "0",
+          "fixed_charges": "0",
+          "fpa": "78.09",
+          "fc_surcharge": "24.94",
+          "tr_surcharge": "0",
+          "qta": "0",
+          "disco_total": "438.85",
+          "govt": {
+            "electricity_duty": "5.04",
+            "tv_fee": "35",
+            "gst": "62",
+            "nj_surcharge": "5.8",
+            "gst_on_fpa": "14",
+            "ed_on_fpa": "1.17"
+          },
+          "govt_total": "123.01",
+          "total_fpa": "93.26",
+          "fpa_parts": [
+            {
+              "ref_month": "2020-10",
+              "units": 117,
+              "rate": "0.2925"
+            },
+            {
+              "ref_month": "2020-11",
+              "units": 57,
+              "rate": "0.7696"
+            }
+          ],
+          "rate_lines": [
+            {
+              "rate": "5.79",
+              "units": 58
+            }
+          ]
+        },
+        "v2_charges": null,
+        "totals": {
+          "arrears": 0,
+          "current_bill": 469,
+          "installment": 0,
+          "adjustments": 0,
+          "payable_within_due": 562,
+          "lp_surcharge": 37,
+          "payable_after_due": 599
+        },
+        "history": [
+          {
+            "month": "2020-01",
+            "status": null,
+            "units": "52",
+            "bill": 572,
+            "payment": 572
+          },
+          {
+            "month": "2020-02",
+            "status": "LK",
+            "units": "66",
+            "bill": 386,
+            "payment": 386
+          },
+          {
+            "month": "2020-03",
+            "status": "LK",
+            "units": "66",
+            "bill": 134,
+            "payment": 0
+          },
+          {
+            "month": "2020-04",
+            "status": null,
+            "units": "66",
+            "bill": 269,
+            "payment": 1066
+          },
+          {
+            "month": "2020-05",
+            "status": null,
+            "units": "155",
+            "bill": 0,
+            "payment": 0
+          },
+          {
+            "month": "2020-06",
+            "status": null,
+            "units": "211",
+            "bill": 2435,
+            "payment": 2435
+          },
+          {
+            "month": "2020-07",
+            "status": null,
+            "units": "185",
+            "bill": 1895,
+            "payment": 0
+          },
+          {
+            "month": "2020-08",
+            "status": null,
+            "units": "183",
+            "bill": 3909,
+            "payment": 3909
+          },
+          {
+            "month": "2020-09",
+            "status": null,
+            "units": "226",
+            "bill": 2653,
+            "payment": 2653
+          },
+          {
+            "month": "2020-10",
+            "status": null,
+            "units": "117",
+            "bill": 1387,
+            "payment": 1387
+          },
+          {
+            "month": "2020-11",
+            "status": null,
+            "units": "57",
+            "bill": 810,
+            "payment": 810
+          },
+          {
+            "month": "2020-12",
+            "status": null,
+            "units": "56",
+            "bill": 753,
+            "payment": 753
+          }
+        ],
+        "uncertain_fields": [],
+        "notes": []
+      }
+    },
+    {
+      "bill_id": "iesco-2023-03",
+      "layout": "pitc_legacy",
+      "read": true,
+      "field_accuracy": 0.9770114942528736,
+      "key_accuracy": 1.0,
+      "fields": 87,
+      "wrong": [
+        [
+          "legacy_charges.govt.ed_on_fpa",
+          "4",
+          "46"
+        ]
+      ],
+      "missing": [
+        "legacy_charges.govt.gst_on_fpa"
+      ],
+      "extra": [
+        "legacy_charges.govt.further_tax_on_fpa"
+      ],
+      "reconciles": true,
+      "failed_checks": [],
+      "attempts": 1,
+      "errors": [],
+      "seconds": 14.1,
+      "extracted": {
+        "bill_id": "iesco-2023-03",
+        "connection_id": null,
+        "source": "real",
+        "disco": "IESCO",
+        "layout": "pitc_legacy",
+        "connection_type": "conventional",
+        "tariff": "A-1a(01)",
+        "sanctioned_load_kw": "2",
+        "bill_month": "2023-03",
+        "reading_date": "2023-03-28",
+        "issue_date": "2023-03-29",
+        "due_date": "2023-04-13",
+        "ed_rate_pct": "1.5",
+        "registers": [
+          {
+            "name": "import",
+            "previous": "8179",
+            "present": "8572",
+            "mf": "1",
+            "units": 393
+          }
+        ],
+        "net_metering": null,
+        "legacy_charges": {
+          "units_consumed": 393,
+          "cost_of_electricity": "10033",
+          "meter_rent": "0",
+          "service_rent": "0",
+          "fixed_charges": "0",
+          "fpa": "266.67",
+          "fc_surcharge": "1501.26",
+          "tr_surcharge": "0",
+          "qta": "1262.16",
+          "disco_total": "13063.09",
+          "govt": {
+            "electricity_duty": "169",
+            "tv_fee": "35",
+            "gst": "2334",
+            "ed_on_fpa": "46",
+            "further_tax_on_fpa": "4"
+          },
+          "govt_total": "2588",
+          "total_fpa": "317",
+          "fpa_parts": [
+            {
+              "ref_month": "2023-01",
+              "units": 558,
+              "rate": null
+            }
+          ],
+          "rate_lines": [
+            {
+              "rate": "25.53",
+              "units": 393
+            }
+          ]
+        },
+        "v2_charges": null,
+        "totals": {
+          "arrears": 0,
+          "current_bill": 15335,
+          "installment": 0,
+          "adjustments": 0,
+          "payable_within_due": 15652,
+          "lp_surcharge": 1280,
+          "payable_after_due": 16932
+        },
+        "history": [
+          {
+            "month": "2022-03",
+            "status": null,
+            "units": "315",
+            "bill": 21910,
+            "payment": 0
+          },
+          {
+            "month": "2022-04",
+            "status": "LK",
+            "units": "337.5",
+            "bill": 25571,
+            "payment": 0
+          },
+          {
+            "month": "2022-05",
+            "status": null,
+            "units": "338",
+            "bill": 36084,
+            "payment": 0
+          },
+          {
+            "month": "2022-06",
+            "status": null,
+            "units": "390",
+            "bill": 44936,
+            "payment": 44936
+          },
+          {
+            "month": "2022-07",
+            "status": null,
+            "units": "344",
+            "bill": 13161,
+            "payment": 13161
+          },
+          {
+            "month": "2022-08",
+            "status": null,
+            "units": "446",
+            "bill": 20513,
+            "payment": 20513
+          },
+          {
+            "month": "2022-09",
+            "status": null,
+            "units": "370",
+            "bill": 14452,
+            "payment": 14452
+          },
+          {
+            "month": "2022-10",
+            "status": null,
+            "units": "324",
+            "bill": 11542,
+            "payment": 11542
+          },
+          {
+            "month": "2022-11",
+            "status": null,
+            "units": "468",
+            "bill": 17791,
+            "payment": 17791
+          },
+          {
+            "month": "2022-12",
+            "status": null,
+            "units": "513",
+            "bill": 19902,
+            "payment": 19902
+          },
+          {
+            "month": "2023-01",
+            "status": null,
+            "units": "558",
+            "bill": 21872,
+            "payment": 21872
+          },
+          {
+            "month": "2023-02",
+            "status": null,
+            "units": "535",
+            "bill": 19545,
+            "payment": 19545
+          }
+        ],
+        "uncertain_fields": [],
+        "notes": []
+      }
+    },
+    {
+      "bill_id": "pesco-2026-03",
+      "layout": "pitc_legacy",
+      "read": true,
+      "field_accuracy": 0.9583333333333334,
+      "key_accuracy": 1.0,
+      "fields": 96,
+      "wrong": [
+        [
+          "sanctioned_load_kw",
+          "7.00",
+          "7.0"
+        ],
+        [
+          "net_metering.dg_capacity_kw",
+          "9.50",
+          "9.5"
+        ]
+      ],
+      "missing": [
+        "legacy_charges.govt.gst_on_fpa",
+        "legacy_charges.govt.ed_on_fpa"
+      ],
+      "extra": [
+        "legacy_charges.govt.rs_tax",
+        "legacy_charges.govt.income_tax_on_fpa"
+      ],
+      "reconciles": false,
+      "failed_checks": [
+        "fpa_total_from_lines",
+        "legacy_current_bill"
+      ],
+      "attempts": 3,
+      "errors": [],
+      "seconds": 71.5,
+      "extracted": {
+        "bill_id": "pesco-2026-03",
+        "connection_id": null,
+        "source": "real",
+        "disco": "PESCO",
+        "layout": "pitc_legacy",
+        "connection_type": "net_metering",
+        "tariff": "A-1b(03)T",
+        "sanctioned_load_kw": "7.0",
+        "bill_month": "2026-03",
+        "reading_date": "2026-03-01",
+        "issue_date": "2026-03-12",
+        "due_date": "2026-03-26",
+        "ed_rate_pct": "1.5",
+        "registers": [
+          {
+            "name": "import_offpeak",
+            "previous": "6876.51",
+            "present": "7071.29",
+            "mf": "1",
+            "units": 195
+          },
+          {
+            "name": "import_peak",
+            "previous": "2153.23",
+            "present": "2254.05",
+            "mf": "1",
+            "units": 101
+          },
+          {
+            "name": "export_offpeak",
+            "previous": "15969.11",
+            "present": "16468.6",
+            "mf": "1",
+            "units": 499
+          }
+        ],
+        "net_metering": {
+          "dg_capacity_kw": "9.5",
+          "import_kwh": {
+            "offpeak": 195,
+            "peak": 101
+          },
+          "export_kwh": {
+            "offpeak": 499,
+            "peak": 1
+          },
+          "net_kwh": {
+            "offpeak": -304,
+            "peak": 100
+          },
+          "month_count": 3,
+          "cycle_length": 3,
+          "remaining_prev": {
+            "offpeak": 0,
+            "peak": 0
+          },
+          "remaining_present": {
+            "offpeak": 0,
+            "peak": 0
+          }
+        },
+        "legacy_charges": {
+          "units_consumed": -204,
+          "cost_of_electricity": "-3012",
+          "meter_rent": "0",
+          "service_rent": "0",
+          "fixed_charges": "2140",
+          "fpa": "972",
+          "fc_surcharge": "0",
+          "tr_surcharge": "0",
+          "qta": "0",
+          "disco_total": "100",
+          "govt": {
+            "rs_tax": "178",
+            "income_tax_on_fpa": "15"
+          },
+          "govt_total": "193",
+          "total_fpa": "1164",
+          "fpa_parts": [
+            {
+              "ref_month": "2026-01",
+              "units": 597,
+              "rate": "1.6274"
+            }
+          ],
+          "rate_lines": []
+        },
+        "v2_charges": null,
+        "totals": {
+          "arrears": -80037,
+          "current_bill": -872,
+          "installment": 0,
+          "adjustments": 0,
+          "payable_within_due": -79745,
+          "lp_surcharge": 0,
+          "payable_after_due": -79745
+        },
+        "history": [
+          {
+            "month": "2025-03",
+            "status": null,
+            "units": "-151",
+            "bill": -31840,
+            "payment": 0
+          },
+          {
+            "month": "2025-04",
+            "status": null,
+            "units": "0",
+            "bill": -30762,
+            "payment": 0
+          },
+          {
+            "month": "2025-05",
+            "status": null,
+            "units": "0",
+            "bill": -29547,
+            "payment": 0
+          },
+          {
+            "month": "2025-06",
+            "status": null,
+            "units": "-3005",
+            "bill": -106348,
+            "payment": 0
+          },
+          {
+            "month": "2025-07",
+            "status": null,
+            "units": "0",
+            "bill": -105168,
+            "payment": 0
+          },
+          {
+            "month": "2025-08",
+            "status": null,
+            "units": "0",
+            "bill": -103988,
+            "payment": 0
+          },
+          {
+            "month": "2025-09",
+            "status": null,
+            "units": "-1185",
+            "bill": -123277,
+            "payment": 0
+          },
+          {
+            "month": "2025-10",
+            "status": null,
+            "units": "0",
+            "bill": -122097,
+            "payment": 0
+          },
+          {
+            "month": "2025-11",
+            "status": "SS",
+            "units": "0",
+            "bill": -120917,
+            "payment": 0
+          },
+          {
+            "month": "2025-12",
+            "status": null,
+            "units": "-873",
+            "bill": -136921,
+            "payment": 0
+          },
+          {
+            "month": "2026-01",
+            "status": null,
+            "units": "597",
+            "bill": -102994,
+            "payment": 0
+          },
+          {
+            "month": "2026-02",
+            "status": null,
+            "units": "383",
+            "bill": -80037,
+            "payment": 0
+          }
+        ],
+        "uncertain_fields": [],
+        "notes": []
+      }
+    },
+    {
+      "bill_id": "pesco-2026-07",
+      "layout": "pesco_v2_2026",
+      "read": true,
+      "field_accuracy": 0.9058823529411765,
+      "key_accuracy": 1.0,
+      "fields": 85,
+      "wrong": [
+        [
+          "sanctioned_load_kw",
+          "7.00",
+          "7.0"
+        ],
+        [
+          "history.2025-07.bill",
+          "-105168",
+          "-100168"
+        ],
+        [
+          "history.2025-08.bill",
+          "-103988",
+          "-103168"
+        ],
+        [
+          "history.2025-12.units",
+          "-873",
+          "-872"
+        ],
+        [
+          "history.2025-12.bill",
+          "-136921",
+          "-124121"
+        ],
+        [
+          "history.2026-02.bill",
+          "-80037",
+          "-80027"
+        ],
+        [
+          "history.2026-04.bill",
+          "-76304",
+          "-78334"
+        ],
+        [
+          "history.2026-05.bill",
+          "-73517",
+          "-79517"
+        ]
+      ],
+      "missing": [],
+      "extra": [],
+      "reconciles": true,
+      "failed_checks": [],
+      "attempts": 1,
+      "errors": [],
+      "seconds": 32.8,
+      "extracted": {
+        "bill_id": "pesco-2026-07",
+        "connection_id": null,
+        "source": "real",
+        "disco": "PESCO",
+        "layout": "pesco_v2_2026",
+        "connection_type": "net_metering",
+        "tariff": "A-1b(03)T",
+        "sanctioned_load_kw": "7.0",
+        "bill_month": "2026-07",
+        "reading_date": "2026-07-01",
+        "issue_date": "2026-07-08",
+        "due_date": "2026-07-22",
+        "ed_rate_pct": null,
+        "registers": [
+          {
+            "name": "import_offpeak",
+            "previous": "7665.26",
+            "present": "8031.61",
+            "mf": "1",
+            "units": 366
+          },
+          {
+            "name": "import_peak",
+            "previous": "2455.13",
+            "present": "2589.27",
+            "mf": "1",
+            "units": 134
+          },
+          {
+            "name": "export_offpeak",
+            "previous": "19414.39",
+            "present": "20614.71",
+            "mf": "1",
+            "units": 1200
+          },
+          {
+            "name": "export_peak",
+            "previous": "9.08",
+            "present": "9.08",
+            "mf": "1",
+            "units": 0
+          }
+        ],
+        "net_metering": {
+          "dg_capacity_kw": null,
+          "import_kwh": {
+            "offpeak": 366,
+            "peak": 134
+          },
+          "export_kwh": {
+            "offpeak": 1200,
+            "peak": 0
+          },
+          "net_kwh": {
+            "offpeak": -834,
+            "peak": 134
+          },
+          "month_count": 1,
+          "cycle_length": 3,
+          "remaining_prev": {
+            "offpeak": 0,
+            "peak": 0
+          },
+          "remaining_present": {
+            "offpeak": 834,
+            "peak": -134
+          }
+        },
+        "legacy_charges": null,
+        "v2_charges": {
+          "total_electricity_charges": 2687,
+          "subsidies": 0,
+          "net_electricity_charges": 2687,
+          "taxes": 484
+        },
+        "totals": {
+          "arrears": -121199,
+          "current_bill": 3170,
+          "installment": 0,
+          "adjustments": 0,
+          "payable_within_due": -118029,
+          "lp_surcharge": 0,
+          "payable_after_due": -118029
+        },
+        "history": [
+          {
+            "month": "2025-07",
+            "status": null,
+            "units": "0",
+            "bill": -100168,
+            "payment": 0
+          },
+          {
+            "month": "2025-08",
+            "status": null,
+            "units": "0",
+            "bill": -103168,
+            "payment": 0
+          },
+          {
+            "month": "2025-09",
+            "status": null,
+            "units": "-1185",
+            "bill": -123277,
+            "payment": 0
+          },
+          {
+            "month": "2025-10",
+            "status": null,
+            "units": "0",
+            "bill": -122097,
+            "payment": 0
+          },
+          {
+            "month": "2025-11",
+            "status": "SS",
+            "units": "0",
+            "bill": -120917,
+            "payment": 0
+          },
+          {
+            "month": "2025-12",
+            "status": null,
+            "units": "-872",
+            "bill": -124121,
+            "payment": 0
+          },
+          {
+            "month": "2026-01",
+            "status": null,
+            "units": "597",
+            "bill": -102994,
+            "payment": 0
+          },
+          {
+            "month": "2026-02",
+            "status": null,
+            "units": "383",
+            "bill": -80027,
+            "payment": 0
+          },
+          {
+            "month": "2026-03",
+            "status": null,
+            "units": "-204",
+            "bill": -79745,
+            "payment": 0
+          },
+          {
+            "month": "2026-04",
+            "status": null,
+            "units": "0",
+            "bill": -78334,
+            "payment": 0
+          },
+          {
+            "month": "2026-05",
+            "status": null,
+            "units": "0",
+            "bill": -79517,
+            "payment": 0
+          },
+          {
+            "month": "2026-06",
+            "status": null,
+            "units": "-2151",
+            "bill": -121199,
+            "payment": 0
+          }
+        ],
+        "uncertain_fields": [],
+        "notes": []
+      }
+    },
+    {
+      "bill_id": "pesco-2026-08",
+      "layout": "pesco_v2_2026",
+      "read": true,
+      "field_accuracy": 0.9764705882352941,
+      "key_accuracy": 1.0,
+      "fields": 85,
+      "wrong": [
+        [
+          "sanctioned_load_kw",
+          "7.00",
+          "7"
+        ],
+        [
+          "history.2025-08.bill",
+          "-103988",
+          "103988"
+        ]
+      ],
+      "missing": [],
+      "extra": [],
+      "reconciles": true,
+      "failed_checks": [],
+      "attempts": 1,
+      "errors": [],
+      "seconds": 75.2,
+      "extracted": {
+        "bill_id": "pesco-2026-08",
+        "connection_id": null,
+        "source": "real",
+        "disco": "PESCO",
+        "layout": "pesco_v2_2026",
+        "connection_type": "net_metering",
+        "tariff": "A-1b(03)T",
+        "sanctioned_load_kw": "7",
+        "bill_month": "2026-08",
+        "reading_date": "2026-08-01",
+        "issue_date": "2026-08-10",
+        "due_date": "2026-08-24",
+        "ed_rate_pct": null,
+        "registers": [
+          {
+            "name": "import_offpeak",
+            "previous": "8031.61",
+            "present": "8485.99",
+            "mf": "1",
+            "units": 454
+          },
+          {
+            "name": "import_peak",
+            "previous": "2589.27",
+            "present": "2774.06",
+            "mf": "1",
+            "units": 185
+          },
+          {
+            "name": "export_offpeak",
+            "previous": "20614.71",
+            "present": "21560.86",
+            "mf": "1",
+            "units": 946
+          },
+          {
+            "name": "export_peak",
+            "previous": "9.08",
+            "present": "9.08",
+            "mf": "1",
+            "units": 0
+          }
+        ],
+        "net_metering": {
+          "dg_capacity_kw": null,
+          "import_kwh": {
+            "offpeak": 454,
+            "peak": 185
+          },
+          "export_kwh": {
+            "offpeak": 946,
+            "peak": 0
+          },
+          "net_kwh": {
+            "offpeak": -492,
+            "peak": 185
+          },
+          "month_count": 2,
+          "cycle_length": 3,
+          "remaining_prev": {
+            "offpeak": 834,
+            "peak": -134
+          },
+          "remaining_present": {
+            "offpeak": 1326,
+            "peak": -319
+          }
+        },
+        "legacy_charges": null,
+        "v2_charges": {
+          "total_electricity_charges": 2774,
+          "subsidies": 0,
+          "net_electricity_charges": 2774,
+          "taxes": 499
+        },
+        "totals": {
+          "arrears": -118029,
+          "current_bill": 3273,
+          "installment": 0,
+          "adjustments": 0,
+          "payable_within_due": -114756,
+          "lp_surcharge": 0,
+          "payable_after_due": -114756
+        },
+        "history": [
+          {
+            "month": "2025-08",
+            "status": null,
+            "units": "0",
+            "bill": 103988,
+            "payment": 0
+          },
+          {
+            "month": "2025-09",
+            "status": null,
+            "units": "-1185",
+            "bill": -123277,
+            "payment": 0
+          },
+          {
+            "month": "2025-10",
+            "status": null,
+            "units": "0",
+            "bill": -122097,
+            "payment": 0
+          },
+          {
+            "month": "2025-11",
+            "status": "SS",
+            "units": "0",
+            "bill": -120917,
+            "payment": 0
+          },
+          {
+            "month": "2025-12",
+            "status": null,
+            "units": "-873",
+            "bill": -136921,
+            "payment": 0
+          },
+          {
+            "month": "2026-01",
+            "status": null,
+            "units": "597",
+            "bill": -102994,
+            "payment": 0
+          },
+          {
+            "month": "2026-02",
+            "status": null,
+            "units": "383",
+            "bill": -80037,
+            "payment": 0
+          },
+          {
+            "month": "2026-03",
+            "status": null,
+            "units": "-204",
+            "bill": -79745,
+            "payment": 0
+          },
+          {
+            "month": "2026-04",
+            "status": null,
+            "units": "0",
+            "bill": -76304,
+            "payment": 0
+          },
+          {
+            "month": "2026-05",
+            "status": null,
+            "units": "0",
+            "bill": -73517,
+            "payment": 0
+          },
+          {
+            "month": "2026-06",
+            "status": null,
+            "units": "-2151",
+            "bill": -121199,
+            "payment": 0
+          },
+          {
+            "month": "2026-07",
+            "status": null,
+            "units": "0",
+            "bill": -118029,
+            "payment": 0
+          }
+        ],
+        "uncertain_fields": [],
+        "notes": []
+      }
+    },
+    {
+      "bill_id": "pesco-2026-09",
+      "layout": "pesco_v2_2026",
+      "read": false,
+      "field_accuracy": 0.0,
+      "key_accuracy": 0.0,
+      "fields": 86,
+      "wrong": [],
+      "missing": [
+        "disco",
+        "layout",
+        "connection_type",
+        "tariff",
+        "sanctioned_load_kw",
+        "bill_month",
+        "reading_date",
+        "issue_date",
+        "due_date",
+        "registers.import_offpeak.name",
+        "registers.import_offpeak.previous",
+        "registers.import_offpeak.present",
+        "registers.import_offpeak.mf",
+        "registers.import_offpeak.units",
+        "registers.import_peak.name",
+        "registers.import_peak.previous",
+        "registers.import_peak.present",
+        "registers.import_peak.mf",
+        "registers.import_peak.units",
+        "registers.export_offpeak.name",
+        "registers.export_offpeak.previous",
+        "registers.export_offpeak.present",
+        "registers.export_offpeak.mf",
+        "registers.export_offpeak.units",
+        "registers.export_peak.name",
+        "registers.export_peak.previous",
+        "registers.export_peak.present",
+        "registers.export_peak.mf",
+        "registers.export_peak.units",
+        "net_metering.dg_capacity_kw",
+        "net_metering.import_kwh.offpeak",
+        "net_metering.import_kwh.peak",
+        "net_metering.export_kwh.offpeak",
+        "net_metering.export_kwh.peak",
+        "net_metering.net_kwh.offpeak",
+        "net_metering.net_kwh.peak",
+        "net_metering.month_count",
+        "net_metering.cycle_length",
+        "net_metering.remaining_prev.offpeak",
+        "net_metering.remaining_prev.peak",
+        "net_metering.remaining_present.offpeak",
+        "net_metering.remaining_present.peak",
+        "v2_charges.total_electricity_charges",
+        "v2_charges.net_electricity_charges",
+        "v2_charges.taxes",
+        "totals.arrears",
+        "totals.current_bill",
+        "totals.payable_within_due",
+        "totals.payable_after_due",
+        "history.2025-09.month",
+        "history.2025-09.units",
+        "history.2025-09.bill",
+        "history.2025-10.month",
+        "history.2025-10.units",
+        "history.2025-10.bill",
+        "history.2025-11.month",
+        "history.2025-11.status",
+        "history.2025-11.units",
+        "history.2025-11.bill",
+        "history.2025-12.month",
+        "history.2025-12.units",
+        "history.2025-12.bill",
+        "history.2026-01.month",
+        "history.2026-01.units",
+        "history.2026-01.bill",
+        "history.2026-02.month",
+        "history.2026-02.units",
+        "history.2026-02.bill",
+        "history.2026-03.month",
+        "history.2026-03.units",
+        "history.2026-03.bill",
+        "history.2026-04.month",
+        "history.2026-04.units",
+        "history.2026-04.bill",
+        "history.2026-05.month",
+        "history.2026-05.units",
+        "history.2026-05.bill",
+        "history.2026-06.month",
+        "history.2026-06.units",
+        "history.2026-06.bill",
+        "history.2026-07.month",
+        "history.2026-07.units",
+        "history.2026-07.bill",
+        "history.2026-08.month",
+        "history.2026-08.units",
+        "history.2026-08.bill"
+      ],
+      "extra": [],
+      "reconciles": false,
+      "failed_checks": [],
+      "attempts": 1,
+      "errors": [
+        "gemini:gemini-3.5-flash HTTP 429: [{ \"error\": { \"code\": 429, \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev"
+      ],
+      "seconds": 78.1,
+      "extracted": null
+    }
+  ]
+}

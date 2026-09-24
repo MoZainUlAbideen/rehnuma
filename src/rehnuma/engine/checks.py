@@ -308,10 +308,18 @@ def check_fpa(bill: Bill) -> list[Finding]:
     b = calc.fpa_breakdown(c.fpa_parts, bill.ed_rate_pct, printed_fpa=c.fpa)
     out.append(compare_printed("fpa_tax_cascade", bid, b.total, c.total_fpa,
                                what="FPA + ED + GST(ref-month rate, rounded per month)"))
+    # Each tax line on its own too: a vision model once copied GST on FPA (46) into the
+    # ED-on-FPA line (4) and no check looked at that line alone.
+    if "ed_on_fpa" in c.govt:
+        out.append(compare_printed("ed_on_fpa", bid, b.ed_on_fpa, c.govt["ed_on_fpa"],
+                                   what=f"{bill.ed_rate_pct}% x FPA"))
     if "gst_on_fpa" in c.govt:
         out.append(compare_printed("gst_on_fpa", bid, b.gst_on_fpa, c.govt["gst_on_fpa"],
                                    what="GST at FPA reference-month rate"))
     return out
+
+
+# --- v2 layout charges -------------------------------------------------------
 
 
 # --- v2 layout charges -------------------------------------------------------

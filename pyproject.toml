@@ -9,6 +9,7 @@ dependencies = [
 ]
 
 [project.scripts]
+rehnuma-eval-extract = "rehnuma.evals.extract_eval:main"
 rehnuma-eval-summary = "rehnuma.evals.summary_eval:main"
 rehnuma-summary = "rehnuma.explain.cli:main"
 rehnuma-eval-auditor = "rehnuma.evals.auditor_eval:main"
