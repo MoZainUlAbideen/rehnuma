@@ -205,6 +205,30 @@ def sentences(text: str) -> list[str]:
     return [p.strip() for p in parts if sum(c.isalpha() for c in TAG.sub("", p)) >= 8]
 
 
+def paragraphs(text: str) -> list[list[str]]:
+    return [sentences(p) for p in re.split(r"\n\s*\n|\n", text) if p.strip()]
+
+
+def uncited_sentences(text: str) -> list[str]:
+    """Sentences with no tag of their own AND no tagged neighbour in the same paragraph.
+
+    Strict per-sentence tagging made the fallback fire on three correct answers in one run
+    (c5, c3-ur, p4-ur): "claim. claim [S5][S6]" and a one-line conclusion after a tagged
+    sentence are ordinary citation style, and the retry would not restructure them. The
+    user then got no answer at all. A paragraph with no tag anywhere still fails, and every
+    number is still checked against the cited sources."""
+    out = []
+    for para in paragraphs(text):
+        tagged = [bool(TAG.search(s)) for s in para]
+        for i, s in enumerate(para):
+            if tagged[i] or _ABSENCE.search(s):
+                continue
+            if (i > 0 and tagged[i - 1]) or (i + 1 < len(para) and tagged[i + 1]):
+                continue
+            out.append(s)
+    return out
+
+
 @dataclass
 class Check:
     bad_tags: list[str] = field(default_factory=list)
@@ -254,7 +278,7 @@ def check(text: str, sources: list[Source], lang: str, question: str = "") -> Ch
     c = Check()
     c.no_citation = not cited_tags
     c.bad_tags = sorted({t for t in cited_tags if t not in by_tag})
-    c.uncited = [s for s in sentences(text) if not TAG.search(s) and not _ABSENCE.search(s)]
+    c.uncited = uncited_sentences(text)
     cited = [by_tag[t] for t in dict.fromkeys(cited_tags) if t in by_tag]
     allowed = numbers_in(question)
     for s in cited:                  # exactly what the model was shown for that source

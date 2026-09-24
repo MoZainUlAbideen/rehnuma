@@ -98,7 +98,10 @@
 - [x] Verified-code run: the family's question answered correctly (power price until the agreement ends, energy on renewal, citing 21(2)); retry kept the correct draft; rate rule caught p4-ur
 - [x] Fixed: critic split sentences at "Rs." / "etc.", demanded tags on "the sources do not cover X", and broke on a trailing NOT_FOUND - c5's good partial answer fell back
 - [x] p4/p4-ur now also must say billing moves to net billing (reg. 14) - completeness the critic can't enforce, measured by the eval
-- [ ] Full answer eval (dev + held-out + out-of-scope) on the next Groq allowance
+- [x] Full answer eval: held-out 100% answered (EN+UR), 91-100% cite gold; dev 88% EN / 67% UR; out-of-scope 6/6 refused
+- [x] Fixed: 3 correct answers fell back on per-sentence tagging - neighbour rule (7 of 8 tag rejections now pass; replayed on the real drafts)
+- [ ] Re-run dev (Urdu fallbacks should clear) - then milestone 4 answer layer is done
+- [ ] Completeness: p4 answers omit the switch to net billing (reg. 14) - measured, not yet fixed
 - [ ] Route bill questions to the engine (RAG explains rules, the engine does the arithmetic)
 
 ## Milestone 5 — Forecasting (both segments) + solar planner

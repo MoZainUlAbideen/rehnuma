@@ -79,7 +79,10 @@ def test_a_number_from_an_uncited_source_does_not_count():
 
 def test_uncited_sentence_and_unknown_tag_are_caught():
     src = _sources(("new", "7(1)"))
-    c = check("The agreement lasts 5 years. [S1] You can renew it after that period.", src, "en")
+    # a tagged neighbour covers ordinary "claim [S1]. follow-up." style (see neighbour rule);
+    # an untagged claim in its own paragraph still fails
+    c = check("The agreement lasts 5 years. [S1]\n\nYou can renew it after that period.", src,
+              "en")
     assert len(c.uncited) == 1
     assert check("It lasts 5 years. [S4]", src, "en").bad_tags == ["S4"]
 
@@ -286,3 +289,35 @@ def test_partial_answer_with_a_trailing_not_found_is_kept():
     a = answer("how long is the prosumer agreement term", _index(), llm, rewritten="",
                docs=DOCS)
     assert a.status == "answered" and "NOT_FOUND" not in a.text
+
+
+# --- neighbour rule: ordinary citation style is not a failure ---------------------------
+def test_claim_followed_by_a_tagged_claim_is_covered():
+    """c5 fell back on 'claim. claim [S5][S6]' - a correct answer, and the user got nothing."""
+    from rehnuma.policy.answer import uncited_sentences
+    text = ("For a new connection the security deposit follows the rates listed in Annex-IV. "
+            "The rates differ by consumer type, e.g. Residential A-1 Urban = Rs. 1,220/kW. "
+            "[S5][S6]")
+    assert uncited_sentences(text) == []
+
+
+def test_conclusion_after_a_tagged_sentence_is_covered():
+    from rehnuma.policy.answer import uncited_sentences
+    urdu = ("ڈسکو زیادہ سے زیادہ دو پچھلے بلنگ سائیکل تک یونٹ چارج کر سکتا ہے [S3]۔ "
+            "اس لیے زیادہ سے زیادہ دو ماہ کے یونٹ چارج کیے جا سکتے ہیں۔")
+    assert uncited_sentences(urdu) == []
+
+
+def test_two_untagged_sentences_in_a_row_still_fail():
+    """h9: the opening sentence has no tagged neighbour."""
+    from rehnuma.policy.answer import uncited_sentences
+    text = ("When the billing cycle is longer than a month the units are prorated. "
+            "The recorded units are divided by the days and multiplied by 30. "
+            "For example 54 units in 33 days gives 49 units for the month [S1].")
+    assert len(uncited_sentences(text)) == 1
+
+
+def test_an_untagged_paragraph_still_fails():
+    from rehnuma.policy.answer import uncited_sentences
+    text = "The agreement lasts five years [S1].\n\nYou can also renew it for another term."
+    assert len(uncited_sentences(text)) == 1

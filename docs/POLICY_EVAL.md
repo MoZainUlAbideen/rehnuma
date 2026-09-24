@@ -195,6 +195,34 @@ required to carry a tag; and a partial answer ending in "NOT_FOUND." was not cle
 three fixed. Trade-off: a sentence phrased as an absence ("... not given ...") is exempt
 from the tag rule - its numbers are still checked.
 
+### Fifth run - full answer eval on verified code
+
+| Split | n | answered | first draft | fallback | false refusal | cites gold | fact correct |
+|---|---|---|---|---|---|---|---|
+| held-out, English | 11 | 100% | 64% | 0% | 0% | 91% | 100% (n=3) |
+| held-out, Urdu | 2 | 100% | 100% | 0% | 0% | 100% | 100% (n=2) |
+| dev, English | 16 | 88% | 75% | 6% | 6% | 93% | 78% (n=9) |
+| dev, Urdu | 6 | 67% | 67% | 33% | 0% | 100% | 100% (n=3) |
+| out of scope | 6 | refused 6/6 | | | | | |
+
+Reading the drafts behind the failures:
+
+- **c5, c3-ur, p4-ur fell back with correct content.** Each was rejected for one sentence
+  without its own tag, next to a tagged sentence in the same paragraph ("claim. claim
+  [S5][S6]", or a one-line conclusion). The retry did not restructure, and the user got no
+  answer. **Change:** a sentence is covered if it or an adjacent sentence in the same
+  paragraph carries a tag. Replayed on every draft the old rule rejected for tags in this
+  run, 7 of 8 now pass; the one still rejected (h9) opens with two untagged sentences in a
+  row. Trade-off: one untagged sentence can ride on a neighbour's citation; a paragraph
+  with no tag still fails and every number is still checked against the cited sources.
+- **p4-ur's first draft was right** - it transliterated the rates as "power" / "energy"
+  (paawar / enarji), keeping the distinction - and was rejected by the English-name rule as
+  designed; the retry added the English names, then hit the tag rule above.
+- **p4 (English) is correct but incomplete**: it gives both rates but not that billing moves
+  to net billing (reg. 14). The completeness fact scores it "no", as intended.
+- **p8, n3** are retrieval misses (the 1 MW definition; the 2018 amendment): p8 honestly
+  says the sources give no number, n3 refuses. Both correct behaviour for the sources given.
+
 Known critic limit (seen in a dry run): the number check asks whether a number appears
 *anywhere* in the cited clause, not in the sentence it supports - an answer citing the wrong
 sub-clause can pass the critic. The eval's "cites gold" column is what catches it.
