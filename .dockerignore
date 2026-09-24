@@ -1,0 +1,11 @@
+# never ship: bill photos (PII), secrets, local environments, raw PDFs, caches, reports
+.env
+.venv/
+.git/
+data/real/
+data/policy/raw/
+data/policy/embeddings/
+reports/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/

@@ -56,6 +56,7 @@ uv run rehnuma-eval-answer --split heldout       # cited answers + critic + refu
 uv run rehnuma-ask "Why is my bill negative?" --bill data/labels/real/pesco-2026-09.json
 uv run rehnuma-ask "کیا میرے بل پر لگا ہوا ایف پی اے قانون کے مطابق ہے؟" --bill data/labels/real/pesco-2026-03.json
 uv run rehnuma-eval-route                        # does each question reach the right part?
+uv sync --extra api; uv run rehnuma-api          # live API on http://localhost:7860/docs
 ```
 
 ## How it's built

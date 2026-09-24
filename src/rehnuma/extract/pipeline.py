@@ -85,7 +85,7 @@ FIELDS_FOR_CHECK = {
     "nj_surcharge": "the N.J surcharge line",
     "fpa": "the FPA line, the FPA note (month and rate), taxes on FPA and TOTAL FPA",
     "gst_on_fpa": "GST on FPA",
-    "ed_on_fpa": "ED on FPA (a separate line from GST on FPA)",    
+    "ed_on_fpa": "ED on FPA (a separate line from GST on FPA)",
     "v2_": "the BILL CHARGES BREAKDOWN block",
     "payable": "arrears, current bill, TOTAL FPA and the payable amounts",
     "arrears_vs_history": "arrears and the last rows of the bill history",
@@ -108,11 +108,19 @@ def _reread_feedback(failed_checks: list[str]) -> str:
             "contain errors. Return the full JSON.")
 
 
-def extract_bill(image_path: str | Path, client: VisionClient, bill_id: str,
-                 verify: bool = True, max_attempts: int = 3) -> ExtractionResult:
+def extract_bill(image_path: str | Path | bytes, client: VisionClient, bill_id: str,
+                 verify: bool = True, max_attempts: int = 3,
+                 mime: str | None = None) -> ExtractionResult:
+    """`image_path` may be raw bytes (an upload: the photo never touches disk) - then
+    `mime` is required."""
     start = time.perf_counter()
-    image = Path(image_path).read_bytes()
-    mime = mime_for(image_path)
+    if isinstance(image_path, bytes):
+        if not mime:
+            raise ValueError("mime is required when passing image bytes")
+        image = image_path
+    else:
+        image = Path(image_path).read_bytes()
+        mime = mime or mime_for(image_path)
     attempts: list[Attempt] = []
     best: tuple[int, Bill] | None = None      # (number of failed checks, bill)
     feedback = None

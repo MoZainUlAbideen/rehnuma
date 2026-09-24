@@ -105,6 +105,8 @@
 - [x] Router eval (`rehnuma-eval-route`): held-out batch 1 EN 9/10 UR 4/6 (fixed, moved to dev); batch 2 EN 3/5 UR 5/5 (misses left as measurement)
 - [x] Works without an LLM: bill questions get the template summary; rules questions get the clause list, or "unavailable" for Urdu
 - [ ] Known limits: p4 omits the switch to net billing; router misses "legally" / "import"; c3-ur and c5 to re-run after the rate limit
+- [x] First live "both" question (FPA legality, Urdu): bill part correct numbers; rules part honest NOT_FOUND (corpus gap, see Backlog)
+- [x] Fixed: bill part said "yes" under a legality question and pointed to text "above" - prompt rules (facts only, no yes/no, answer stands alone)
 - [ ] Real questions from neighbours (round 4) through `rehnuma-ask` - the real router test
 - [ ] Route bill questions to the engine (RAG explains rules, the engine does the arithmetic)
 
@@ -118,12 +120,20 @@
 - [ ] Evals in CI (auditor, summary template baseline, policy retrieval)
 - [ ] Policy watcher: scheduled `fetch`, CHANGED documents open a review task (a human approves every rule change)
 
-## Milestone 7 — Live product
-- [ ] FastAPI backend: upload photo -> verified bill -> audit + Urdu/English summary; policy Q&A endpoint
-- [ ] Next.js frontend (Urdu-first, RTL), polished design
-- [ ] Deploy
+## Milestone 7 — Live product (in progress)
+Decisions: backend on Hugging Face Spaces (Docker, free); frontend on Vercel; sample bills free, live uploads/questions rate-limited per visitor (5 uploads, 20 questions a day) so the free Groq/Gemini quota survives strangers.
+- [x] 7a FastAPI backend (`rehnuma-api`): health, samples (bill + audit + Urdu/English summary, free), photo upload (verify loop; photo never stored), ask (router; cached per sample question)
+- [x] Citations carry the official PDF link + page (`...pdf#page=12`)
+- [x] Per-visitor daily limits behind the Spaces proxy (X-Forwarded-For), `Retry-After` until midnight UTC
+- [x] Degrades without keys: summaries from the template, rules from the clause list; degraded answers never cached
+- [x] API tests (fake LLM + vision, real samples + real clause index): 11 tests incl. "the photo is never written to disk"
+- [x] Dockerfile for Spaces (non-root, port 7860, ships labels + clause index only; photos, PDFs, .env excluded)
+- [ ] 7b Deploy to Hugging Face Spaces (Space secrets: GROQ_API_KEY, GEMINI_API_KEY, REHNUMA_CORS_ORIGINS)
+- [ ] 7c Next.js frontend (Urdu-first, RTL): sample picker, upload, summary, audit, chat with clickable citations - Vercel
+- [ ] Image-level PII blurring before upload (milestone 3 item; matters once real users upload)
 
 ## Backlog — waiting on sources or data
+- [ ] Add the legal basis for FPA to the policy corpus (NEPRA Act 1997 s. 31(7) + monthly fuel-charge-adjustment decisions) — *"is the FPA on my bill legal?" correctly got NOT_FOUND: none of the 5 documents cover it, and FPA is among the most common complaints*
 - [ ] Get S.R.O. 279(I)/2026 itself and upgrade the 2026 schedule to `official` — *needs the official PDF*
 - [ ] ToU (A-1b) and net-metering slabs; fixed charges and their GST treatment — *needs the same SRO*
 - [ ] Open questions in FINDINGS.md: LP surcharge base, status codes (`LK`, `SS`), Q1 vs Q3 netting — *needs regulation text / more bills*

@@ -28,8 +28,11 @@ them). Rules:
 1. Never calculate or invent a number: every number you write must appear in the facts.
 2. If the facts do not answer the question, say so in one sentence, then give the facts that \
 come closest.
-3. Do not quote NEPRA rules or give legal opinions - another part of Rehnuma does that.
-4. Answer in {lang}, in 1 to 5 short sentences, in plain words."""
+3. Do not quote NEPRA rules or give legal opinions - another part of Rehnuma does that. Never \
+start with "yes" or "no": if the question asks whether something is allowed, only state what \
+the bill shows (the rule is answered separately).
+4. Your answer is read on its own: never refer to text "above" or "below".
+5. Answer in {lang}, in 1 to 5 short sentences, in plain words."""
 
 LEAD = {"en": "Here is what your bill shows:", "ur": "آپ کے بل میں یہ ہے:"}
 
