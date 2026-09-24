@@ -48,7 +48,11 @@ uv run rehnuma-eval-extract                      # bill photo -> verified bill (
 uv run rehnuma-policy fetch                      # download the NEPRA documents
 uv run rehnuma-policy ingest                     # PDFs -> clause-level index
 uv run rehnuma-policy search "can my solar be bigger than my sanctioned load"
-uv run rehnuma-eval-policy                       # retrieval eval (add --rewrite for Urdu)
+uv run rehnuma-eval-policy                       # retrieval eval: lexical, no API
+uv run rehnuma-eval-policy --rewrite all         # + Groq rewrites questions into NEPRA wording
+uv sync --extra dense; uv run rehnuma-eval-policy --dense   # + multilingual HF embeddings
+uv run rehnuma-policy ask "کیا میرا سولر منظور شدہ لوڈ سے بڑا ہو سکتا ہے؟"   # cited answer
+uv run rehnuma-eval-answer --split heldout       # cited answers + critic + refusals
 ```
 
 ## How it's built

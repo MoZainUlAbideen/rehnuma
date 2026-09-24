@@ -1,0 +1,174 @@
+{
+  "model": "groq:openai/gpt-oss-120b",
+  "n": 4,
+  "rewrites": "replayed",
+  "calls": 6,
+  "mean_seconds": 3.9250000000000003,
+  "wall_seconds": 22,
+  "summary": {
+    "dev/en": {
+      "n": 2,
+      "answered": 0.5,
+      "first_draft_pass": 0.5,
+      "fallback": 0.5,
+      "false_refusal": 0.0,
+      "error": 0.0,
+      "gold_retrieved": 1.0,
+      "cites_gold": [
+        1.0,
+        1
+      ],
+      "fact_ok": [
+        1.0,
+        1
+      ]
+    },
+    "dev/ur": {
+      "n": 2,
+      "answered": 1.0,
+      "first_draft_pass": 0.5,
+      "fallback": 0.0,
+      "false_refusal": 0.0,
+      "error": 0.0,
+      "gold_retrieved": 1.0,
+      "cites_gold": [
+        1.0,
+        2
+      ],
+      "fact_ok": [
+        1.0,
+        2
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "p1-ur",
+      "lang": "ur",
+      "split": "dev",
+      "status": "answered",
+      "attempts": 1,
+      "seconds": 0.8,
+      "calls": 1,
+      "rewrite": "net billing rate for kWh supplied by distributed generation facility to licensee (prosumer export price)",
+      "answer": "نیٹ بلنگ کے تحت آپ کے سولر سسٹم سے گرڈ کو بھیجے گئے یونٹس کی قیمت \"national average energy purchase price\" پر لگتی ہے [S1]۔\n\n[S1] Prosumer Regs 2026, reg. 14(1), p. 6",
+      "drafts": [
+        {
+          "text": "نیٹ بلنگ کے تحت آپ کے سولر سسٹم سے گرڈ کو بھیجے گئے یونٹس کی قیمت \"national average energy purchase price\" پر لگتی ہے [S1]۔",
+          "problems": []
+        }
+      ],
+      "sources": [
+        "S1 prosumer-2026:14(1)",
+        "S2 prosumer-2026:14(2)",
+        "S3 nm-2015:14(2)",
+        "S4 nm-2015:14(3)",
+        "S5 nm-2015:14(1)",
+        "S6 prosumer-2026:21(2)"
+      ],
+      "first_draft_pass": true,
+      "gold_retrieved": true,
+      "cites_gold": true,
+      "fact_ok": true
+    },
+    {
+      "id": "p4",
+      "lang": "en",
+      "split": "dev",
+      "status": "answered",
+      "attempts": 1,
+      "seconds": 0.9,
+      "calls": 1,
+      "rewrite": "net billing price exported kWh prosumer agreement before 2026",
+      "answer": "Your exported units will be billed at the national average power purchase price until the expiry of the term of your original agreement; after that, any renewal will be billed at the national average energy purchase price [S2].\n\n[S2] Prosumer Regs 2026, reg. 21(2), p. 7",
+      "drafts": [
+        {
+          "text": "Your exported units will be billed at the national average power purchase price until the expiry of the term of your original agreement; after that, any renewal will be billed at the national average energy purchase price [S2].",
+          "problems": []
+        }
+      ],
+      "sources": [
+        "S1 csm-2025:6.4.1",
+        "S2 prosumer-2026:21(2)",
+        "S3 csm-2025:4.3.1",
+        "S4 prosumer-2026:14(1)",
+        "S5 nm-2015:14(2)"
+      ],
+      "first_draft_pass": true,
+      "gold_retrieved": true,
+      "cites_gold": true,
+      "fact_ok": true
+    },
+    {
+      "id": "p4-ur",
+      "lang": "ur",
+      "split": "dev",
+      "status": "answered",
+      "attempts": 2,
+      "seconds": 1.6,
+      "calls": 2,
+      "rewrite": "net metering export rate for distributed generation facility installed before 2026",
+      "answer": "آپ کے نیٹ میٹرنگ معاہدے جو 2026 سے پہلے ہوا تھا، اس کی بلنگ \"national average power purchase price\" کے مطابق ہوگی جب تک معاہدے کی مدت ختم نہیں ہوتی؛ اس کے بعد کی تجدیدات کے لیے \"national average energy purchase price\" لاگو ہوگی۔ [S6]\n\n[S6] Prosumer Regs 2026, reg. 21(2), p. 7",
+      "drafts": [
+        {
+          "text": "آپ کے نیٹ میٹرنگ معاہدے جو 2026 سے پہلے ہوا تھا، اس کی بلنگ قومی اوسط پاور خریداری قیمت کے مطابق ہوگی جب تک معاہدے کی مدت ختم نہیں ہوتی؛ اس کے بعد کی تجدیدات کے لیے قومی اوسط انرجی خریداری قیمت لاگو ہوگی۔ [S6]",
+          "problems": [
+            "write these rate names exactly, in English: national average power purchase price; national average energy purchase price"
+          ]
+        },
+        {
+          "text": "آپ کے نیٹ میٹرنگ معاہدے جو 2026 سے پہلے ہوا تھا، اس کی بلنگ \"national average power purchase price\" کے مطابق ہوگی جب تک معاہدے کی مدت ختم نہیں ہوتی؛ اس کے بعد کی تجدیدات کے لیے \"national average energy purchase price\" لاگو ہوگی۔ [S6]",
+          "problems": []
+        }
+      ],
+      "sources": [
+        "S1 nm-2015:12(3)",
+        "S2 prosumer-2026:12(3)",
+        "S3 nm-2015:3(9)",
+        "S4 nm-2015:13(2)",
+        "S5 csm-2025:2.4.11",
+        "S6 prosumer-2026:21(2)"
+      ],
+      "first_draft_pass": false,
+      "gold_retrieved": true,
+      "cites_gold": true,
+      "fact_ok": true
+    },
+    {
+      "id": "c5",
+      "lang": "en",
+      "split": "dev",
+      "status": "fallback",
+      "attempts": 2,
+      "seconds": 12.4,
+      "calls": 2,
+      "rewrite": "security deposit connection charge new connection licensee/disco",
+      "answer": "I could not write an answer I was able to verify. These are the rules that apply:\n- Consumer Service Manual 2025, clause 2.4.9, p. 17\n- Consumer Service Manual 2025, clause 2.4.10, p. 17\n- Consumer Service Manual 2025, Annex-VI, p. 90",
+      "drafts": [
+        {
+          "text": "For a new connection the security deposit is required according to the rates approved by NEPRA and listed in Annex‑IV. The rates are per kilowatt of load and differ by consumer type, for example Residential A‑1 Urban = Rs. 1,220/kW, Residential A‑1 Rural = Rs. 610/kW, Commercial A‑2 Urban = Rs. 1,810/kW, etc. [S5][S6]  \n\nThe sources do not provide any information about connection‑charge amounts for a new connection. NOT_FOUND.",
+          "problems": [
+            "6 sentence(s) have no [S#] tag"
+          ]
+        },
+        {
+          "text": "The security deposit for a new connection is required according to the rate approved by NEPRA and listed in Annex‑IV; the rates are per kilowatt of load and differ by consumer type, for example Residential A‑1 Urban = Rs. 1,220/kW, Residential A‑1 Rural = Rs. 610/kW, Commercial A‑2 Urban = Rs. 1,810/kW, etc. [S5][S6]  \nThe sources do not provide any information about connection‑charge amounts for a new connection. [S5]",
+          "problems": [
+            "3 sentence(s) have no [S#] tag"
+          ]
+        }
+      ],
+      "sources": [
+        "S1 csm-2025:2.4.9",
+        "S2 csm-2025:2.4.10",
+        "S3 csm-2025:Annex-VI",
+        "S4 csm-2025:5.2.2",
+        "S5 csm-2025:5.1.1",
+        "S6 csm-2025:Annex-IV"
+      ],
+      "first_draft_pass": false,
+      "gold_retrieved": true,
+      "cites_gold": false
+    }
+  ]
+}

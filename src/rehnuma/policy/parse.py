@@ -119,7 +119,20 @@ _REG_HEAD = re.compile(r"(?<![\w(/.])(\d{1,2})\s?([.,\-]{0,2})\s+"          # nu
 _XREF = re.compile(r"(?i)(regulation|clause|section|rule|para(?:graph)?|schedule|no|s\.r\.o)\s*$")
 _SUBREG = re.compile(r"[({]\s*(\d{1,2}|I|l)\s*\)\s+(?=[A-Z\"'])")   # OCR reads (1) as (I)
 _ROMAN_ITEM = re.compile(r"\(([ivxl]{1,6})\)\s+(?=[\"'])")
-_SCHEDULE = re.compile(r"(?m)^\s*SCHEDULE[\s\-—]*([IVX]{1,4})\b")
+# End matter headings, alone on their line. The real PDFs print "Schedule-I", "Schedule - H"
+# (II), "Schedule-Ill" (III), "Schedule-tV" (IV), "Schedule — 1.1" (II), "Annexure -1".
+# Matching only uppercase "SCHEDULE"/"ANNEX" once glued every schedule onto the last
+# regulation (nm-2015 reg. 18 grew to 16,000 characters) and hijacked "agreement" queries.
+_END_NUMERAL = r"([IVXHWLlt1.]{1,5}|\d{1,2})"
+_SCHEDULE = re.compile(r"(?im)^[ \t]*sch[ec]dule[ \t]*[-—]?[ \t]*" + _END_NUMERAL + r"[ \t]*$")
+
+
+def _roman_label(raw: str) -> str:
+    """OCR'd end-matter numeral -> roman: 'H'->'II', 'Ill'->'III', 'tV'->'IV', '1.1'->'II'."""
+    if raw.isdigit():
+        return raw
+    s = raw.replace(".", "").replace("H", "II").replace("W", "V")
+    return "".join("I" if ch in "lLt1" else ch for ch in s).upper()
 _ROMAN = {"i": 1, "v": 5, "x": 10, "l": 50}
 
 
@@ -244,7 +257,7 @@ def parse_regulations(doc_id: str, pages: list[str]) -> list[Chunk]:
                                 item_text)
     scheds = [m for m in _SCHEDULE.finditer(text) if m.start() >= end_regs]
     for s, nxt in _with_next(scheds):
-        name = f"Schedule-{s.group(1)}"
+        name = f"Schedule-{_roman_label(s.group(1))}"
         chunks += _emit(doc_id, name, [name], name, P.page_of(s.start()),
                         text[s.end():nxt.start() if nxt else len(text)])
     return chunks
@@ -253,7 +266,7 @@ def parse_regulations(doc_id: str, pages: list[str]) -> list[Chunk]:
 # --- manual -----------------------------------------------------------------
 _CHAPTER = re.compile(r"(?m)^\s*CHAPTER\s*[-—:]?\s*(\d{1,2}|[IVX]{1,5})\b[ \t.:—-]*([^\n]*)")
 _CLAUSE = re.compile(r"(?m)^[ \t]*(\d{1,2}(?:\.\d{1,2}){1,3})\.?[ \t]+(?=\S)")
-_ANNEX = re.compile(r"(?m)^\s*ANNEX(?:URE)?[\s\-—]*([A-Z0-9]{1,4})\b")
+_ANNEX = re.compile(r"(?im)^[ \t]*annex(?:ure)?[ \t]*[-—]?[ \t]*" + _END_NUMERAL + r"[ \t]*$")
 
 
 def is_toc_page(page: str) -> bool:
@@ -287,8 +300,11 @@ def parse_manual(doc_id: str, pages: list[str]) -> list[Chunk]:
     pages = ["" if is_toc_page(p) else p for p in pages]
     P = _Pages(pages)
     text = P.text
-    annex = next(iter(_ANNEX.finditer(text)), None)
-    body_end = annex.start() if annex else len(text)
+    # annexures come after the LAST chapter; a "List of Annexures" page near the front must
+    # not end the manual on page 3
+    last_chapter = max((m.start() for m in _CHAPTER.finditer(text)), default=0)
+    annexes = [a for a in _ANNEX.finditer(text) if a.start() > last_chapter]
+    body_end = annexes[0].start() if annexes else len(text)
 
     chapters = []                                 # (offset, "CHAPTER 4 METERING")
     for m in _CHAPTER.finditer(text[:body_end]):
@@ -326,9 +342,8 @@ def parse_manual(doc_id: str, pages: list[str]) -> list[Chunk]:
         heading = " > ".join([chapter, *ancestors]).strip(" >")
         chunks += _emit(doc_id, num, list(key), heading, P.page_of(m.start()), body)
 
-    annexes = list(_ANNEX.finditer(text))
     for a, nxt in _with_next(annexes):
-        name = f"Annex-{a.group(1)}"
+        name = f"Annex-{_roman_label(a.group(1))}"
         chunks += _emit(doc_id, name, [name], name, P.page_of(a.start()),
                         text[a.end():nxt.start() if nxt else len(text)])
     return chunks

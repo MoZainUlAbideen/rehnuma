@@ -193,7 +193,7 @@ class FakeLLM:
 
 def test_only_urdu_questions_are_rewritten():
     llm = FakeLLM("defective meter average bill maximum months\n")
-    assert rewrite("defective meter", llm) == ("defective meter", None) and llm.calls == 0
+    assert rewrite("defective meter", llm) == (None, None) and llm.calls == 0
     assert needs_rewrite("میرا میٹر خراب ہے")
     assert rewrite("میرا میٹر خراب ہے", llm)[0] == "defective meter average bill maximum months"
 
@@ -314,3 +314,99 @@ def test_dense_methods_refused_without_a_model():
         assert "DenseIndex" in str(e)
     else:
         raise AssertionError("dense search without a model must fail loudly")
+
+
+def test_end_matter_headings_as_the_real_pdfs_print_them():
+    """Verbatim from the PDFs. Uppercase-only matching once glued every schedule onto the
+    last regulation (nm-2015 reg. 18: 16,000 chars) and every annexure onto CSM 16.8."""
+    body = ("1. Short title.— (1) These are the regulations.\n"
+            "2. Billing.— (1) Excess units are credited quarterly.\n")
+    sched = ("Schedule-I \nAgreement. The term of the agreement is three years.\n"
+             "Schedule - H \nApplication form for interconnection by the applicant.\n"
+             "Schedule-Ill along with following: \n"          # a reference, not a heading
+             "Schedule-tV \nTechnical standards for the inverters used.\n")
+    ch = _by_clause(parse_regulations("d", [body + sched]))
+    assert {"Schedule-I", "Schedule-II", "Schedule-IV"} <= set(ch)
+    assert "three years" not in ch["2(1)"].text
+    manual = clean("LIST OFANNEXURES\nAnnexure -1 \nAnnexure - II\n"   # list page at the front
+                   "CHAPTER 16\nEV CHARGING\n16.8 Complaints of EV users go to chapter 10.\n"
+                   "Annexure -1 \nForm A for new connection application by consumer.\n"
+                   "Annexure - II\nSchedule of load assessment for housing societies.\n")
+    mch = _by_clause(parse_manual("csm", [manual]))
+    assert "16.8" in mch and "Form A" not in mch["16.8"].text
+    assert {"Annex-1", "Annex-II"} <= set(mch)
+
+
+def test_search_returns_one_hit_per_clause():
+    long = "3. Something.— (1) " + " ".join(f"Agreement term sentence {i}." for i in range(300))
+    other = "\n4. Other.— (1) The agreement term is five years."
+    idx = PolicyIndex(parse_regulations("d", [long + other]))
+    clauses = [h.chunk.clause for h in idx.search("agreement term", k=5)]
+    assert len(clauses) == len(set(clauses)) == 2
+
+
+def test_rewrite_all_searches_users_words_and_rewrite_separately():
+    """Concatenating question + rewrite diluted the user's terms (dev hit@5 88% -> 75%);
+    they are now separate queries fused by rank."""
+    from rehnuma.policy.query import search_queries
+    llm = FakeLLM("kWh supplied by prosumer to the licensee national average price")
+    rw, err = rewrite("what price for my exported units", llm, mode="all")
+    assert err is None and "supplied by prosumer" in rw
+    assert search_queries("what price for my exported units", rw) == \
+        ("what price for my exported units", (rw,))
+    assert search_queries("میرا میٹر خراب ہے", "defective meter") == ("defective meter", ())
+    assert search_queries("defective meter", None) == ("defective meter", ())
+
+
+def test_a_second_query_adds_candidates_it_cannot_remove():
+    idx = _index()
+    alone = [h.chunk.clause for h in idx.search("paid quarterly", k=3)]
+    fused = [h.chunk.clause for h in idx.search("paid quarterly", k=5,
+                                                also=("sanctioned load capacity",))]
+    assert alone[0] in fused and "3(2)" in fused
+
+
+def test_ties_do_not_depend_on_chunk_order():
+    """RRF ties are exact; 4 of 27 real English questions tied at rank 1 and the winner
+    was decided by file order. The tie-break must be order-independent."""
+    import random
+    chunks = _index().chunks
+    base = [h.chunk.id for h in PolicyIndex(chunks).search("billing cycle meter", k=5)]
+    for seed in range(5):
+        shuffled = chunks[:]
+        random.Random(seed).shuffle(shuffled)
+        assert [h.chunk.id for h in PolicyIndex(shuffled).search("billing cycle meter", k=5)] \
+            == base
+
+
+def test_failed_rewrite_falls_back_to_the_original_query():
+    from rehnuma.llm.client import LLMError
+
+    class Down:
+        name = "down"
+
+        def complete(self, system, user):
+            raise LLMError("429")
+    rw, err = rewrite("میرا میٹر خراب ہے", Down(), mode="all")
+    assert rw is None and "429" in err
+
+
+def test_source_names_are_stripped_from_rewrites():
+    """The rewriter appended 'NEPRA Consumer Service Manual' to 6 of 27 English rewrites;
+    those words are everywhere in the corpus and pulled p4 into CSM billing clauses."""
+    from rehnuma.policy.query import clean_rewrite, search_queries
+    rw = "net metering exported kWh price after 2026 NEPRA Consumer Service Manual"
+    assert clean_rewrite(rw) == "net metering exported kWh price after 2026"
+    assert clean_rewrite("prosumer regulations billing cycle") == "billing cycle"
+    assert clean_rewrite("prosumer net billing") == "prosumer net billing"   # a real term
+    assert search_queries("q", "NEPRA regulations") == ("q", ())   # nothing left: no 2nd query
+
+
+def test_replay_reads_old_and_new_report_formats(tmp_path):
+    from rehnuma.evals.policy_retrieval_eval import load_replay
+    rep = {"rows": [{"id": "a", "rewrite": "new style"},
+                    {"id": "b", "query": "orig words plus rewrite", "rewrite_error": None},
+                    {"id": "c", "query": "failed", "rewrite_error": "429"}]}
+    path = tmp_path / "r.json"
+    path.write_text(json.dumps(rep), encoding="utf-8")
+    assert load_replay(path) == {"a": "new style", "b": "orig words plus rewrite"}

@@ -35,6 +35,11 @@ class Document:
     repealed_by: str | None = None
     amends: str | None = None
     note: str | None = None
+    savings_clause: tuple[str, str] | None = None   # (doc id, clause) deciding when it applies
+
+    def __post_init__(self):
+        if isinstance(self.savings_clause, list):   # JSON gives a list
+            object.__setattr__(self, "savings_clause", tuple(self.savings_clause))
 
     @property
     def path(self) -> Path:

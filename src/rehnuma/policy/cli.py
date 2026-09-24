@@ -5,6 +5,7 @@
   uv run rehnuma-policy ingest                # PDFs -> data/policy/chunks.jsonl (+ report)
   uv run rehnuma-policy search "can my solar be bigger than my sanctioned load"
   uv run rehnuma-policy search "کیا میرا سولر منظور شدہ لوڈ سے بڑا ہو سکتا ہے" --method hybrid+dense
+  uv run rehnuma-policy ask "میرا نیٹ میٹرنگ 2026 سے پہلے لگا تھا، اب یونٹ کس ریٹ پر گنے جائیں گے؟"
 """
 
 from __future__ import annotations
@@ -55,6 +56,9 @@ def main(argv: list[str] | None = None) -> int:
     f = sub.add_parser("fetch")
     f.add_argument("--force", action="store_true")
     sub.add_parser("ingest")
+    a = sub.add_parser("ask", help="cited answer in the question's language (needs GROQ_API_KEY)")
+    a.add_argument("question")
+    a.add_argument("--show-drafts", action="store_true")
     s = sub.add_parser("search")
     s.add_argument("query")
     s.add_argument("--k", type=int, default=5)
@@ -69,6 +73,17 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.cmd == "ingest":
         return ingest()
+    if args.cmd == "ask":
+        from rehnuma.llm.client import GroqClient
+        from rehnuma.policy.answer import answer
+        ans = answer(args.question, PolicyIndex(load_chunks()),
+                     GroqClient(temperature=0.0, max_tokens=700))
+        print(ans.render())
+        print(f"\n[{ans.status}, {len(ans.drafts)} draft(s), {ans.seconds:.1f} s]")
+        if args.show_drafts:
+            for d, problems in ans.drafts:
+                print(f"\n--- draft ({'; '.join(problems) or 'passed'}) ---\n{d}")
+        return 0
     chunks, dense = load_chunks(), None
     if "dense" in args.method:
         from rehnuma.policy.dense import DEFAULT_MODEL, DenseIndex, HFEncoder

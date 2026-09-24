@@ -1,0 +1,173 @@
+{
+  "_note": "Answer eval. Answerable questions come from retrieval_questions.json (same ids, same gold clauses). `facts`: for some questions, the fact the answer must state - any one alternative per list, case-insensitive; Urdu alternatives included. Facts are mostly numbers because they are checkable in both languages. `out_of_scope`: questions the NEPRA documents do not answer - the correct behaviour is to refuse. Rate names are checked in English only (the answer must write them verbatim, rule 8): an earlier Urdu alternative, 'qaumi ausat' (national average), matched BOTH rates and scored a wrong answer as correct.",
+  "facts": {
+    "p1": [
+      [
+        "energy purchase price"
+      ]
+    ],
+    "p1-ur": [
+      [
+        "energy purchase price"
+      ]
+    ],
+    "p2": [
+      [
+        "quarter",
+        "سہ ماہی",
+        "تین ماہ",
+        "تین مہینے"
+      ]
+    ],
+    "p2-ur": [
+      [
+        "quarter",
+        "سہ ماہی",
+        "تین ماہ",
+        "تین مہینے"
+      ]
+    ],
+    "p4": [
+      [
+        "power purchase price"
+      ]
+    ],
+    "p6": [
+      [
+        "sanctioned load",
+        "منظور شدہ لوڈ",
+        "سینکشنڈ لوڈ"
+      ]
+    ],
+    "p7": [
+      [
+        "30",
+        "thirty",
+        "تیس",
+        "۳۰"
+      ]
+    ],
+    "p8": [
+      [
+        "1 MW",
+        "1MW",
+        "one MW",
+        "۱ میگا",
+        "1 میگا",
+        "ایک میگا"
+      ]
+    ],
+    "c1": [
+      [
+        "2",
+        "two",
+        "دو",
+        "۲"
+      ]
+    ],
+    "c1-ur": [
+      [
+        "2",
+        "two",
+        "دو",
+        "۲"
+      ]
+    ],
+    "c2": [
+      [
+        "two billing cycles",
+        "2 billing cycles",
+        "immediately",
+        "فوری",
+        "دو بلنگ",
+        "دو ماہ",
+        "۲"
+      ]
+    ],
+    "c3": [
+      [
+        "two",
+        "2",
+        "دو",
+        "۲"
+      ]
+    ],
+    "h1": [
+      [
+        "5",
+        "five",
+        "پانچ",
+        "۵"
+      ]
+    ],
+    "h1-ur": [
+      [
+        "5",
+        "five",
+        "پانچ",
+        "۵"
+      ]
+    ],
+    "h6": [
+      [
+        "12",
+        "twelve",
+        "بارہ",
+        "۱۲"
+      ]
+    ],
+    "h6-ur": [
+      [
+        "12",
+        "twelve",
+        "بارہ",
+        "۱۲"
+      ]
+    ],
+    "h7": [
+      [
+        "15",
+        "fifteen",
+        "پندرہ",
+        "۱۵"
+      ]
+    ],
+    "p4-ur": [
+      [
+        "power purchase price"
+      ]
+    ]
+  },
+  "out_of_scope": [
+    {
+      "id": "o1",
+      "lang": "en",
+      "q": "What is the best tilt angle for solar panels in Peshawar?"
+    },
+    {
+      "id": "o2",
+      "lang": "en",
+      "q": "Which inverter brand should I buy for a 10 kW solar system?"
+    },
+    {
+      "id": "o3",
+      "lang": "en",
+      "q": "Will electricity prices go up next month?"
+    },
+    {
+      "id": "o4",
+      "lang": "ur",
+      "q": "کیا اگلے مہینے بجلی کی قیمت بڑھ جائے گی؟"
+    },
+    {
+      "id": "o5",
+      "lang": "en",
+      "q": "How do I apply for a Pakistani passport?"
+    },
+    {
+      "id": "o6",
+      "lang": "ur",
+      "q": "سولر پینل صاف کرنے کا بہترین طریقہ کیا ہے؟"
+    }
+  ]
+}

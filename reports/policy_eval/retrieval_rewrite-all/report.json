@@ -1,5 +1,5 @@
 {
-  "rewrite": null,
+  "rewrite": "all via groq:openai/gpt-oss-120b",
   "dense": null,
   "methods": [
     "bm25",
@@ -12,81 +12,81 @@
     "dev/en": {
       "bm25": {
         "n": 16,
-        "hit@1": 0.25,
-        "hit@5": 0.875,
-        "mrr": 0.48125
+        "hit@1": 0.4375,
+        "hit@5": 0.8125,
+        "mrr": 0.6041666666666666
       },
       "char": {
         "n": 16,
-        "hit@1": 0.25,
-        "hit@5": 0.5,
-        "mrr": 0.375
+        "hit@1": 0.4375,
+        "hit@5": 0.6875,
+        "mrr": 0.5364583333333334
       },
       "hybrid": {
         "n": 16,
         "hit@1": 0.375,
-        "hit@5": 0.875,
-        "mrr": 0.559375
+        "hit@5": 0.9375,
+        "mrr": 0.5927083333333333
       }
     },
     "dev/ur": {
       "bm25": {
         "n": 6,
-        "hit@1": 0.0,
-        "hit@5": 0.0,
-        "mrr": 0.0
+        "hit@1": 0.5,
+        "hit@5": 0.8333333333333334,
+        "mrr": 0.5972222222222222
       },
       "char": {
         "n": 6,
-        "hit@1": 0.0,
-        "hit@5": 0.0,
-        "mrr": 0.0
+        "hit@1": 0.5,
+        "hit@5": 0.6666666666666666,
+        "mrr": 0.5416666666666666
       },
       "hybrid": {
         "n": 6,
-        "hit@1": 0.0,
-        "hit@5": 0.0,
-        "mrr": 0.0
+        "hit@1": 0.5,
+        "hit@5": 0.8333333333333334,
+        "mrr": 0.638888888888889
       }
     },
     "heldout/en": {
       "bm25": {
         "n": 11,
-        "hit@1": 0.45454545454545453,
-        "hit@5": 0.8181818181818182,
-        "mrr": 0.6090909090909091
+        "hit@1": 0.6363636363636364,
+        "hit@5": 0.9090909090909091,
+        "mrr": 0.7348484848484849
       },
       "char": {
         "n": 11,
-        "hit@1": 0.5454545454545454,
+        "hit@1": 0.45454545454545453,
         "hit@5": 0.8181818181818182,
-        "mrr": 0.6439393939393939
+        "mrr": 0.6212121212121212
       },
       "hybrid": {
         "n": 11,
         "hit@1": 0.5454545454545454,
         "hit@5": 0.9090909090909091,
-        "mrr": 0.712121212121212
+        "mrr": 0.7272727272727273
       }
     },
     "heldout/ur": {
       "bm25": {
         "n": 2,
-        "hit@1": 0.0,
-        "hit@5": 0.0,
-        "mrr": 0.0
+        "hit@1": 0.5,
+        "hit@5": 1.0,
+        "mrr": 0.75
       },
       "char": {
         "n": 2,
         "hit@1": 0.0,
-        "hit@5": 0.0,
-        "mrr": 0.0
+        "hit@5": 1.0,
+        "mrr": 0.41666666666666663
       },
       "hybrid": {
         "n": 2,
-        "hit@1": 0.0,
-        "hit@5": 0.0,
-        "mrr": 0.0
+        "hit@1": 0.5,
+        "hit@5": 1.0,
+        "mrr": 0.75
       }
     }
   },
@@ -96,31 +96,31 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "Under net billing, what price do I get for the units my solar system exports to the grid?",
+      "rewrite": "net billing price for kWh supplied by prosumer to licensee",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 4,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1",
-            "csm-2025:6.1.1.1"
+            "prosumer-2026:14(1)",
+            "nm-2015-amend-2018:p2",
+            "nm-2015:14(4)"
           ]
         },
         "char": {
-          "rank": null,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1",
-            "csm-2025:6.1.1.1"
+            "prosumer-2026:14(1)",
+            "nm-2015:14(2)",
+            "nm-2015:14(1)"
           ]
         },
         "hybrid": {
-          "rank": 4,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1",
-            "csm-2025:6.1.1.1"
+            "prosumer-2026:14(1)",
+            "nm-2015:14(2)",
+            "nm-2015:14(1)"
           ]
         }
       }
@@ -130,20 +130,32 @@
       "lang": "ur",
       "split": "dev",
       "in_index": true,
-      "query": "نیٹ بلنگ میں جو یونٹ میرا سولر سسٹم گرڈ کو بھیجتا ہے، ان کی قیمت کس ریٹ پر لگتی ہے؟",
+      "rewrite": "net billing rate for kWh supplied by distributed generation facility to licensee (prosumer export price)",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(1)",
+            "prosumer-2026:14(2)",
+            "nm-2015:14(2)"
+          ]
         },
         "char": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(1)",
+            "nm-2015:14(2)",
+            "prosumer-2026:14(2)"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(1)",
+            "prosumer-2026:14(2)",
+            "nm-2015:14(2)"
+          ]
         }
       }
     },
@@ -152,31 +164,31 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "If my exported units are worth more than what I imported, is the extra carried to the next bill or paid to me?",
+      "rewrite": "net billing surplus kWh carry forward to next billing cycle versus payment to prosumer",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 4,
+          "rank": 2,
           "top": [
             "csm-2025:6.1.1.1",
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1"
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)"
           ]
         },
         "char": {
-          "rank": null,
+          "rank": 2,
           "top": [
             "csm-2025:6.1.1.1",
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1"
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)"
           ]
         },
         "hybrid": {
-          "rank": 4,
+          "rank": 2,
           "top": [
             "csm-2025:6.1.1.1",
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1"
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)"
           ]
         }
       }
@@ -186,20 +198,32 @@
       "lang": "ur",
       "split": "dev",
       "in_index": true,
-      "query": "اگر میرے بھیجے گئے یونٹ کی رقم استعمال شدہ بجلی سے زیادہ ہو تو اضافی رقم اگلے بل میں جائے گی یا مجھے ادا ہوگی؟",
+      "rewrite": "net billing surplus credit carry forward or refund of excess payment for kWh supplied by prosumer versus kWh consumed",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)",
+            "prosumer-2026:14(1)"
+          ]
         },
         "char": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "nm-2015:14(2)",
+            "nm-2015:14(3)"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "prosumer-2026:14(2)",
+            "nm-2015:14(3)",
+            "nm-2015:14(2)"
+          ]
         }
       }
     },
@@ -208,31 +232,31 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "Can NEPRA change the export rate while my agreement is still running?",
+      "rewrite": "net billing rate amendment existing net metering agreement before 2026",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
           "rank": 1,
           "top": [
             "prosumer-2026:14(3)",
-            "csm-2025:5.1.1",
-            "csm-2025:16.2.5"
+            "nm-2015:4(1)",
+            "nm-2015:14(4)"
           ]
         },
         "char": {
           "rank": 1,
           "top": [
             "prosumer-2026:14(3)",
-            "prosumer-2026:7(1)",
-            "csm-2025:15.1"
+            "nm-2015:7(1)",
+            "prosumer-2026:7(1)"
           ]
         },
         "hybrid": {
           "rank": 1,
           "top": [
             "prosumer-2026:14(3)",
-            "csm-2025:15.1",
-            "csm-2025:16.2.5"
+            "nm-2015:4(1)",
+            "nm-2015:Schedule-I"
           ]
         }
       }
@@ -242,31 +266,31 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "I got net metering before 2026. At what price will my exported units be billed now?",
+      "rewrite": "net billing price exported kWh prosumer agreement before 2026",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 5,
+          "rank": 1,
           "top": [
+            "prosumer-2026:21(2)",
             "csm-2025:6.4.1",
-            "csm-2025:4.3.1",
-            "csm-2025:6.1.1.1"
+            "prosumer-2026:14(1)"
           ]
         },
         "char": {
           "rank": null,
           "top": [
             "csm-2025:6.4.1",
-            "csm-2025:4.3.1",
-            "csm-2025:6.1.1.1"
+            "prosumer-2026:14(2)",
+            "csm-2025:4.3.1"
           ]
         },
         "hybrid": {
-          "rank": 4,
+          "rank": 2,
           "top": [
             "csm-2025:6.4.1",
-            "csm-2025:4.3.1",
-            "csm-2025:6.1.1.1"
+            "prosumer-2026:21(2)",
+            "csm-2025:4.3.1"
           ]
         }
       }
@@ -276,31 +300,31 @@
       "lang": "ur",
       "split": "dev",
       "in_index": true,
-      "query": "میرا نیٹ میٹرنگ 2026 سے پہلے لگا تھا، اب میرے بھیجے گئے یونٹ کس ریٹ پر گنے جائیں گے؟",
+      "rewrite": "net metering export rate for distributed generation facility installed before 2026",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
           "rank": null,
           "top": [
-            "prosumer-2026:1(1)",
-            "prosumer-2026:preamble",
-            "prosumer-2026:Schedule-V"
+            "nm-2015:12(3)",
+            "nm-2015:3(9)",
+            "prosumer-2026:12(3)"
           ]
         },
         "char": {
           "rank": null,
           "top": [
-            "prosumer-2026:1(1)",
-            "prosumer-2026:preamble",
-            "prosumer-2026:Schedule-V"
+            "nm-2015:12(3)",
+            "prosumer-2026:12(3)",
+            "nm-2015:13(2)"
           ]
         },
         "hybrid": {
           "rank": null,
           "top": [
-            "prosumer-2026:1(1)",
-            "prosumer-2026:preamble",
-            "prosumer-2026:Schedule-V"
+            "nm-2015:12(3)",
+            "prosumer-2026:12(3)",
+            "nm-2015:3(9)"
           ]
         }
       }
@@ -310,7 +334,7 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "Which old regulations did the prosumer regulations repeal?",
+      "rewrite": "repeal of prior net metering regulations by current prosumer regulations",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -330,10 +354,10 @@
           ]
         },
         "hybrid": {
-          "rank": 1,
+          "rank": 2,
           "top": [
-            "prosumer-2026:21(1)",
             "prosumer-2026:21(3)",
+            "prosumer-2026:21(1)",
             "prosumer-2026:21(2)"
           ]
         }
@@ -344,7 +368,7 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "Can my solar system capacity be larger than my sanctioned load?",
+      "rewrite": "distributed generation facility capacity greater than sanctioned load net metering",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -359,8 +383,8 @@
           "rank": 1,
           "top": [
             "prosumer-2026:3(2)",
-            "csm-2025:7.5.1",
-            "prosumer-2026:2(1)(x)"
+            "nm-2015-amend-2018:p1",
+            "nm-2015:Schedule-I"
           ]
         },
         "hybrid": {
@@ -368,7 +392,7 @@
           "top": [
             "prosumer-2026:3(2)",
             "nm-2015:Schedule-I",
-            "csm-2025:7.5.1"
+            "prosumer-2026:Schedule-I"
           ]
         }
       }
@@ -378,20 +402,32 @@
       "lang": "ur",
       "split": "dev",
       "in_index": true,
-      "query": "کیا میرا سولر سسٹم میرے منظور شدہ لوڈ سے بڑا ہو سکتا ہے؟",
+      "rewrite": "distributed generation facility size relative to sanctioned load limit prosumer agreement terms before 2026",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 4,
+          "top": [
+            "prosumer-2026:7(1)",
+            "prosumer-2026:5(3)",
+            "prosumer-2026:Schedule-I"
+          ]
         },
         "char": {
-          "rank": null,
-          "top": []
+          "rank": 4,
+          "top": [
+            "nm-2015:7(1)",
+            "nm-2015:6(2)",
+            "prosumer-2026:7(1)"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 2,
+          "top": [
+            "prosumer-2026:7(1)",
+            "prosumer-2026:3(2)",
+            "nm-2015:7(1)"
+          ]
         }
       }
     },
@@ -400,10 +436,18 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "What does billing cycle mean in the prosumer regulations?",
+      "rewrite": "billing cycle prosumer distributed generation regulations",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
+          "rank": null,
+          "top": [
+            "prosumer-2026:14(1)",
+            "prosumer-2026:14(2)",
+            "nm-2015:14(1)"
+          ]
+        },
+        "char": {
           "rank": 3,
           "top": [
             "prosumer-2026:14(1)",
@@ -411,20 +455,12 @@
             "prosumer-2026:2(1)(viii)"
           ]
         },
-        "char": {
-          "rank": 1,
-          "top": [
-            "prosumer-2026:2(1)(viii)",
-            "prosumer-2026:14(2)",
-            "prosumer-2026:14(1)"
-          ]
-        },
         "hybrid": {
-          "rank": 1,
+          "rank": 3,
           "top": [
-            "prosumer-2026:2(1)(viii)",
             "prosumer-2026:14(1)",
-            "prosumer-2026:14(2)"
+            "prosumer-2026:14(2)",
+            "prosumer-2026:2(1)(viii)"
           ]
         }
       }
@@ -434,23 +470,23 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "What is the maximum size of a distributed generation facility?",
+      "rewrite": "maximum capacity of distributed generation facility limit",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
           "rank": 3,
           "top": [
-            "nm-2015:Schedule-VII",
             "prosumer-2026:3(2)",
+            "prosumer-2026:3(3)",
             "nm-2015:2(1)"
           ]
         },
         "char": {
           "rank": null,
           "top": [
+            "prosumer-2026:3(2)",
             "nm-2015:6(1)",
-            "nm-2015:9(4)",
-            "prosumer-2026:3(2)"
+            "nm-2015:9(4)"
           ]
         },
         "hybrid": {
@@ -468,7 +504,7 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "Under the 2015 net metering regulations, how long was the net metering agreement term?",
+      "rewrite": "net metering agreement term length 2015 regulations",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -476,23 +512,23 @@
           "top": [
             "nm-2015:1",
             "nm-2015:Schedule-VII",
-            "nm-2015:4(1)"
+            "nm-2015:Schedule-I"
           ]
         },
         "char": {
-          "rank": null,
+          "rank": 1,
           "top": [
+            "nm-2015:7(1)",
             "nm-2015:1",
-            "csm-2025:4.2",
-            "nm-2015:Schedule-VII"
+            "prosumer-2026:7(2)"
           ]
         },
         "hybrid": {
-          "rank": null,
+          "rank": 5,
           "top": [
             "nm-2015:1",
             "nm-2015:Schedule-VII",
-            "prosumer-2026:21(1)"
+            "nm-2015:Schedule-I"
           ]
         }
       }
@@ -502,18 +538,10 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "Under the old net metering rules, were excess exported units carried forward or paid quarterly?",
+      "rewrite": "net metering excess exported kWh carried forward or quarterly payment under pre‑2026 agreement",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 3,
-          "top": [
-            "csm-2025:6.1.1.1",
-            "csm-2025:6.4.1",
-            "nm-2015:14(3)"
-          ]
-        },
-        "char": {
           "rank": 2,
           "top": [
             "csm-2025:6.1.1.1",
@@ -521,11 +549,19 @@
             "csm-2025:6.4.1"
           ]
         },
-        "hybrid": {
-          "rank": 2,
+        "char": {
+          "rank": 1,
           "top": [
-            "csm-2025:6.1.1.1",
             "nm-2015:14(3)",
+            "csm-2025:6.1.1.1",
+            "prosumer-2026:14(2)"
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "top": [
+            "nm-2015:14(3)",
+            "csm-2025:6.1.1.1",
             "csm-2025:6.4.1"
           ]
         }
@@ -536,14 +572,14 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "After the 2018 amendment, how large could a net metering system be compared to the sanctioned load?",
+      "rewrite": "net metering system capacity limit percentage of sanctioned load amendment 2018",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
           "rank": null,
           "top": [
-            "csm-2025:8.4",
             "csm-2025:1.4",
+            "prosumer-2026:Schedule-I",
             "csm-2025:6.4.1"
           ]
         },
@@ -552,15 +588,15 @@
           "top": [
             "prosumer-2026:Schedule-I",
             "nm-2015-amend-2018:p1",
-            "csm-2025:3.4.4"
+            "nm-2015-amend-2017:p1"
           ]
         },
         "hybrid": {
           "rank": null,
           "top": [
-            "csm-2025:3.4.4",
             "prosumer-2026:Schedule-I",
-            "nm-2015-amend-2017:p1"
+            "csm-2025:6.4.1",
+            "csm-2025:1.4"
           ]
         }
       }
@@ -570,7 +606,7 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "My meter is defective. For how many months can the DISCO charge me an average bill?",
+      "rewrite": "defective meter detection bill months DISCO charge average billing cycle",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -582,10 +618,10 @@
           ]
         },
         "char": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:4.3.6",
             "csm-2025:4.3.1",
+            "csm-2025:4.3.6",
             "csm-2025:4.3.2"
           ]
         },
@@ -604,20 +640,32 @@
       "lang": "ur",
       "split": "dev",
       "in_index": true,
-      "query": "میرا میٹر خراب ہے، بجلی کمپنی کتنے مہینے اوسط بل چارج کر سکتی ہے؟",
+      "rewrite": "defective meter detection bill billing cycle average bill months DISCO",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:9.1.3",
+            "csm-2025:6.4.1"
+          ]
         },
         "char": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:9.2.3",
+            "csm-2025:4.3.6"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:9.2.3",
+            "csm-2025:6.4.1"
+          ]
         }
       }
     },
@@ -626,30 +674,30 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "How soon must the DISCO replace a defective meter?",
+      "rewrite": "defective meter replacement timeframe by DISCO",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 1,
+          "rank": 3,
           "top": [
-            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
             "csm-2025:4.3.6",
-            "csm-2025:4.3.3"
+            "csm-2025:4.3.1"
           ]
         },
         "char": {
           "rank": null,
           "top": [
             "csm-2025:4.3.6",
-            "csm-2025:4.4",
-            "csm-2025:4.3"
+            "csm-2025:4.3",
+            "csm-2025:4.4"
           ]
         },
         "hybrid": {
-          "rank": 2,
+          "rank": 4,
           "top": [
             "csm-2025:4.3.6",
-            "csm-2025:4.3.1",
+            "csm-2025:4.3.3",
             "csm-2025:4.4"
           ]
         }
@@ -660,7 +708,7 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "My meter was found running slow. Can they charge me for units lost in past months, and for how many billing cycles?",
+      "rewrite": "defective meter detection bill units lost past billing cycles",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -668,7 +716,7 @@
           "top": [
             "csm-2025:4.3.1",
             "csm-2025:4.3.3",
-            "csm-2025:4.3.2"
+            "csm-2025:4.3.4"
           ]
         },
         "char": {
@@ -694,20 +742,32 @@
       "lang": "ur",
       "split": "dev",
       "in_index": true,
-      "query": "میرا میٹر آہستہ چل رہا تھا، کیا وہ پچھلے مہینوں کے یونٹ چارج کر سکتے ہیں، اور کتنے مہینوں کے؟",
+      "rewrite": "defective meter retroactive billing period units charged previous months",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 3,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.3"
+          ]
         },
         "char": {
           "rank": null,
-          "top": []
+          "top": [
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1",
+            "csm-2025:4.3.2"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 3,
+          "top": [
+            "csm-2025:4.3.1",
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.3"
+          ]
         }
       }
     },
@@ -716,23 +776,23 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "How is the meter reading of consumers carried out by the DISCO?",
+      "rewrite": "DISCO meter reading procedures detection bill",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:6.3",
             "csm-2025:6.1.1",
-            "csm-2025:6.2"
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.3"
           ]
         },
         "char": {
-          "rank": 2,
+          "rank": 4,
           "top": [
+            "csm-2025:6.4",
             "csm-2025:6.3",
-            "csm-2025:6.1.1",
-            "csm-2025:6.2"
+            "csm-2025:6.7"
           ]
         },
         "hybrid": {
@@ -740,7 +800,7 @@
           "top": [
             "csm-2025:6.3",
             "csm-2025:6.1.1",
-            "csm-2025:6.2"
+            "csm-2025:6.1.1.1"
           ]
         }
       }
@@ -750,15 +810,15 @@
       "lang": "en",
       "split": "dev",
       "in_index": true,
-      "query": "What security deposit and connection charges do I pay for a new connection?",
+      "rewrite": "security deposit connection charge new connection licensee/disco",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:2.7.2",
             "csm-2025:2.4.9",
-            "csm-2025:2.4.10"
+            "csm-2025:2.4.10",
+            "csm-2025:Annex-VI"
           ]
         },
         "char": {
@@ -774,7 +834,7 @@
           "top": [
             "csm-2025:2.4.9",
             "csm-2025:2.4.10",
-            "csm-2025:8.6"
+            "csm-2025:Annex-VI"
           ]
         }
       }
@@ -784,7 +844,7 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "How many years is the agreement between a prosumer and the DISCO under the 2026 rules?",
+      "rewrite": "prosumer DISCO agreement term years under 2026 rules",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -796,19 +856,19 @@
           ]
         },
         "char": {
-          "rank": 1,
+          "rank": 2,
           "top": [
-            "prosumer-2026:7(1)",
             "prosumer-2026:7(2)",
-            "prosumer-2026:2(1)(ii)"
+            "prosumer-2026:7(1)",
+            "nm-2015:7(1)"
           ]
         },
         "hybrid": {
-          "rank": 1,
+          "rank": 2,
           "top": [
-            "prosumer-2026:7(1)",
             "prosumer-2026:7(2)",
-            "prosumer-2026:2(1)(ii)"
+            "prosumer-2026:7(1)",
+            "nm-2015:7(1)"
           ]
         }
       }
@@ -818,20 +878,32 @@
       "lang": "ur",
       "split": "heldout",
       "in_index": true,
-      "query": "نئے قواعد کے تحت سولر لگانے والے اور بجلی کمپنی کا معاہدہ کتنے سال کا ہوتا ہے؟",
+      "rewrite": "duration of net billing agreement between prosumer and licensee under new rules",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 2,
+          "top": [
+            "prosumer-2026:7(2)",
+            "prosumer-2026:7(1)",
+            "prosumer-2026:2(1)(ii)"
+          ]
         },
         "char": {
-          "rank": null,
-          "top": []
+          "rank": 3,
+          "top": [
+            "prosumer-2026:7(2)",
+            "prosumer-2026:2(1)(ii)",
+            "prosumer-2026:7(1)"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 2,
+          "top": [
+            "prosumer-2026:7(2)",
+            "prosumer-2026:7(1)",
+            "prosumer-2026:2(1)(ii)"
+          ]
         }
       }
     },
@@ -840,7 +912,7 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "Who pays for the meter and the interconnection when I install solar under net billing?",
+      "rewrite": "net billing cost responsibility meter interconnection distributed generation facility",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -848,23 +920,23 @@
           "top": [
             "nm-2015:2(1)",
             "nm-2015:14(1)",
-            "nm-2015:13(1)"
+            "nm-2015:3(9)"
           ]
         },
         "char": {
-          "rank": null,
+          "rank": 3,
           "top": [
-            "prosumer-2026:2(1)(x)",
-            "csm-2025:6.4",
-            "nm-2015:3(7)"
+            "nm-2015:12(1)",
+            "nm-2015:3(7)",
+            "prosumer-2026:12(3)"
           ]
         },
         "hybrid": {
           "rank": null,
           "top": [
-            "prosumer-2026:2(1)(x)",
             "nm-2015:2(1)",
-            "nm-2015:3(9)"
+            "nm-2015:3(9)",
+            "nm-2015:12(1)"
           ]
         }
       }
@@ -874,31 +946,31 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "Does the meter for a solar connection have to measure electricity in both directions?",
+      "rewrite": "bidirectional meter requirement for distributed generation facility net billing prosumer detection bill",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
           "rank": 1,
           "top": [
-            "prosumer-2026:13(1)",
-            "nm-2015:13(1)",
-            "prosumer-2026:2(1)(ix)"
+            "prosumer-2026:5(1)",
+            "prosumer-2026:2(1)(ix)",
+            "nm-2015:13(1)"
           ]
         },
         "char": {
-          "rank": 1,
+          "rank": null,
           "top": [
-            "prosumer-2026:13(1)",
-            "nm-2015:13(1)",
-            "csm-2025:6.4"
+            "csm-2025:2.4.11",
+            "csm-2025:6.4",
+            "prosumer-2026:12(3)"
           ]
         },
         "hybrid": {
-          "rank": 1,
+          "rank": 2,
           "top": [
-            "prosumer-2026:13(1)",
-            "nm-2015:13(1)",
-            "prosumer-2026:2(1)(ix)"
+            "prosumer-2026:2(1)(ix)",
+            "prosumer-2026:5(1)",
+            "csm-2025:2.4.11"
           ]
         }
       }
@@ -908,14 +980,14 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "Can I end my solar agreement with the DISCO, and how?",
+      "rewrite": "termination of net metering agreement with licensee DISCO procedure for prosumer distributed generation facility",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
+          "rank": 1,
           "top": [
-            "nm-2015:Schedule-I",
-            "nm-2015:2(1)",
+            "prosumer-2026:8(1)",
+            "prosumer-2026:6(2)",
             "prosumer-2026:Schedule-I"
           ]
         },
@@ -923,16 +995,16 @@
           "rank": 1,
           "top": [
             "prosumer-2026:8(1)",
-            "nm-2015:7(1)",
-            "prosumer-2026:7(1)"
+            "prosumer-2026:7(1)",
+            "prosumer-2026:6(2)"
           ]
         },
         "hybrid": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "nm-2015:Schedule-I",
             "prosumer-2026:8(1)",
-            "nm-2015:2(1)"
+            "prosumer-2026:6(2)",
+            "prosumer-2026:7(1)"
           ]
         }
       }
@@ -942,7 +1014,7 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "Under the old net metering rules, which rate did the DISCO pay for exported units, and were fuel adjustment and taxes included?",
+      "rewrite": "old net metering export tariff fuel adjustment taxes included",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -954,18 +1026,18 @@
           ]
         },
         "char": {
-          "rank": 4,
+          "rank": 2,
           "top": [
             "csm-2025:4.3",
-            "csm-2025:6.4.1",
-            "csm-2025:4.3.1"
+            "nm-2015:14(4)",
+            "csm-2025:6.4.1"
           ]
         },
         "hybrid": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4.1",
             "nm-2015:14(4)",
+            "csm-2025:6.4.1",
             "csm-2025:4.3.1"
           ]
         }
@@ -976,7 +1048,7 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "If someone is caught stealing electricity, how many months can a detection bill cover?",
+      "rewrite": "maximum duration of detection bill coverage months for electricity theft",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -988,11 +1060,11 @@
           ]
         },
         "char": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4",
             "csm-2025:9.1.3",
-            "csm-2025:9.2.3"
+            "csm-2025:9.2.3",
+            "csm-2025:6.4"
           ]
         },
         "hybrid": {
@@ -1010,20 +1082,32 @@
       "lang": "ur",
       "split": "heldout",
       "in_index": true,
-      "query": "بجلی چوری پکڑی جائے تو ڈیٹیکشن بل زیادہ سے زیادہ کتنے مہینوں کا بن سکتا ہے؟",
+      "rewrite": "maximum duration of detection bill issuance in months for electricity theft detection",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.3",
+            "csm-2025:9.2.5"
+          ]
         },
         "char": {
-          "rank": null,
-          "top": []
+          "rank": 2,
+          "top": [
+            "csm-2025:9.2.5",
+            "csm-2025:9.2.3",
+            "csm-2025:9.1.3"
+          ]
         },
         "hybrid": {
-          "rank": null,
-          "top": []
+          "rank": 1,
+          "top": [
+            "csm-2025:9.1.3",
+            "csm-2025:9.2.5",
+            "csm-2025:9.2.3"
+          ]
         }
       }
     },
@@ -1032,30 +1116,30 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "How many days does the DISCO have to settle my complaint about a detection bill?",
+      "rewrite": "DISCO detection bill complaint settlement period days",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 2,
+          "rank": 3,
           "top": [
             "csm-2025:9.2.5",
-            "csm-2025:10.3.1",
-            "csm-2025:9.2.3"
+            "csm-2025:9.2.3",
+            "csm-2025:10.3.1"
           ]
         },
         "char": {
           "rank": null,
           "top": [
-            "csm-2025:10.3",
             "csm-2025:10.3.1",
-            "csm-2025:10.4.4"
+            "csm-2025:10.3",
+            "csm-2025:9.2.5"
           ]
         },
         "hybrid": {
-          "rank": 1,
+          "rank": 2,
           "top": [
-            "csm-2025:10.3.1",
             "csm-2025:9.2.5",
+            "csm-2025:10.3.1",
             "csm-2025:10.3"
           ]
         }
@@ -1066,7 +1150,7 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "How can I avoid the late payment surcharge?",
+      "rewrite": "avoid late payment surcharge billing cycle payment deadline DISCO",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -1100,31 +1184,31 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "If the meter reading is taken late and the billing period is longer than a month, how are the units charged?",
+      "rewrite": "late meter reading extended billing cycle unit charge calculation detection bill",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4.1",
             "csm-2025:6.1.1.1",
-            "csm-2025:6.1.1"
+            "csm-2025:6.4.1",
+            "csm-2025:4.3.1"
           ]
         },
         "char": {
-          "rank": 3,
+          "rank": 2,
           "top": [
-            "csm-2025:6.4.1",
             "csm-2025:6.4",
-            "csm-2025:6.1.1.1"
+            "csm-2025:6.1.1.1",
+            "csm-2025:6.8"
           ]
         },
         "hybrid": {
-          "rank": 2,
+          "rank": 1,
           "top": [
-            "csm-2025:6.4.1",
             "csm-2025:6.1.1.1",
-            "csm-2025:6.1.1"
+            "csm-2025:6.4.1",
+            "csm-2025:6.8.1"
           ]
         }
       }
@@ -1134,7 +1218,7 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "Can a three-phase consumer get a bi-directional meter without installing solar?",
+      "rewrite": "bi-directional meter installation three-phase consumer without distributed generation",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
@@ -1142,7 +1226,7 @@
           "top": [
             "csm-2025:2.4.11",
             "csm-2025:4.2.8",
-            "csm-2025:Annex-V"
+            "csm-2025:4.3.4"
           ]
         },
         "char": {
@@ -1150,7 +1234,7 @@
           "top": [
             "csm-2025:2.4.11",
             "csm-2025:4.2.8",
-            "csm-2025:4.3.4"
+            "csm-2025:11.5"
           ]
         },
         "hybrid": {
@@ -1158,7 +1242,7 @@
           "top": [
             "csm-2025:2.4.11",
             "csm-2025:4.2.8",
-            "csm-2025:4.3.4"
+            "nm-2015:2(1)"
           ]
         }
       }
@@ -1168,14 +1252,14 @@
       "lang": "en",
       "split": "heldout",
       "in_index": true,
-      "query": "I am using more load than my sanctioned load. What will the DISCO do?",
+      "rewrite": "exceeding sanctioned load actions by DISCO load increase penalty billing cycle",
       "rewrite_error": null,
       "by_method": {
         "bm25": {
-          "rank": 5,
+          "rank": 4,
           "top": [
             "csm-2025:7.5.2",
-            "csm-2025:8.1",
+            "csm-2025:2.10.1",
             "csm-2025:8.4"
           ]
         },
@@ -1183,16 +1267,16 @@
           "rank": 1,
           "top": [
             "csm-2025:8.2.10",
-            "csm-2025:8.1",
-            "csm-2025:7.5.1"
+            "csm-2025:7.5.2",
+            "csm-2025:2.10.1"
           ]
         },
         "hybrid": {
-          "rank": 3,
+          "rank": 2,
           "top": [
-            "csm-2025:8.1",
             "csm-2025:7.5.2",
-            "csm-2025:8.2.10"
+            "csm-2025:8.2.10",
+            "csm-2025:2.10.1"
           ]
         }
       }

@@ -121,19 +121,44 @@ class PolicyIndex:
             return self.dense.scores(query)
         return []
 
-    def search(self, query: str, k: int = 5, method: str = "hybrid",
-               rrf_k: int = 60) -> list[Hit]:
+    def search(self, query: str, k: int = 5, method: str = "hybrid", rrf_k: int = 60,
+               also: tuple[str, ...] = ()) -> list[Hit]:
+        """Top-k clauses for `query`. `also`: extra phrasings of the same question (e.g. an
+        LLM rewrite into NEPRA wording). Each query is ranked on its own and the rankings
+        are fused - so a rewrite can ADD candidates without diluting the user's own words,
+        which is what concatenating the two strings did (dev hit@5 88% -> 75%)."""
         if method not in self.methods:
             raise ValueError(f"method must be one of {self.methods}"
                              + ("" if self.dense else " (dense methods need a DenseIndex)"))
-        if method in ("bm25", "char", "dense"):
+        queries = (query, *also)
+        if method in ("bm25", "char", "dense") and not also:
             scores = self._scores(query, method)
         else:                                       # reciprocal rank fusion
-            parts = ("bm25", "char") + (("dense",) if method == "hybrid+dense" else ())
+            parts = {"hybrid": ("bm25", "char"), "hybrid+dense": ("bm25", "char", "dense")
+                     }.get(method, (method,))
             fused: dict[int, float] = {}
-            for part in parts:
-                for r, i in enumerate(_ranking(self._scores(query, part))):
-                    fused[i] = fused.get(i, 0.0) + 1 / (rrf_k + r + 1)
+            for q in queries:
+                for part in parts:
+                    for r, i in enumerate(_ranking(self._scores(q, part))):
+                        fused[i] = fused.get(i, 0.0) + 1 / (rrf_k + r + 1)
             scores = [fused.get(i, 0.0) for i in range(len(self.chunks))]
-        ranked = _ranking(scores)[:k]
+
+        # RRF ties are exact (1st+2nd == 2nd+1st): 4 of 27 English eval questions tied at
+        # rank 1, so hit@1 depended on the order of chunks in the file. Break ties by the
+        # user's own words under BM25 (the most precise single ranker), then by chunk id.
+        bm25_rank = {i: r for r, i in enumerate(_ranking(self.bm25.scores(words(query))))}
+        order = sorted((i for i, s in enumerate(scores) if s > 0),
+                       key=lambda i: (-scores[i], bm25_rank.get(i, len(scores)),
+                                      self.chunks[i].id))
+
+        # one hit per clause: a long clause split into parts must not fill several of the k
+        # slots (nm-2015 reg. 18 once took all top-3 places with three of its parts)
+        ranked, seen = [], set()
+        for i in order:
+            key = (self.chunks[i].doc_id, self.chunks[i].clause)
+            if key not in seen:
+                seen.add(key)
+                ranked.append(i)
+                if len(ranked) == k:
+                    break
         return [Hit(self.chunks[i], scores[i], r + 1) for r, i in enumerate(ranked)]

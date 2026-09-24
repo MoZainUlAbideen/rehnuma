@@ -1,5 +1,5 @@
 {
-  "_note": "Official NEPRA documents Rehnuma answers from. `rehnuma-policy fetch` downloads them into data/policy/raw/ (git-ignored) and records a SHA-256 in sources.lock.json; a changed hash on a later fetch means NEPRA replaced the file and the answer layer must be reviewed. `status` and `amends` let answers warn when a clause has been repealed or amended.",
+  "_note": "Official NEPRA documents Rehnuma answers from. `rehnuma-policy fetch` downloads them into data/policy/raw/ (git-ignored) and records a SHA-256 in sources.lock.json; a changed hash on a later fetch means NEPRA replaced the file and the answer layer must be reviewed. `status` and `amends` let answers warn when a clause has been repealed or amended. `savings_clause` [doc, clause] is the clause that says when a repealed document still applies; the answer layer always adds it next to any retrieved clause of that document, and the critic requires it to be cited. `note` is Rehnuma's own text and must never state a rule itself: an earlier paraphrase here ('keep their export price until the term ends') was repeated by the model as if it were NEPRA's text.",
   "documents": [
     {
       "id": "prosumer-2026",
@@ -19,7 +19,11 @@
       "repealed_by": "prosumer-2026",
       "style": "regulations",
       "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/NOTIFICATION%20SRO%20892%20-2015.pdf",
-      "note": "Repealed by the Prosumer Regulations 2026, but agreements signed under it keep their export price until the agreement term ends (Prosumer Regs 2026, reg. 21(2))."
+      "note": "Repealed by the Prosumer Regulations 2026. When it still applies is decided by the savings clause (Prosumer Regs 2026, reg. 21(2)), not by this text.",
+      "savings_clause": [
+        "prosumer-2026",
+        "21(2)"
+      ]
     },
     {
       "id": "nm-2015-amend-2017",
@@ -31,7 +35,11 @@
       "amends": "nm-2015",
       "style": "amendment",
       "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/SRO%201025(I)2017%2010-10-2017.pdf",
-      "note": "Repealed by the Prosumer Regulations 2026, but agreements signed under it keep their export price until the agreement term ends (Prosumer Regs 2026, reg. 21(2))."
+      "note": "Repealed by the Prosumer Regulations 2026. When it still applies is decided by the savings clause (Prosumer Regs 2026, reg. 21(2)), not by this text.",
+      "savings_clause": [
+        "prosumer-2026",
+        "21(2)"
+      ]
     },
     {
       "id": "nm-2015-amend-2018",
@@ -43,7 +51,11 @@
       "amends": "nm-2015",
       "style": "amendment",
       "url": "https://nepra.org.pk/Legislation/3-Reg/3.13%20NEPRA%20(Alternative%20&%20Renewable%20Energy)%20Distributed%20Generation%20and%20Net%20Metering%20Regulations,%202015/S.R.O%201135(I)-2018%2013-09-2018.pdf",
-      "note": "Repealed by the Prosumer Regulations 2026, but agreements signed under it keep their export price until the agreement term ends (Prosumer Regs 2026, reg. 21(2))."
+      "note": "Repealed by the Prosumer Regulations 2026. When it still applies is decided by the savings clause (Prosumer Regs 2026, reg. 21(2)), not by this text.",
+      "savings_clause": [
+        "prosumer-2026",
+        "21(2)"
+      ]
     },
     {
       "id": "csm-2025",
