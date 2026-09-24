@@ -11,6 +11,10 @@ Rehnuma reads a photo of your bill, **re-computes it rupee by rupee with a deter
 engine**, explains every line with citations to the NEPRA rules behind it, and tells you
 what to do next.
 
+**Live:** API at [rehnuma-api-3e5t.onrender.com/docs](https://rehnuma-api-3e5t.onrender.com/docs)
+(free tier - the first request after a quiet spell takes up to a minute). The website lives in
+[`web/`](web/) (Next.js, deployed on Vercel).
+
 ## Two kinds of households, one product
 
 | | Conventional household (no solar) | Solar prosumer (net metering / net billing) |
@@ -57,6 +61,7 @@ uv run rehnuma-ask "Why is my bill negative?" --bill data/labels/real/pesco-2026
 uv run rehnuma-ask "کیا میرے بل پر لگا ہوا ایف پی اے قانون کے مطابق ہے؟" --bill data/labels/real/pesco-2026-03.json
 uv run rehnuma-eval-route                        # does each question reach the right part?
 uv sync --extra api; uv run rehnuma-api          # live API on http://localhost:7860/docs
+cd web; npm install; npm run dev                # website on http://localhost:3000
 ```
 
 ## How it's built

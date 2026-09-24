@@ -121,15 +121,19 @@
 - [ ] Policy watcher: scheduled `fetch`, CHANGED documents open a review task (a human approves every rule change)
 
 ## Milestone 7 — Live product (in progress)
-Decisions: backend on Hugging Face Spaces (Docker, free); frontend on Vercel; sample bills free, live uploads/questions rate-limited per visitor (5 uploads, 20 questions a day) so the free Groq/Gemini quota survives strangers.
+Decisions: backend on Render (Docker, free tier; Hugging Face Docker Spaces now need PRO); frontend on Vercel; sample bills free, live uploads/questions rate-limited per visitor (5 uploads, 20 questions a day) so the free Groq/Gemini quota survives strangers.
 - [x] 7a FastAPI backend (`rehnuma-api`): health, samples (bill + audit + Urdu/English summary, free), photo upload (verify loop; photo never stored), ask (router; cached per sample question)
 - [x] Citations carry the official PDF link + page (`...pdf#page=12`)
-- [x] Per-visitor daily limits behind the Spaces proxy (X-Forwarded-For), `Retry-After` until midnight UTC
+- [x] Per-visitor daily limits behind the proxy (X-Forwarded-For), `Retry-After` until midnight UTC
 - [x] Degrades without keys: summaries from the template, rules from the clause list; degraded answers never cached
-- [x] API tests (fake LLM + vision, real samples + real clause index): 11 tests incl. "the photo is never written to disk"
-- [x] Dockerfile for Spaces (non-root, port 7860, ships labels + clause index only; photos, PDFs, .env excluded)
-- [ ] 7b Deploy to Hugging Face Spaces (Space secrets: GROQ_API_KEY, GEMINI_API_KEY, REHNUMA_CORS_ORIGINS)
-- [ ] 7c Next.js frontend (Urdu-first, RTL): sample picker, upload, summary, audit, chat with clickable citations - Vercel
+- [x] API tests (fake LLM + vision, real samples + real clause index): incl. "the photo is never written to disk"
+- [x] Dockerfile (non-root, PORT from env, ships labels + clause index only; photos, PDFs, .env excluded)
+- [x] 7b Deployed on Render: https://rehnuma-api-3e5t.onrender.com - health, samples and a live Urdu `/api/ask` verified (route bill, LLM answer, repeat served from cache)
+- [x] Removed the Hugging Face deploy files
+- [x] 7c Next.js site in `web/`: home (what it does, the 5 NEPRA documents), accuracy page (evals, real bugs, known limits), GitHub link, bottom-left chat (sample bills, photo upload, Urdu/English, clickable citations to the PDF page)
+- [x] Chat handles the free server's cold start ("waking up" notice; the page pings `/api/health` on load), 429 limits and expired uploads
+- [ ] 7c Deploy `web/` to Vercel (root directory `web`)
+- [ ] 7d Set `REHNUMA_CORS_ORIGINS` on Render to the Vercel URL; end-to-end check on the live site
 - [ ] Image-level PII blurring before upload (milestone 3 item; matters once real users upload)
 
 ## Backlog — waiting on sources or data
