@@ -1,0 +1,146 @@
+{
+ "_note": "Frozen Groq (gpt-oss-120b) query rewrites from the production retrieval run, replayed in CI so retrieval is scored in the production setting without an API call. Regenerate with: uv run rehnuma-eval-policy --rewrite all, then copy the rows' id/rewrite here.",
+ "source": "all via groq:openai/gpt-oss-120b",
+ "rows": [
+  {
+   "id": "p1",
+   "rewrite": "net billing price for kWh supplied by prosumer to licensee"
+  },
+  {
+   "id": "p1-ur",
+   "rewrite": "net billing rate for kWh supplied by distributed generation facility to licensee (prosumer export price)"
+  },
+  {
+   "id": "p2",
+   "rewrite": "net billing surplus kWh carry forward to next billing cycle versus payment to prosumer"
+  },
+  {
+   "id": "p2-ur",
+   "rewrite": "net billing surplus credit carry forward or refund of excess payment for kWh supplied by prosumer versus kWh consumed"
+  },
+  {
+   "id": "p3",
+   "rewrite": "net billing rate amendment existing net metering agreement before 2026"
+  },
+  {
+   "id": "p4",
+   "rewrite": "net billing price exported kWh prosumer agreement before 2026"
+  },
+  {
+   "id": "p4-ur",
+   "rewrite": "net metering export rate for distributed generation facility installed before 2026"
+  },
+  {
+   "id": "p5",
+   "rewrite": "repeal of prior net metering regulations by current prosumer regulations"
+  },
+  {
+   "id": "p6",
+   "rewrite": "distributed generation facility capacity greater than sanctioned load net metering"
+  },
+  {
+   "id": "p6-ur",
+   "rewrite": "distributed generation facility size relative to sanctioned load limit prosumer agreement terms before 2026"
+  },
+  {
+   "id": "p7",
+   "rewrite": "billing cycle prosumer distributed generation regulations"
+  },
+  {
+   "id": "p8",
+   "rewrite": "maximum capacity of distributed generation facility limit"
+  },
+  {
+   "id": "n1",
+   "rewrite": "net metering agreement term length 2015 regulations"
+  },
+  {
+   "id": "n2",
+   "rewrite": "net metering excess exported kWh carried forward or quarterly payment under pre‑2026 agreement"
+  },
+  {
+   "id": "n3",
+   "rewrite": "net metering system capacity limit percentage of sanctioned load amendment 2018"
+  },
+  {
+   "id": "c1",
+   "rewrite": "defective meter detection bill months DISCO charge average billing cycle"
+  },
+  {
+   "id": "c1-ur",
+   "rewrite": "defective meter detection bill billing cycle average bill months DISCO"
+  },
+  {
+   "id": "c2",
+   "rewrite": "defective meter replacement timeframe by DISCO"
+  },
+  {
+   "id": "c3",
+   "rewrite": "defective meter detection bill units lost past billing cycles"
+  },
+  {
+   "id": "c3-ur",
+   "rewrite": "defective meter retroactive billing period units charged previous months"
+  },
+  {
+   "id": "c4",
+   "rewrite": "DISCO meter reading procedures detection bill"
+  },
+  {
+   "id": "c5",
+   "rewrite": "security deposit connection charge new connection licensee/disco"
+  },
+  {
+   "id": "h1",
+   "rewrite": "prosumer DISCO agreement term years under 2026 rules"
+  },
+  {
+   "id": "h1-ur",
+   "rewrite": "duration of net billing agreement between prosumer and licensee under new rules"
+  },
+  {
+   "id": "h2",
+   "rewrite": "net billing cost responsibility meter interconnection distributed generation facility"
+  },
+  {
+   "id": "h3",
+   "rewrite": "bidirectional meter requirement for distributed generation facility net billing prosumer detection bill"
+  },
+  {
+   "id": "h4",
+   "rewrite": "termination of net metering agreement with licensee DISCO procedure for prosumer distributed generation facility"
+  },
+  {
+   "id": "h5",
+   "rewrite": "old net metering export tariff fuel adjustment taxes included"
+  },
+  {
+   "id": "h6",
+   "rewrite": "maximum duration of detection bill coverage months for electricity theft"
+  },
+  {
+   "id": "h6-ur",
+   "rewrite": "maximum duration of detection bill issuance in months for electricity theft detection"
+  },
+  {
+   "id": "h7",
+   "rewrite": "DISCO detection bill complaint settlement period days"
+  },
+  {
+   "id": "h8",
+   "rewrite": "avoid late payment surcharge billing cycle payment deadline DISCO"
+  },
+  {
+   "id": "h9",
+   "rewrite": "late meter reading extended billing cycle unit charge calculation detection bill"
+  },
+  {
+   "id": "h10",
+   "rewrite": "bi-directional meter installation three-phase consumer without distributed generation"
+  },
+  {
+   "id": "h11",
+   "rewrite": "exceeding sanctioned load actions by DISCO load increase penalty billing cycle"
+  }
+ ]
+}

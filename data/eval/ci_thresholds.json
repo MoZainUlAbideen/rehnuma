@@ -1,0 +1,57 @@
+{
+  "_note": "Limits for rehnuma-ci-evals, set to what the code achieved when they were last raised. A metric below its limit fails CI. When a change genuinely improves a metric, raise its limit in the same commit so the gain is locked in. Held-out numbers are floors to stop regressions, never targets to tune on.",
+  "auditor.detection_rate": {
+    "min": 1.0
+  },
+  "auditor.false_positive_rate": {
+    "max": 0.0
+  },
+  "auditor.localisation_rate": {
+    "min": 1.0
+  },
+  "retrieval.lexical.dev/en.hit@5": {
+    "min": 0.875
+  },
+  "retrieval.lexical.heldout/en.hit@5": {
+    "min": 0.909
+  },
+  "retrieval.lexical.not_in_index": {
+    "max": 0
+  },
+  "retrieval.rewrite.dev/en.hit@5": {
+    "min": 0.937
+  },
+  "retrieval.rewrite.dev/ur.hit@5": {
+    "min": 0.833
+  },
+  "retrieval.rewrite.heldout/en.hit@5": {
+    "min": 0.909
+  },
+  "retrieval.rewrite.heldout/ur.hit@5": {
+    "min": 1.0
+  },
+  "retrieval.rewrite.not_in_index": {
+    "max": 0
+  },
+  "router.dev/en.accuracy": {
+    "min": 1.0
+  },
+  "router.dev/ur.accuracy": {
+    "min": 1.0
+  },
+  "router.heldout/en.accuracy": {
+    "min": 0.857
+  },
+  "router.heldout/ur.accuracy": {
+    "min": 1.0
+  },
+  "summary.coverage": {
+    "min": 1.0
+  },
+  "summary.faithfulness": {
+    "min": 1.0
+  },
+  "summary.language_ok": {
+    "min": 1.0
+  }
+}

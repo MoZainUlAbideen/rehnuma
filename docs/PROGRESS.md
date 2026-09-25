@@ -122,7 +122,10 @@
 
 ## Milestone 6 — LLMOps
 - [ ] Langfuse tracing across extraction, summary and policy answers
-- [ ] Evals in CI (auditor, summary template baseline, policy retrieval)
+- [x] `rehnuma-ci-evals`: every no-API eval in one gate (auditor, template summaries, retrieval lexical + production rewrites replayed from a frozen file, router) - 18 metrics, fails if any drops below `data/eval/ci_thresholds.json`
+- [x] Fixed (found by the gate's first run): a floor rounded UP (15/16 -> 0.938) failed on its own value - floors are rounded down, a test guards it
+- [x] Renamed or missing metrics fail the gate (a metric can't silently stop being checked)
+- [ ] GitHub Actions (`.github/workflows/ci.yml`): ruff + pytest + eval gate + web lint/build on every push - first green run
 - [ ] Policy watcher: scheduled `fetch`, CHANGED documents open a review task (a human approves every rule change)
 
 ## Milestone 7 — Live product (in progress)

@@ -21,6 +21,7 @@ rehnuma-eval-answer = "rehnuma.evals.policy_answer_eval:main"
 rehnuma-eval-route = "rehnuma.evals.route_eval:main"
 rehnuma-ask = "rehnuma.assistant.cli:main"
 rehnuma-api = "rehnuma.api.server:main"
+rehnuma-ci-evals = "rehnuma.evals.ci_gate:main"
 [project.optional-dependencies]
 # Live backend (milestone 7): uv sync --extra api
 api = ["fastapi>=0.115", "uvicorn>=0.30", "python-multipart>=0.0.9"]
