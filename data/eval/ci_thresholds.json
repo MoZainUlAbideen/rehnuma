@@ -9,6 +9,9 @@
   "auditor.localisation_rate": {
     "min": 1.0
   },
+  "forecast.engine_reproduces_bills": {
+    "min": 1.0
+  },
   "retrieval.lexical.dev/en.hit@5": {
     "min": 0.875
   },

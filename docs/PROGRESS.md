@@ -116,7 +116,15 @@
 - [ ] Route bill questions to the engine (RAG explains rules, the engine does the arithmetic)
 
 ## Milestone 5 — Forecasting (both segments) + solar planner
-- [ ] Next-12-months bill forecast from the bill's own history (conventional households)
+- [x] 5a Next-12-months units from the bill's own history (same month last year, neighbour-month range) - `rehnuma-forecast` (see FORECAST.md)
+- [x] Evidence for own-history forecasting: household profiles correlate +0.89 (two summer peakers) and -0.49 / -0.48 (one winter peaker)
+- [x] 5b Rupees at today's rates: audited slab engine + ED + GST + fixed charge; protected status re-decided every month, so one month over 200 costs the next six
+- [x] 200-unit and slab-edge watch: months within 15% of an edge, priced through the full 12-month path (iesco-2021-01: holding June at 200 saves ~Rs 13,130, ~Rs 1,190 per unit not used)
+- [x] Fixed: "keeps protected rates" was claimed for months after an earlier crossing - now only when later months actually change
+- [x] Fixed: first counterfactual told a 558-unit household to cut to 200 - advice limited to months in reach
+- [x] `rehnuma-eval-forecast`: backtest (n = 0 - no same-household pairs yet, reported as not measured), seasonality, engine reproduces 3/3 printed energy charges (gated in CI)
+- [ ] Backtest number: bills from the same households 6-12 months apart
+- [ ] Outlook in the API and on the website
 - [ ] Export credit / settlement trajectory for prosumers
 - [ ] Solar planner: PVGIS yield + 2026 net billing (buyback at national average energy purchase price) vs grandfathered net metering
 
@@ -125,7 +133,7 @@
 - [x] `rehnuma-ci-evals`: every no-API eval in one gate (auditor, template summaries, retrieval lexical + production rewrites replayed from a frozen file, router) - 18 metrics, fails if any drops below `data/eval/ci_thresholds.json`
 - [x] Fixed (found by the gate's first run): a floor rounded UP (15/16 -> 0.938) failed on its own value - floors are rounded down, a test guards it
 - [x] Renamed or missing metrics fail the gate (a metric can't silently stop being checked)
-- [ ] GitHub Actions (`.github/workflows/ci.yml`): ruff + pytest + eval gate + web lint/build on every push - first green run
+- [x] GitHub Actions (`.github/workflows/ci.yml`): ruff + pytest + eval gate + web lint/build on every push - first run green (backend 18 s, web 28 s)
 - [ ] Policy watcher: scheduled `fetch`, CHANGED documents open a review task (a human approves every rule change)
 
 ## Milestone 7 — Live product (in progress)

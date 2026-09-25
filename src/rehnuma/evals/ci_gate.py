@@ -12,6 +12,7 @@ makes any of these worse fails the build instead of quietly shipping:
   * retrieval    - NEPRA clause retrieval, lexical and with the production query rewrites
                    REPLAYED from a frozen file (no Groq call), per split and language
   * router       - which part of the assistant each question reaches
+  * forecast     - the outlook prices months with the engine that reproduces real bills
 
 Anything that needs a live model (extraction, LLM answers) is measured by its own eval
 and is not gated here: a flaky free-tier API must not turn the build red.
@@ -96,9 +97,17 @@ def router_metrics() -> dict[str, float]:
     return {f"router.{g}.accuracy": m["accuracy"] for g, m in rep["groups"].items()}
 
 
+def forecast_metrics() -> dict[str, float]:
+    from rehnuma.evals.forecast_eval import run
+    rep = run()
+    rows = rep["engine"]
+    return {"forecast.engine_reproduces_bills": sum(bool(r.get("ok")) for r in rows)
+            / (len(rows) or 1)}
+
+
 SUITES: dict[str, Callable[[], dict[str, float]]] = {
     "auditor": auditor_metrics, "summary": summary_metrics,
-    "retrieval": retrieval_metrics, "router": router_metrics,
+    "retrieval": retrieval_metrics, "router": router_metrics, "forecast": forecast_metrics,
 }
 
 

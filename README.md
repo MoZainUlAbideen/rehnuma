@@ -62,6 +62,8 @@ uv run rehnuma-ask "Why is my bill negative?" --bill data/labels/real/pesco-2026
 uv run rehnuma-ask "کیا میرے بل پر لگا ہوا ایف پی اے قانون کے مطابق ہے؟" --bill data/labels/real/pesco-2026-03.json
 uv run rehnuma-eval-route                        # does each question reach the right part?
 uv run rehnuma-ci-evals                          # all no-API evals vs their floors (what CI runs)
+uv run rehnuma-forecast data/labels/real/iesco-2021-01.json --lang en --table   # next 12 months
+uv run rehnuma-eval-forecast                     # backtest, seasonality, engine check
 uv sync --extra api; uv run rehnuma-api          # live API on http://localhost:7860/docs
 cd web; npm install; npm run dev                # website on http://localhost:3000
 ```
