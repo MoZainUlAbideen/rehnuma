@@ -16,6 +16,7 @@ import {
 
 import { IconCheck, IconChat, IconExternal, IconSend, IconUpload, IconX } from "./icons";
 import { OPEN_CHAT_EVENT, type OpenChatDetail } from "./OpenChat";
+import { OutlookCard } from "./OutlookCard";
 
 // ---------------------------------------------------------------- strings
 
@@ -223,6 +224,7 @@ function BillCard({ view, lang, note }: { view: BillView; lang: Lang; note?: str
             ))}
         </div>
       )}
+      <OutlookCard outlook={view.outlook} lang={lang} />
       {note && <div className="chat-note">{note}</div>}
     </div>
   );
@@ -458,8 +460,8 @@ export function ChatWidget() {
                 );
               if (m.bill)
                 return (
-                  <div key={m.id} className={`chat-msg bot wide${latest}`} dir={m.lang === "ur" ? "rtl" : "ltr"}>
-                    <BillCard view={m.bill} lang={m.lang} note={m.note} />
+                  <div key={m.id} className={`chat-msg bot wide${latest}`} dir={lang === "ur" ? "rtl" : "ltr"}>
+                    <BillCard view={m.bill} lang={lang} note={m.note ? T[lang].noStore : undefined} />
                   </div>
                 );
               const r = m.reply!;

@@ -648,3 +648,106 @@
     display: none;
   }
 }
+
+/* bill chips: scroll sideways without a scrollbar; the faded edge says there is more */
+.chat-chips {
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 85%, transparent);
+}
+
+.lang-ur .chat-chips {
+  mask-image: linear-gradient(to left, #000 85%, transparent);
+}
+
+.chat-chips::-webkit-scrollbar {
+  display: none;
+}
+
+/* 12-month outlook card inside a bill message */
+.outlook {
+  margin-top: 12px;
+  padding: 12px 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.outlook-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font: 700 13px/1.8 var(--font-sans);
+  color: var(--navy);
+}
+
+.outlook-total {
+  font-weight: 500;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.outlook-total b {
+  color: var(--navy);
+  font-family: var(--font-sans);
+}
+
+.outlook-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 4px;
+}
+
+.outlook-chart .bar {
+  fill: var(--brand);
+}
+
+.outlook-chart .bar.over {
+  fill: #d97706;
+}
+
+.outlook-chart g:hover .bar {
+  opacity: 0.8;
+}
+
+.outlook-chart .axis {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.outlook-chart .limit {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.outlook-chart .limit-label,
+.outlook-chart .tick {
+  font: 500 9px var(--font-sans);
+  fill: var(--muted);
+}
+
+.outlook-chart .bar-label {
+  font: 700 9px var(--font-sans);
+  fill: var(--ink);
+}
+
+.outlook-legend {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.outlook-lines {
+  margin-top: 6px;
+  font-size: 13.5px;
+}
+
+.outlook-lines.urdu {
+  font-size: 14px;
+}
+
+.outlook-lines p + p {
+  margin-top: 4px;
+}

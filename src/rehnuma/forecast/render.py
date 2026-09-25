@@ -43,8 +43,8 @@ def summarize_outlook(o: Outlook, lang: str = "ur") -> list[str]:
             lines.append(
                 f"{m}: اندازاً {n(c.units)} یونٹ۔ اگر {n(c.edge)} یا کم رکھیں تو تقریباً "
                 f"{n(rs(c.saving))} روپے بچیں گے - ہر نہ استعمال کیے گئے یونٹ پر تقریباً "
-                f"{n(rs(c.per_unit))} روپے، کیونکہ مزید {n(c.protected_gained)} مہینے پروٹیکٹڈ ریٹ "
-                f"ملے گا۔" if ur
+                f"{n(rs(c.per_unit))} روپے، کیونکہ مزید {n(c.protected_gained)} "
+                f"{'مہینہ' if c.protected_gained == 1 else 'مہینے'} پروٹیکٹڈ ریٹ ملے گا۔" if ur
                 else f"{m}: about {n(c.units)} units. Keeping it at {n(c.edge)} or below saves "
                 f"about Rs {n(rs(c.saving))} - about Rs {n(rs(c.per_unit))} for every unit not "
                 f"used, because it keeps protected rates for {n(c.protected_gained)} more "

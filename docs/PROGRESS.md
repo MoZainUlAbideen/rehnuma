@@ -124,7 +124,7 @@
 - [x] Fixed: first counterfactual told a 558-unit household to cut to 200 - advice limited to months in reach
 - [x] `rehnuma-eval-forecast`: backtest (n = 0 - no same-household pairs yet, reported as not measured), seasonality, engine reproduces 3/3 printed energy charges (gated in CI)
 - [ ] Backtest number: bills from the same households 6-12 months apart
-- [ ] Outlook in the API and on the website
+- [x] Outlook in the API (`outlook` on every sample/upload, no LLM so free) and on the website: 12-month chart (months over 200 in amber, hover for range, protected status and bill) + the advice lines, Urdu/English
 - [ ] Export credit / settlement trajectory for prosumers
 - [ ] Solar planner: PVGIS yield + 2026 net billing (buyback at national average energy purchase price) vs grandfathered net metering
 
@@ -150,6 +150,9 @@ Decisions: backend on Render (Docker, free tier; Hugging Face Docker Spaces now 
 - [x] Chat handles the free server's cold start ("waking up" notice; the page pings `/api/health` on load), 429 limits and expired uploads
 - [ ] 7c Deploy `web/` to Vercel (root directory `web`)
 - [ ] 7d Set `REHNUMA_CORS_ORIGINS` on Render to the Vercel URL; end-to-end check on the live site
+- [x] Fixed: CORS setting pasted with a trailing slash ("https://x.vercel.app/") never matches a browser origin - slashes, spaces and newlines are now stripped (seen while deploying)
+- [x] Chat polish: bill cards follow the language toggle; bill chips scroll without a scrollbar
+- [ ] Found live: bill answer said "you ALREADY have Rs 134,041 credit" - that total includes this month's Rs 19,285 (numbers right, relation wrong; the critic checks numbers, not meaning) - send the carried-over balance as its own fact
 - [ ] Image-level PII blurring before upload (milestone 3 item; matters once real users upload)
 
 ## Backlog — waiting on sources or data

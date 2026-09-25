@@ -144,3 +144,10 @@ def test_forecast_prices_months_with_the_audited_engine():
     rows = engine_consistency([bill(b) for b in ("iesco-2019-07", "iesco-2021-01",
                                                  "iesco-2023-03")])
     assert len(rows) == 3 and all(r.get("ok") for r in rows)
+
+
+def test_urdu_uses_singular_for_one_month():
+    """'مزید 1 مہینے' read wrong; one month is 'مہینہ'."""
+    lines = summarize_outlook(outlook(bill("iesco-2021-01")), "ur")
+    sept = next(ln for ln in lines if ln.startswith("ستمبر"))
+    assert "مزید 1 مہینہ" in sept and "مزید 1 مہینے" not in sept

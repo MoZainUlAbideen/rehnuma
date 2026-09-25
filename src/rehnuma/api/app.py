@@ -113,12 +113,19 @@ def _limit(state: State, request: Request, kind: str) -> None:
                             headers={"Retry-After": str(seconds_to_midnight_utc())})
 
 
+def cors_origins() -> list[str]:
+    """REHNUMA_CORS_ORIGINS, comma separated. A browser sends its origin without a trailing
+    slash, so "https://x.vercel.app/" (pasted from the address bar - it happened while
+    deploying) would never match: slashes and spaces are stripped."""
+    raw = os.environ.get("REHNUMA_CORS_ORIGINS", "http://localhost:3000")
+    return [o.strip().rstrip("/") for o in raw.replace("\n", ",").split(",") if o.strip()]
+
+
 def create_app(state: State | None = None) -> FastAPI:
     app = FastAPI(title="Rehnuma API", version="0.1.0",
                   description="Pakistani electricity bills: audit, plain-language summary "
                               "and cited NEPRA rules, in Urdu or English.")
-    origins = os.environ.get("REHNUMA_CORS_ORIGINS", "http://localhost:3000").split(",")
-    app.add_middleware(CORSMiddleware, allow_origins=[o.strip() for o in origins],
+    app.add_middleware(CORSMiddleware, allow_origins=cors_origins(),
                        allow_methods=["GET", "POST"], allow_headers=["*"])
     app.state.rehnuma = state or State.load()
 

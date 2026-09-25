@@ -23,10 +23,30 @@ export interface Finding {
   actual: string | null;
 }
 
+export interface OutlookMonth {
+  month: string;
+  units: number;
+  low: number;
+  high: number;
+  protected: boolean;
+  bill: number;
+}
+
+export type Outlook =
+  | { available: false; reason: string }
+  | {
+      available: true;
+      total: number;
+      summary: Record<Lang, string[]>;
+      months: OutlookMonth[];
+      rates: string;
+    };
+
 export interface BillView {
   bill: { bill_id: string; disco: string; bill_month: string; connection_type: string };
   audit: { passed: number; failed: number; skipped: number; findings: Finding[] };
   summary: Record<Lang, string[]>;
+  outlook?: Outlook;
 }
 
 export interface UploadView extends BillView {

@@ -7,6 +7,8 @@ from rehnuma.engine import Status, audit_bill
 from rehnuma.explain.render import summarize
 from rehnuma.explain.story import build_story
 from rehnuma.extract.pipeline import ExtractionResult
+from rehnuma.forecast.outlook import NotSupported, outlook
+from rehnuma.forecast.render import rs, summarize_outlook
 from rehnuma.policy.answer import Answer, Source
 from rehnuma.schema import Bill
 
@@ -30,6 +32,24 @@ def bill_view(bill: Bill) -> dict:
                          for f in findings],
         },
         "summary": {"ur": summarize(story, "ur"), "en": summarize(story, "en")},
+        "outlook": outlook_view(bill),
+    }
+
+
+def outlook_view(bill: Bill) -> dict:
+    """The 12-month outlook (no LLM, so free). `available: false` says why not."""
+    try:
+        o = outlook(bill)
+    except NotSupported as e:
+        return {"available": False, "reason": str(e)}
+    return {
+        "available": True,
+        "total": rs(o.total),
+        "summary": {"ur": summarize_outlook(o, "ur"), "en": summarize_outlook(o, "en")},
+        "months": [{"month": u.month, "units": u.units, "low": u.low, "high": u.high,
+                    "protected": m.protected, "bill": rs(m.total)}
+                   for u, m in zip(o.units, o.months, strict=True)],
+        "rates": f"{o.schedule.id} ({o.schedule.confidence})",
     }
 
 

@@ -178,3 +178,25 @@ def test_upload_when_the_daily_vision_quota_is_spent(api):
     r = client.post("/api/bills/extract",
                     files={"file": ("bill.jpg", b"\xff\xd8fake-jpeg", "image/jpeg")})
     assert r.status_code == 503 and "quota" in r.json()["detail"]
+
+
+def test_regular_bill_comes_with_a_12_month_outlook(api):
+    client, *_ = api
+    o = client.get("/api/samples/iesco-2021-01").json()["outlook"]
+    assert o["available"] and len(o["months"]) == 12 and o["total"] > 0
+    june = next(m for m in o["months"] if m["month"] == "2021-06")
+    assert june["units"] == 211 and not june["protected"]
+    assert any("1,190" in ln for ln in o["summary"]["en"]) and o["summary"]["ur"]
+
+
+def test_solar_bill_says_why_there_is_no_outlook(api):
+    client, *_ = api
+    o = client.get("/api/samples/pesco-2026-09").json()["outlook"]
+    assert o == {"available": False, "reason": o["reason"]} and "solar" in o["reason"]
+
+
+def test_cors_origins_forgive_a_pasted_trailing_slash(monkeypatch):
+    from rehnuma.api.app import cors_origins
+    monkeypatch.setenv("REHNUMA_CORS_ORIGINS",
+                       "https://rehnuma-kappa.vercel.app/,\n http://localhost:3000 ")
+    assert cors_origins() == ["https://rehnuma-kappa.vercel.app", "http://localhost:3000"]
