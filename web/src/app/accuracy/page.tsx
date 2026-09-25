@@ -90,6 +90,15 @@ const LAYERS = [
       "Rules, not an LLM: 100% on dev questions, with held-out misses reported as they are.",
     ],
   },
+  {
+    kicker: "Layer 6",
+    h: "Operations that keep it honest",
+    items: [
+      "Every push runs 319 tests and gates 20 eval metrics against committed limits - a metric that drops or disappears fails the build.",
+      "Optional Langfuse tracing shows each question's full path: routing, retrieved clauses, every LLM draft and the critic's verdict on it.",
+      "A weekly watcher re-downloads NEPRA's PDFs and opens a review issue if one changed. Nothing updates itself.",
+    ],
+  },
 ];
 
 const RETRIEVAL: { setting: string; dev: string; held: string; ur: string; best?: boolean }[] = [
@@ -160,6 +169,24 @@ const BUGS = [
     found: "The retry started from scratch after a tagging complaint and lost the right answer.",
     fix: "The retry now sees its own draft and fixes only the listed problems.",
   },
+  {
+    area: "Photo reading",
+    h: "Gemini calculated the solar bank instead of copying it",
+    found: "It wrote 1,832 and -513 banked units (previous + this month) where the bill prints 0 after settlement. The audit engine caught it.",
+    fix: "Prompt and re-read now say banked units are copied, never calculated - with a test replaying the exact misread.",
+  },
+  {
+    area: "Forecast",
+    h: "'Keeps protected rates' was promised when it wouldn't",
+    found: "For a household already over 200 the month before, holding the next month at 200 protects one later month, not six.",
+    fix: "The claim is made only when later months actually change, counted month by month.",
+  },
+  {
+    area: "Live answer",
+    h: "'You already have Rs 134,041 credit'",
+    found: "That total already included this month's Rs 19,285. Every number was right; the relation between them wasn't - and the critic checks numbers, not meaning.",
+    fix: "The model now gets the balance as an explicit sum: carried over + this bill = balance now.",
+  },
 ];
 
 const LIMITS = [
@@ -169,6 +196,8 @@ const LIMITS = [
   "Router misses on held-out phrasings like 'legally' and 'import' are left in the numbers, not patched to the test.",
   "Eval sets are small: 35 retrieval questions, 7 real bills. One question moves a percentage by several points.",
   "The legal basis for the fuel adjustment (NEPRA Act s. 31(7)) isn't indexed yet, so that question is answered 'not covered'.",
+  "The 12-month forecast's accuracy is unmeasured (n = 0) until bills from the same household a year apart are collected. For solar, last year's rupees missed by -68%, so there is no solar rupee forecast.",
+  "2026 tariff and buyback rates come from secondary sources (press, explainer sites), and every outlook says so.",
 ];
 
 export default function Accuracy() {

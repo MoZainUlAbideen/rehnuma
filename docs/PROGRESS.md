@@ -1,5 +1,18 @@
 # Rehnuma — progress log
 
+## Status: v1.0 wrapped up (Sep 2026)
+Live: https://rehnuma-kappa.vercel.app (web, Vercel) + https://rehnuma-api-3e5t.onrender.com (API, Render).
+Milestones 1, 2, 2.5, 4, 6 and 7 done; 3 and 5 done except the items below. 319 tests, 20 eval
+metrics gated in CI, Langfuse tracing live, weekly NEPRA watcher.
+
+Open items, to finish over time (none blocks the product):
+- [ ] Full photo-extraction run on all 7 bills (free Gemini quota; the eval resumes across days) -> EXTRACT_EVAL.md
+- [ ] Same-household bill pairs 6-12 months apart -> the forecast backtest gets a number
+- [ ] The family's net-metering agreement date -> "renewal in N months" on the solar card
+- [ ] Rates from NEPRA's own documents (S.R.O. 279(I)/2026, buyback determinations) instead of secondary sources
+- [ ] 5d solar planner; fuel-adjustment legal basis (NEPRA Act s. 31(7)) in the policy corpus
+- [ ] Synthetic bill images, photo PII blurring, meter-photo check (milestone 3 extras)
+
 ## Milestone 1 — Deterministic reconciliation engine ✅
 - [x] Repo scaffold with uv (src layout, pytest, ruff)
 - [x] Bill schema covering 2 PESCO layouts + conventional / net-metering connections
@@ -142,6 +155,7 @@
 - [x] Renamed or missing metrics fail the gate (a metric can't silently stop being checked)
 - [x] GitHub Actions (`.github/workflows/ci.yml`): ruff + pytest + eval gate + web lint/build on every push - first run green (backend 18 s, web 28 s)
 - [x] Policy watcher: `rehnuma-policy watch` re-downloads the NEPRA PDFs and compares with the lock (read only); weekly GitHub workflow opens a `policy-watch` issue on a change (exit 3) and goes red when NEPRA is unreachable for every file (exit 4) - a blind run must not look like "no change"
+- [x] Langfuse live: first trace from the website (api.ask -> assistant.ask -> policy.answer -> retrieve -> llm)
 - [ ] First scheduled watch run on GitHub (does nepra.org.pk answer GitHub's runners?)
 
 ## Milestone 7 — Live product (in progress)
@@ -160,7 +174,7 @@ Decisions: backend on Render (Docker, free tier; Hugging Face Docker Spaces now 
 - [ ] 7d Set `REHNUMA_CORS_ORIGINS` on Render to the Vercel URL; end-to-end check on the live site
 - [x] Fixed: CORS setting pasted with a trailing slash ("https://x.vercel.app/") never matches a browser origin - slashes, spaces and newlines are now stripped (seen while deploying)
 - [x] Chat polish: bill cards follow the language toggle; bill chips scroll without a scrollbar
-- [ ] Found live: bill answer said "you ALREADY have Rs 134,041 credit" - that total includes this month's Rs 19,285 (numbers right, relation wrong; the critic checks numbers, not meaning) - send the carried-over balance as its own fact
+- [x] Found live: bill answer said "you ALREADY have Rs 134,041 credit" - that total includes this month's Rs 19,285 (numbers right, relation wrong; the critic checks numbers, not meaning). Fixed: the facts now carry the balance as an explicit sum (carried over + this bill = balance now), with a test
 - [ ] Image-level PII blurring before upload (milestone 3 item; matters once real users upload)
 
 ## Backlog — waiting on sources or data

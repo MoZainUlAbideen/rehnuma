@@ -43,6 +43,16 @@ def facts_payload(story: BillStory, lang: str) -> str:
         facts.pop("payable_after_due")
     else:
         facts["due_date"] = day(story.due_date, lang)
+    # The balance as an explicit sum. Given only "payable" and "bill_effect", gpt-oss wrote
+    # "you ALREADY have a credit of Rs 134,041" - but that total includes this month's
+    # Rs 19,285 (live answer, Sep-2026 sample). Every number was right; the relation wasn't.
+    facts["balance"] = {
+        "carried_over_from_last_bill": story.carried_over,
+        "added_by_this_bill": story.bill_effect,
+        "balance_now": story.payable,
+        "how": "balance_now = carried_over_from_last_bill + added_by_this_bill "
+               "(negative = credit in the household's favour)",
+    }
     return json.dumps({
         "language": LANG_NAME[lang],
         "must_mention": required_numbers(story),
@@ -63,6 +73,7 @@ def _feedback(q: Quality, lang: str) -> str:
     if not q.structure_ok:
         parts.append("Write 5 to 8 different lines; never repeat a line.")
     return "Your previous draft was rejected. " + " ".join(parts) + " Write it again."
+
 
 @dataclass
 class SummaryResult:
@@ -92,7 +103,7 @@ def llm_summary(story: BillStory, client: LLMClient, lang: str = "ur",
                                  time.perf_counter() - start)
         rejected.append({"attempt": attempt, "text": draft,
                          "unsupported": [str(x) for x in q.unsupported],
-                           "missing": q.missing, "language_ok": q.language_ok,
+                         "missing": q.missing, "language_ok": q.language_ok,
                          "structure_ok": q.structure_ok})
         user = facts_payload(story, lang) + "\n\n" + _feedback(q, lang)
     text = "\n".join(f"- {line}" for line in summarize(story, lang))

@@ -104,10 +104,15 @@ class BillStory:
     def is_credit(self) -> bool:
         return self.payable < 0
 
+    @property
+    def carried_over(self) -> int:
+        """The balance brought from the last bill (arrears; negative = credit)."""
+        return self.payable - self.bill_effect
+
     def allowed_numbers(self) -> set[Decimal]:
         """Every number a summary is allowed to state (used by the faithfulness check)."""
         vals: list[int] = [self.payable, self.payable_after_due, self.current_bill,
-                           self.bill_effect,
+                           self.bill_effect, self.carried_over,
                            self.energy_rs, self.taxes_rs,
                            PROTECTED_LIMIT_KWH, PROTECTED_LOOKBACK_MONTHS]
         y, m = (int(p) for p in self.bill_month.split("-"))

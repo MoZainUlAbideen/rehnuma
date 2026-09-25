@@ -141,3 +141,19 @@ def test_without_an_llm_rules_questions_get_the_clauses_not_a_crash():
 def test_without_an_llm_an_urdu_rules_question_says_unavailable_not_an_empty_list():
     r = ask("کیا ڈسکو میٹر بدل سکتی ہے؟", _index(), None, docs={"new": DOC})
     assert r.policy.status == "error" and "دستیاب نہیں" in r.render()
+
+
+def test_bill_facts_spell_out_the_balance_sum():
+    """Live finding: 'you already have Rs 134,041 credit' - that total INCLUDES this month's
+    Rs 19,285. The facts now give the carried-over balance and the sum explicitly."""
+    import json
+
+    from rehnuma.explain.llm_summary import facts_payload
+    from rehnuma.explain.story import build_story
+    from rehnuma.loader import load_bill
+
+    story = build_story(load_bill("data/labels/real/pesco-2026-09.json"))
+    bal = json.loads(facts_payload(story, "en"))["facts"]["balance"]
+    assert (bal["carried_over_from_last_bill"], bal["added_by_this_bill"],
+            bal["balance_now"]) == (-114756, -19285, -134041)
+    assert 114756 in {abs(int(x)) for x in story.allowed_numbers()}
