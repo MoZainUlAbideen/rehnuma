@@ -10,9 +10,9 @@ from rehnuma.forecast.outlook import Outlook
 TOP_CHANCES = 3
 
 
-def rs(x: Decimal) -> int:
+def rs(x: Decimal | int) -> int:
     """Estimates are rounded to Rs 10 - a forecast has no business showing single rupees."""
-    return int((x / 10).quantize(Decimal(1), ROUND_HALF_UP) * 10)
+    return int((Decimal(x) / 10).quantize(Decimal(1), ROUND_HALF_UP) * 10)
 
 
 def summarize_outlook(o: Outlook, lang: str = "ur") -> list[str]:

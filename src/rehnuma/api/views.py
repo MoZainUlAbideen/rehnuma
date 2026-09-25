@@ -9,15 +9,17 @@ from rehnuma.explain.story import build_story
 from rehnuma.extract.pipeline import ExtractionResult
 from rehnuma.forecast.outlook import NotSupported, outlook
 from rehnuma.forecast.render import rs, summarize_outlook
+from rehnuma.forecast.solar import solar_outlook
+from rehnuma.forecast.solar_render import summarize_solar
 from rehnuma.policy.answer import Answer, Source
-from rehnuma.schema import Bill
+from rehnuma.schema import Bill, ConnectionType
 
 
 def _num(x):
     return None if x is None else str(x)
 
 
-def bill_view(bill: Bill) -> dict:
+def bill_view(bill: Bill, others: list[Bill] | None = None) -> dict:
     """The bill, Rehnuma's audit of it, and the plain-language summary in both languages."""
     findings = audit_bill(bill)
     story = build_story(bill)
@@ -33,6 +35,28 @@ def bill_view(bill: Bill) -> dict:
         },
         "summary": {"ur": summarize(story, "ur"), "en": summarize(story, "en")},
         "outlook": outlook_view(bill),
+        "solar": solar_view(bill, others or []),
+    }
+
+
+def solar_view(bill: Bill, others: list[Bill]) -> dict | None:
+    """Last 12 months of a net-metering account + the renewal comparison (no LLM)."""
+    if bill.connection_type != ConnectionType.NET_METERING:
+        return None
+    o = solar_outlook(bill, others)
+    if not o.amounts:
+        return {"available": False, "reason": "the bill history has no consecutive months"}
+    r = o.renewal
+    return {
+        "available": True,
+        "summary": {"ur": summarize_solar(o, "ur"), "en": summarize_solar(o, "en")},
+        "months": [{"month": a.month, "amount": a.amount, "net_units": a.net_units}
+                   for a in o.last_12],
+        "total": o.last_12_total,
+        "renewal": None if r is None else {
+            "months": list(r.usage.months), "actual": r.usage.actual_electricity,
+            "renewal_low": rs(r.renewal_total("high")), "renewal_high": rs(r.renewal_total("low")),
+        },
     }
 
 

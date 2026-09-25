@@ -1,0 +1,9 @@
+{
+  "_about": "Rates for the solar (prosumer) outlook. All are SECONDARY sources (press / explainer sites quoting NEPRA); none is read from a NEPRA determination yet. The outlook says so, and shows a range for the energy purchase price.",
+  "napp": {"rate": "25.9", "unit": "Rs/kWh", "what": "national average power purchase price - paid for exported surplus under agreements signed before the Prosumer Regulations 2026 (reg. 21(2)), until they expire",
+           "source": "Express Tribune, 9 Feb 2026 ('current rate Rs25.9 per unit'); Business Recorder 13 Mar 2025 cites Rs 27 (NAPP-based) a year earlier", "confidence": "secondary"},
+  "epp": {"rate": "11", "low": "9", "high": "11", "unit": "Rs/kWh", "what": "national average energy purchase price - paid for ALL exported units under net billing (reg. 14), which applies at renewal (reg. 21(2))",
+          "source": "Express Tribune, 9 Feb 2026 ('Rs11 per unit'); Dawn Prism ('Rs9-Rs11 per kwh')", "confidence": "secondary"},
+  "tou": {"offpeak": "34.53", "peak": "46.85", "unit": "Rs/kWh", "tariff": "A-1b (time of use, residential)",
+          "source": "ebillpakistan.pk, citing S.R.O. 279(I)/2026 effective 12 Feb 2026", "confidence": "secondary"}
+}

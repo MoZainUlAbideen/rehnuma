@@ -101,8 +101,10 @@ def forecast_metrics() -> dict[str, float]:
     from rehnuma.evals.forecast_eval import run
     rep = run()
     rows = rep["engine"]
+    recon = rep["solar"]["reconstruction"]
     return {"forecast.engine_reproduces_bills": sum(bool(r.get("ok")) for r in rows)
-            / (len(rows) or 1)}
+            / (len(rows) or 1),
+            "forecast.solar_months_rebuilt": sum(r["ok"] for r in recon) / (len(recon) or 1)}
 
 
 SUITES: dict[str, Callable[[], dict[str, float]]] = {

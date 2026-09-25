@@ -17,6 +17,7 @@ import {
 import { IconCheck, IconChat, IconExternal, IconSend, IconUpload, IconX } from "./icons";
 import { OPEN_CHAT_EVENT, type OpenChatDetail } from "./OpenChat";
 import { OutlookCard } from "./OutlookCard";
+import { SolarCard } from "./SolarCard";
 
 // ---------------------------------------------------------------- strings
 
@@ -231,6 +232,7 @@ function BillCard({ view, lang, note }: { view: BillView; lang: Lang; note?: str
         </div>
       )}
       <OutlookCard outlook={view.outlook} lang={lang} />
+      <SolarCard solar={view.solar} lang={lang} />
       {note && <div className="chat-note">{note}</div>}
     </div>
   );

@@ -152,7 +152,7 @@ def create_app(state: State | None = None) -> FastAPI:
         bill = st().samples.get(sample_id)
         if bill is None:
             raise HTTPException(404, detail=f"no sample bill {sample_id!r}")
-        return bill_view(bill)
+        return bill_view(bill, list(st().samples.values()))
 
     @app.post("/api/bills/extract")
     async def extract(request: Request, file: Annotated[UploadFile, File()]):
@@ -176,7 +176,7 @@ def create_app(state: State | None = None) -> FastAPI:
             last = res.attempts[-1].error if res.attempts else "no output"
             raise HTTPException(502, detail=f"could not read the bill: {last}")
         return {"bill_token": s.keep_upload(res.bill), "extraction": extraction_view(res),
-                **bill_view(res.bill)}
+                **bill_view(res.bill, list(s.samples.values()))}
 
     @app.post("/api/ask")
     def ask_endpoint(body: AskBody, request: Request):

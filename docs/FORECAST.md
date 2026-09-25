@@ -70,4 +70,51 @@ over-200 warnings). The eval picks pairs up automatically by `connection_id`.
   2020 at 200 would protect months after the window; the outlook prices only the edge).
 - Per-month savings are not additive; the "all together" figure is its own re-run.
 - 2026 A-1a rates are from secondary sources; fixed-charge tax treatment is unconfirmed.
-- Only flat A-1a households. Time-of-use (A-1b) and solar households come next (5c).
+- Only flat A-1a households get the 12-month forecast. Solar households get the section below.
+
+# Solar households (milestone 5c)
+
+`uv run rehnuma-forecast data/labels/real --lang en` (the folder, so a bill can find the
+other bills of its billing cycle).
+
+## What happened - no rates needed
+
+The history table prints the account balance each month. A month's amount is this month's
+balance minus last month's (payments added back); settlement months are where banked units
+were cashed out. Your family's last 12 months (to Sep 2026): **Rs 10,760 credited overall** -
+settlements of Rs 16,000 (Dec), Rs 47,680 (Jun) and Rs 19,290 (Sep), against Rs 56,880 for
+January and February 2026, when more was used than sent back and the units were billed.
+
+Checked: every month rebuilt from one bill's history equals what that month's own bill says
+(6 / 6, gated in CI).
+
+**Bug found while building it:** the bill's own month first used "current bill" - for Mar-26
+that is -872, but the balance moved +292 because the Rs 1,164 fuel adjustment is billed on
+top. The next bills' history shows +292, so the own month now uses the change in payable.
+
+## Why there is no rupee forecast for solar
+
+"Same month last year" in rupees, scored on the six months the history covers twice
+(Apr-Sep 2026): forecast -91,437, actual -54,296 (**-68%**). Months without a settlement cost
+2-3x more in 2026 (about Rs 1,180 -> 3,220), and June's settlement was smaller (2,151 net units
+vs 3,005, and less per unit). The timing matches the Feb-2026 rules, but one household can't
+separate rules from usage, so the outlook reports the last 12 months instead of forecasting.
+
+## At renewal (reg. 21(2))
+
+Agreements signed before the Prosumer Regulations 2026 keep the old terms until they end;
+renewals move to net billing (reg. 14): every imported unit at the tariff, every exported unit
+at the energy purchase price. Priced on the family's REAL Jul-Sep 2026 meter readings (1,768
+units taken, 3,088 sent back) with the bills' REAL charges on the other side: about
+Rs 41,590-47,770 for that quarter instead of a Rs 13,820 credit - **Rs 55,420-61,590 more for one
+summer quarter.** Fixed charges are taken from the in-cycle months and assumed unchanged.
+
+Rates (`src/rehnuma/data/solar_rates.json`), all secondary: energy purchase price Rs 9-11
+(Express Tribune 9 Feb 2026; Dawn), national average power purchase price Rs 25.9 (Tribune),
+A-1b off-peak Rs 34.53 / peak Rs 46.85 (S.R.O. 279(I)/2026 via ebillpakistan.pk).
+
+**Settlement hypothesis** (eval part 6): "off-peak imports netted 1:1 against exports inside
+the cycle, surplus paid at the power purchase price, peak imports at the peak rate" explains
+the Jul-Sep 2026 cycle's energy credit within **6.5%** (predicted -23,441, actual -22,016).
+Close, not exact - the rates are secondary and the fixed charge is inferred - so it is
+reported, not used to bill anyone.

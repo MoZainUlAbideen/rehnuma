@@ -82,5 +82,100 @@
       "printed": "10033",
       "ok": true
     }
-  ]
+  ],
+  "solar": {
+    "reconstruction": [
+      {
+        "from": "pesco-2026-07",
+        "month": "2026-03",
+        "rebuilt": 292,
+        "bill": 292,
+        "ok": true
+      },
+      {
+        "from": "pesco-2026-08",
+        "month": "2026-03",
+        "rebuilt": 292,
+        "bill": 292,
+        "ok": true
+      },
+      {
+        "from": "pesco-2026-08",
+        "month": "2026-07",
+        "rebuilt": 3170,
+        "bill": 3170,
+        "ok": true
+      },
+      {
+        "from": "pesco-2026-09",
+        "month": "2026-03",
+        "rebuilt": 292,
+        "bill": 292,
+        "ok": true
+      },
+      {
+        "from": "pesco-2026-09",
+        "month": "2026-07",
+        "rebuilt": 3170,
+        "bill": 3170,
+        "ok": true
+      },
+      {
+        "from": "pesco-2026-09",
+        "month": "2026-08",
+        "rebuilt": 3273,
+        "bill": 3273,
+        "ok": true
+      }
+    ],
+    "last_year_as_forecast": {
+      "months": 6,
+      "forecast_total": -91437,
+      "actual_total": -54296,
+      "rows": [
+        {
+          "month": "2026-04",
+          "last_year": 1078,
+          "actual": 3441
+        },
+        {
+          "month": "2026-05",
+          "last_year": 1215,
+          "actual": 2787
+        },
+        {
+          "month": "2026-06",
+          "last_year": -76801,
+          "actual": -47682
+        },
+        {
+          "month": "2026-07",
+          "last_year": 1180,
+          "actual": 3170
+        },
+        {
+          "month": "2026-08",
+          "last_year": 1180,
+          "actual": 3273
+        },
+        {
+          "month": "2026-09",
+          "last_year": -19289,
+          "actual": -19285
+        }
+      ]
+    },
+    "settlement_hypothesis": [
+      {
+        "cycle": [
+          "2026-07",
+          "2026-08",
+          "2026-09"
+        ],
+        "predicted_energy": "-23441",
+        "actual_energy": "-22016",
+        "error": 0.064733937453158
+      }
+    ]
+  }
 }

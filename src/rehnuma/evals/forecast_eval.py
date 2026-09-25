@@ -18,6 +18,16 @@ Three parts, each reported with its sample size:
 3. Cost-engine consistency: the forecast prices months with the same slab engine the
    auditor uses. Applied to each real bill's actual units with that bill's own schedule,
    it must reproduce the printed cost of electricity (Rs 1 display rounding allowed).
+
+Solar (net-metering) households:
+
+4. Reconstruction: a month's amount rebuilt from one bill's balance history must equal
+   what the bill of that month itself says (the change in its payable).
+5. Last year as a forecast: "same month last year" in rupees, scored on the months the
+   history covers twice - it measures how much the 2026 rules broke the pattern.
+6. Settlement hypothesis: does "unit netting inside the cycle, surplus paid at the national
+   average power purchase price, peak imports at the peak rate" explain the settled
+   cycle? Reported as an error, not gated: the rates are secondary.
 """
 
 from __future__ import annotations
@@ -29,6 +39,13 @@ from decimal import Decimal
 from itertools import combinations
 from pathlib import Path
 
+from rehnuma.forecast.solar import (
+    cycle_bills,
+    cycle_usage,
+    monthly_amounts,
+    renewal_scenario,
+    solar_rates,
+)
 from rehnuma.forecast.units import forecast_units, monthly_units
 from rehnuma.loader import load_bills
 from rehnuma.schema import Bill, ConnectionType
@@ -123,10 +140,55 @@ def engine_consistency(bills: list[Bill]) -> list[dict]:
     return rows
 
 
+def solar_checks(all_bills: list[Bill]) -> dict:
+    solar = [b for b in all_bills if b.connection_type == ConnectionType.NET_METERING]
+    # 4. reconstruction: history-derived amount vs the month's own bill
+    own = {b.bill_month: b.totals.payable_within_due - b.totals.arrears for b in solar}
+    recon = []
+    for b in solar:
+        for a in monthly_amounts(b)[:-1]:            # the last row IS the bill itself
+            if a.month in own:
+                recon.append({"from": b.bill_id, "month": a.month, "rebuilt": a.amount,
+                              "bill": own[a.month], "ok": a.amount == own[a.month]})
+    # 5. same month last year, in rupees
+    series: dict[str, int] = {}
+    for b in solar:
+        series.update({a.month: a.amount for a in monthly_amounts(b)})
+    yoy = [{"month": m, "last_year": series[p], "actual": v}
+           for m, v in sorted(series.items())
+           if (p := f"{int(m[:4]) - 1}-{m[5:]}") in series]
+    naive = None
+    if yoy:
+        fc, act = sum(r["last_year"] for r in yoy), sum(r["actual"] for r in yoy)
+        naive = {"months": len(yoy), "forecast_total": fc, "actual_total": act,
+                 "rows": yoy}
+    # 6. settlement hypothesis on each complete cycle
+    hyp = []
+    for b in solar:
+        cycle = cycle_bills(b, solar)
+        if not cycle:
+            continue
+        u = cycle_usage(cycle)
+        r = solar_rates()
+        nm_off = sum(x.net_metering.net_kwh.offpeak for x in cycle)
+        nm_peak = sum(x.net_metering.net_kwh.peak for x in cycle)
+        napp, peak, off = (Decimal(r["napp"]["rate"]), Decimal(r["tou"]["peak"]),
+                           Decimal(r["tou"]["offpeak"]))
+        predicted = (max(nm_peak, 0) * peak + max(nm_off, 0) * off
+                     - (-min(nm_off, 0) - min(nm_peak, 0)) * napp)
+        fixed = renewal_scenario(cycle).fixed_estimate
+        actual_energy = u.actual_electricity - fixed
+        hyp.append({"cycle": list(u.months), "predicted_energy": str(round(predicted)),
+                    "actual_energy": str(round(actual_energy)),
+                    "error": float(abs(predicted - actual_energy) / abs(actual_energy))})
+    return {"reconstruction": recon, "last_year_as_forecast": naive, "settlement_hypothesis": hyp}
+
+
 def run(paths: list[str] | None = None) -> dict:
-    bills = conventional(load_bills(paths or [LABELS]))
+    everything = load_bills(paths or [LABELS])
+    bills = conventional(everything)
     return {"n_bills": len(bills), "backtest": backtest(bills), "seasonality": profiles(bills),
-            "engine": engine_consistency(bills)}
+            "engine": engine_consistency(bills), "solar": solar_checks(everything)}
 
 
 def render(rep: dict) -> str:
@@ -159,6 +221,27 @@ def render(rep: dict) -> str:
         else:
             lines.append(f"| {r['bill']} | {r['units']} | {r['computed']} | {r['printed']} | "
                          f"{'yes' if r['ok'] else '**no**'} |")
+    so = rep["solar"]
+    rec = so["reconstruction"]
+    lines += ["", "## 4. Solar: monthly amounts rebuilt from the balance history", "",
+              f"{sum(r['ok'] for r in rec)} / {len(rec)} months match the bill of that month.", ""]
+    nv = so["last_year_as_forecast"]
+    if nv:
+        err = (nv["forecast_total"] - nv["actual_total"]) / abs(nv["actual_total"])
+        lines += ["## 5. Solar: last year's rupees as this year's forecast", "",
+                  "| Month | Last year | Actual |", "|---|---|---|"]
+        lines += [f"| {r['month']} | {r['last_year']:,} | {r['actual']:,} |" for r in nv["rows"]]
+        lines += ["", f"Total over {nv['months']} months: forecast {nv['forecast_total']:,}, "
+                  f"actual {nv['actual_total']:,} ({err:+.0%}). The pattern changed in 2026: "
+                  "months without a settlement cost 2-3x more, and June's settlement was smaller "
+                  "(fewer net units, less per unit). The timing matches the Feb-2026 rules, but "
+                  "one household can't separate rules from usage - so the outlook reports the "
+                  "last 12 months instead of forecasting solar rupees from them.", ""]
+    lines += ["## 6. Solar: settlement hypothesis (secondary rates)", "",
+              "| Cycle | Predicted energy | Actual energy | Error |", "|---|---|---|---|"]
+    for h in so["settlement_hypothesis"]:
+        lines.append(f"| {h['cycle'][0]} to {h['cycle'][-1]} | {h['predicted_energy']} | "
+                     f"{h['actual_energy']} | {h['error']:.1%} |")
     return "\n".join(lines) + "\n"
 
 

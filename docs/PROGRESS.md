@@ -125,7 +125,12 @@
 - [x] `rehnuma-eval-forecast`: backtest (n = 0 - no same-household pairs yet, reported as not measured), seasonality, engine reproduces 3/3 printed energy charges (gated in CI)
 - [ ] Backtest number: bills from the same households 6-12 months apart
 - [x] Outlook in the API (`outlook` on every sample/upload, no LLM so free) and on the website: 12-month chart (months over 200 in amber, hover for range, protected status and bill) + the advice lines, Urdu/English
-- [ ] Export credit / settlement trajectory for prosumers
+- [x] 5c Solar: last 12 months rebuilt from the balance history (settlements, import months, in-cycle charge level) - 6/6 months match their own bills, gated in CI
+- [x] Fixed: the bill's own month used "current bill" (Mar-26: -872) - the balance moved +292 because the fuel adjustment is billed on top
+- [x] Measured: last year's rupees as a forecast missed by -68% over Apr-Sep 2026 (in-cycle months 2-3x dearer, smaller June settlement) - so no solar rupee forecast
+- [x] Renewal comparison (reg. 21(2) -> reg. 14 net billing) on the real Jul-Sep 2026 cycle: Rs 55,420-61,590 more for that quarter (rates secondary, cited in solar_rates.json)
+- [x] Settlement hypothesis (netting + power purchase price for the surplus) explains the Jul-Sep 2026 cycle within 6.5%
+- [x] Solar card on the website: 12-month charges/credits chart + the renewal box
 - [ ] Solar planner: PVGIS yield + 2026 net billing (buyback at national average energy purchase price) vs grandfathered net metering
 
 ## Milestone 6 — LLMOps

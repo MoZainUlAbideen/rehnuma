@@ -42,11 +42,21 @@ export type Outlook =
       rates: string;
     };
 
+export interface SolarView {
+  available: boolean;
+  reason?: string;
+  summary: Record<Lang, string[]>;
+  months: { month: string; amount: number; net_units: number }[];
+  total: number;
+  renewal: { months: string[]; actual: number; renewal_low: number; renewal_high: number } | null;
+}
+
 export interface BillView {
   bill: { bill_id: string; disco: string; bill_month: string; connection_type: string };
   audit: { passed: number; failed: number; skipped: number; findings: Finding[] };
   summary: Record<Lang, string[]>;
   outlook?: Outlook;
+  solar?: SolarView | null;
 }
 
 export interface UploadView extends BillView {

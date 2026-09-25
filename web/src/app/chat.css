@@ -833,3 +833,24 @@
 .outlook-lines p + p {
   margin-top: 4px;
 }
+
+.outlook-chart .bar.credit {
+  fill: var(--pass);
+}
+
+.renewal {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--amber-soft);
+  border: 1px solid #f3d19c;
+}
+
+.renewal-title {
+  font: 700 12.5px/1.8 var(--font-sans);
+  color: #7a4a00;
+}
+
+.outlook-chart .bar-label.inside {
+  fill: #fff;
+}

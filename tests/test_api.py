@@ -200,3 +200,12 @@ def test_cors_origins_forgive_a_pasted_trailing_slash(monkeypatch):
     monkeypatch.setenv("REHNUMA_CORS_ORIGINS",
                        "https://rehnuma-kappa.vercel.app/,\n http://localhost:3000 ")
     assert cors_origins() == ["https://rehnuma-kappa.vercel.app", "http://localhost:3000"]
+
+
+def test_solar_sample_comes_with_last_12_months_and_renewal(api):
+    client, *_ = api
+    s = client.get("/api/samples/pesco-2026-09").json()["solar"]
+    assert s["available"] and len(s["months"]) == 12
+    assert s["renewal"]["months"] == ["2026-07", "2026-08", "2026-09"]
+    assert s["renewal"]["actual"] == -13824 and s["renewal"]["renewal_low"] > 40000
+    assert client.get("/api/samples/iesco-2021-01").json()["solar"] is None
