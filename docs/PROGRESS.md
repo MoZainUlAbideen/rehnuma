@@ -55,7 +55,12 @@
 - [x] First real run (verify on): 6/7 bills read, 96.2% field accuracy, 100% key fields, 83.3% reconcile
 - [x] Fixed: eval scored decimal formatting ("1652.60" vs "1652.6") as misreads - values now compared, not strings
 - [x] New `ed_on_fpa` check: Gemini copied GST on FPA (46) into ED on FPA (4) and no check looked at that line
-- [ ] Re-run verify on vs off after the Gemini quota resets (+ `--only pesco-2026-09`) and record the numbers
+- [x] `--only pesco-2026-09` on gemini-3.5-flash: 96.5% fields, 100% key fields, NOT verified - it CALCULATED the net-metering bank (Rem kWh present = previous - Net: 1325 + 507 = 1832, -319 - 194 = -513) instead of copying the printed 0 of a settlement month; the engine caught it, the re-read repeated it
+- [x] Fixed: prompt + re-read feedback say Rem kWh is copied, never computed (effect to be measured in the full run)
+- [x] Fixed: a DAILY quota 429 was retried 4 x 90 s per bill (3 minutes lost, then the next bill did the same) - now stops the run at once; the API answers 503 "free quota used up"
+- [x] Eval resumes across days: each finished bill is saved (keyed by a hash of the prompt), the next run continues; quota stops are "not run", not API errors
+- [x] Verify on/off from ONE run: the first schema-valid read gets no feedback, so it is the single-pass result - half the quota
+- [ ] Full run on all 7 bills with the new prompt (spread over days) and record first-read vs re-read numbers
 - [ ] EXTRACT_EVAL.md: results, each real misread, and the history-row limit (see Backlog)
 - [ ] Render synthetic bills as images (clean + phone-photo augmentation) - stress test with perfect labels
 - [ ] Image-level PII: blur identifiers before the photo leaves the device

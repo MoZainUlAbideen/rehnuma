@@ -160,3 +160,21 @@ def test_root_redirects_to_the_docs(api):
     client, *_ = api
     r = client.get("/", follow_redirects=False)
     assert r.status_code == 307 and r.headers["location"] == "/docs"
+
+
+def test_upload_when_the_daily_vision_quota_is_spent(api):
+    """A spent Gemini quota is a clear 503 for the visitor, not 'could not read the bill'."""
+    from rehnuma.extract.vision_client import QuotaExhausted
+
+    client, state, _ = api
+
+    class Spent:
+        name = "spent"
+
+        def read(self, *a):
+            raise QuotaExhausted("per day")
+
+    state.vision_factory = lambda: Spent()
+    r = client.post("/api/bills/extract",
+                    files={"file": ("bill.jpg", b"\xff\xd8fake-jpeg", "image/jpeg")})
+    assert r.status_code == 503 and "quota" in r.json()["detail"]

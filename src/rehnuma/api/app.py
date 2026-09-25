@@ -162,6 +162,9 @@ def create_app(state: State | None = None) -> FastAPI:
         bill_id = f"upload-{uuid.uuid4().hex[:8]}"
         res = extract_bill(data, vision, bill_id, mime=file.content_type)
         del data                                     # the photo is never stored
+        if res.quota_exhausted:
+            raise HTTPException(503, detail="Photo reading has used up today's free quota. "
+                                "Try again tomorrow - the sample bills still work.")
         if res.bill is None:
             last = res.attempts[-1].error if res.attempts else "no output"
             raise HTTPException(502, detail=f"could not read the bill: {last}")

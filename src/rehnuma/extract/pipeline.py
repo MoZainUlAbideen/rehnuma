@@ -23,7 +23,7 @@ from pydantic import ValidationError
 
 from rehnuma.engine import Status, audit_bill
 from rehnuma.extract.prompt import SYSTEM, build_prompt
-from rehnuma.extract.vision_client import VisionClient, mime_for
+from rehnuma.extract.vision_client import QuotaExhausted, VisionClient, mime_for
 from rehnuma.llm.client import LLMError
 from rehnuma.schema import Bill
 
@@ -49,6 +49,8 @@ class Attempt:
     ok_schema: bool
     failed_checks: list[str] = field(default_factory=list)
     error: str | None = None
+    bill: Bill | None = None                # what this attempt read (schema-valid only)
+    quota_exhausted: bool = False           # the provider refused: try again later
 
 
 @dataclass
@@ -62,6 +64,17 @@ class ExtractionResult:
     def failed_checks(self) -> list[str]:
         return self.attempts[-1].failed_checks if self.attempts else []
 
+    @property
+    def quota_exhausted(self) -> bool:
+        return any(a.quota_exhausted for a in self.attempts)
+
+    @property
+    def first_pass(self) -> Attempt | None:
+        """The first schema-valid read. Re-read feedback is only sent AFTER a schema-valid
+        read, so this is exactly what a single-pass run (verify=False) returns - the eval
+        scores it as the "no re-read loop" column without spending a second run's quota."""
+        return next((a for a in self.attempts if a.ok_schema), None)
+
 
 def _schema_feedback(err: Exception) -> str:
     return ("Your previous JSON did not match the schema: " + str(err)[:1500]
@@ -73,7 +86,8 @@ def _schema_feedback(err: Exception) -> str:
 # "fix" a real billing error instead of re-reading (caught by test_extract.py).
 FIELDS_FOR_CHECK = {
     "register_units": "meter readings (previous, present, units)",
-    "nm_": "the net-metering box (Exp/Imp/Net, month count, remaining kWh)",
+    "nm_": "the net-metering box (Exp/Imp/Net, month count, remaining kWh - copy both printed "
+           "Rem kWh values, do not calculate one from the other)",
     "legacy_units_consumed": "units consumed and the meter rows",
     "legacy_current_bill": "the DISCO charges, government charges and current bill",
     "legacy_disco_total": "the DISCO charge lines and their TOTAL",
@@ -129,14 +143,15 @@ def extract_bill(image_path: str | Path | bytes, client: VisionClient, bill_id: 
             raw = client.read(SYSTEM, build_prompt(feedback), image, mime)
             bill = to_bill(parse_json(raw), bill_id)
         except LLMError as e:
-            attempts.append(Attempt(n, False, error=str(e)[:300]))
+            attempts.append(Attempt(n, False, error=str(e)[:300],
+                                    quota_exhausted=isinstance(e, QuotaExhausted)))
             break
         except (ValueError, ValidationError) as e:
             attempts.append(Attempt(n, False, error=str(e)[:300]))
             feedback = _schema_feedback(e)
             continue
         fails = [f.check for f in audit_bill(bill) if f.status == Status.FAIL]
-        attempts.append(Attempt(n, True, fails))
+        attempts.append(Attempt(n, True, fails, bill=bill))
         if best is None or len(fails) < best[0]:
             best = (len(fails), bill)
         if not fails or not verify:

@@ -50,6 +50,8 @@ Rules:
   off-peak before peak).
 - net_metering: copy the box values exactly with their printed signs (Exp/Imp/Net, Mnt Cnt as
   month_count/cycle_length, Rem kWh previous/present). dg_capacity_kw from "DG CAPACITY" if shown.
+  Rem kWh "present" is its own printed number: copy it. Never work it out from "previous"
+  and Net - the DISCO settles the bank at the end of a cycle, so that sum is often wrong.
 - legacy_charges.govt: printed government lines only, keys: electricity_duty, tv_fee, gst,
   nj_surcharge, income_tax, extra_tax, further_tax, gst_on_fpa, ed_on_fpa, income_tax_on_fpa.
 - fpa_parts: from the FPA note ("Fuel Price Adj for MAY-19 @ 0.0999/KWH" -> ref_month 2019-05,

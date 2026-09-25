@@ -44,6 +44,17 @@ PROVIDERS = {
 
 
 RETRY_DELAY = re.compile(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"')
+# Gemini names the quota it enforced ("GenerateRequestsPerDayPerProjectPerModel-FreeTier").
+DAILY_QUOTA = re.compile(r"per\s*day", re.IGNORECASE)
+
+
+class QuotaExhausted(LLMError):
+    """The provider's quota is spent. A daily quota does not come back in a few seconds, so
+    retrying only burns minutes: callers should stop and try again later."""
+
+
+def is_daily_quota(detail: str) -> bool:
+    return bool(DAILY_QUOTA.search(detail))
 
 
 def retry_after(headers, detail: str, attempt: int) -> float:
@@ -87,10 +98,17 @@ class OpenAICompatVision:
                     return json.loads(resp.read().decode("utf-8"))
             except urllib.error.HTTPError as e:
                 detail = e.read().decode("utf-8", "replace")
+                message = " ".join(detail.split())[:600]     # keep which quota was hit
+                if e.code == 429 and is_daily_quota(detail):
+                    # Waiting 90 s x 4 retries cannot bring back a DAILY quota (seen live:
+                    # 3 minutes lost per bill before giving up)
+                    raise QuotaExhausted(f"{self.name} daily quota used up: {message}") from e
                 if e.code in (429, 503) and attempt < self.max_retries:
                     time.sleep(min(retry_after(e.headers, detail, attempt), 90))
                     continue
-                message = " ".join(detail.split())[:600]     # keep which quota was hit
+                if e.code == 429:
+                    raise QuotaExhausted(f"{self.name} still rate-limited after "
+                                         f"{self.max_retries} retries: {message}") from e
                 raise LLMError(f"{self.name} HTTP {e.code}: {message}") from e
             except (urllib.error.URLError, TimeoutError) as e:
                 raise LLMError(f"{self.name} unreachable: {e}") from e
