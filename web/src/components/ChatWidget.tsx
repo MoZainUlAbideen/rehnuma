@@ -24,7 +24,6 @@ const T = {
   ur: {
     title: "رہنما",
     subtitle: "بجلی کے بل کا مددگار",
-    pick: "کوئی بل منتخب کریں، یا بغیر بل کے قواعد کے بارے میں پوچھیں",
     upload: "بل کی تصویر",
     change: "بل بدلیں",
     placeholder: "اپنا سوال لکھیں…",
@@ -43,12 +42,15 @@ const T = {
     plain: "عام",
     credit: "کریڈٹ",
     greeting:
-      "السلام علیکم! میں آپ کا بل جانچ کر آسان اردو میں سمجھاتا ہوں، اور نیپرا کے قواعد حوالوں کے ساتھ بتاتا ہوں۔ نیچے سے کوئی نمونہ بل منتخب کریں۔",
+      "السلام علیکم! میں آپ کا بل جانچ کر آسان اردو میں سمجھاتا ہوں، اور نیپرا کے قواعد حوالوں کے ساتھ بتاتا ہوں۔",
+    uploadTitle: "اپنے بل کی تصویر اپ لوڈ کریں",
+    uploadSub: "JPG، PNG یا WebP · تصویر محفوظ نہیں کی جاتی",
+    orSample: "یا کوئی اصل نمونہ بل آزمائیں",
+    attach: "بل کی تصویر اپ لوڈ کریں",
   },
   en: {
     title: "Rehnuma",
     subtitle: "Electricity bill copilot",
-    pick: "Pick a bill, or ask about the rules without one",
     upload: "Upload photo",
     change: "Change bill",
     placeholder: "Ask a question…",
@@ -67,7 +69,11 @@ const T = {
     plain: "regular",
     credit: "credit",
     greeting:
-      "Hi! I check your electricity bill, explain it in plain words, and answer NEPRA rule questions with citations. Pick a sample bill below to start.",
+      "Hi! I check your electricity bill, explain it in plain words, and answer NEPRA rule questions with citations.",
+    uploadTitle: "Upload a photo of your bill",
+    uploadSub: "JPG, PNG or WebP · read in memory, never stored",
+    orSample: "Or try a real sample bill",
+    attach: "Upload a bill photo",
   },
 } as const;
 
@@ -241,6 +247,7 @@ export function ChatWidget() {
   const [busy, setBusy] = useState<null | "ask" | "read" | "load">(null);
   const [slow, setSlow] = useState(false);
   const [input, setInput] = useState("");
+  const [dragging, setDragging] = useState(false);
   const scroller = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const pending = useRef<OpenChatDetail | null>(null);
@@ -389,7 +396,21 @@ export function ChatWidget() {
       </button>
 
       {open && (
-        <section className={`chat-panel lang-${lang}`} dir={lang === "ur" ? "rtl" : "ltr"} aria-label="Rehnuma chat">
+        <section
+          className={`chat-panel lang-${lang}`}
+          dir={lang === "ur" ? "rtl" : "ltr"}
+          aria-label="Rehnuma chat"
+          onDragOver={(e) => {
+            e.preventDefault();
+            setDragging(true);
+          }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragging(false);
+            onUpload(e.dataTransfer.files?.[0]);
+          }}
+        >
           <header className="chat-head">
             <Image src="/logo-mark.png" alt="" width={46} height={24} />
             <div className="chat-head-text">
@@ -409,40 +430,52 @@ export function ChatWidget() {
             </button>
           </header>
 
-          <div className="chat-billbar">
-            {bill ? (
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+            onChange={(e) => onUpload(e.target.files?.[0])}
+          />
+          {bill && (
+            <div className="chat-billbar">
               <div className="chat-current">
                 <span className="chat-current-dot" />
                 <span>{bill.kind === "sample" ? billLabel(bill.card) : t.upload}</span>
                 <button onClick={() => setBill(null)}>{t.change}</button>
               </div>
-            ) : (
-              <>
-                <div className="chat-pick">{t.pick}</div>
+            </div>
+          )}
+
+          <div className="chat-body" ref={scroller}>
+            <div className={`chat-msg bot ${lang === "ur" ? "urdu" : ""}`}>{t.greeting}</div>
+
+            {!bill && (
+              <div className="chat-start">
+                <button
+                  className={`chat-upload-card${dragging ? " dragging" : ""}`}
+                  onClick={() => fileRef.current?.click()}
+                  disabled={!!busy}
+                >
+                  <span className="chat-upload-icon">
+                    <IconUpload size={20} />
+                  </span>
+                  <span className="chat-upload-text">
+                    <span className={`chat-upload-title ${lang === "ur" ? "urdu-inline" : ""}`}>{t.uploadTitle}</span>
+                    <span className={`chat-upload-sub ${lang === "ur" ? "urdu-inline" : ""}`}>{t.uploadSub}</span>
+                  </span>
+                </button>
+                <div className={`chat-pick ${lang === "ur" ? "urdu-inline" : ""}`}>{t.orSample}</div>
                 <div className="chat-chips">
-                  {samples === null && busy !== null && <span className="chat-chip ghost">…</span>}
+                  {samples === null && <span className="chat-chip ghost">…</span>}
                   {samples?.map((s) => (
                     <button key={s.id} className="chat-chip" onClick={() => chooseSample(s.id)} disabled={!!busy}>
                       {billLabel(s)}
                     </button>
                   ))}
-                  <button className="chat-chip upload" onClick={() => fileRef.current?.click()} disabled={!!busy}>
-                    <IconUpload size={14} /> {t.upload}
-                  </button>
-                  <input
-                    ref={fileRef}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    hidden
-                    onChange={(e) => onUpload(e.target.files?.[0])}
-                  />
                 </div>
-              </>
+              </div>
             )}
-          </div>
-
-          <div className="chat-body" ref={scroller}>
-            <div className={`chat-msg bot ${lang === "ur" ? "urdu" : ""}`}>{t.greeting}</div>
 
             {msgs.map((m, idx) => {
               const latest = idx === msgs.length - 1 ? " latest" : "";
@@ -511,6 +544,16 @@ export function ChatWidget() {
               ask(input);
             }}
           >
+            <button
+              type="button"
+              className="chat-attach"
+              onClick={() => fileRef.current?.click()}
+              disabled={!!busy}
+              aria-label={t.attach}
+              title={t.attach}
+            >
+              <IconUpload size={18} />
+            </button>
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
