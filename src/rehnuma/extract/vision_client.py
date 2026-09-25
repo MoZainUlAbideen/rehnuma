@@ -20,6 +20,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol
 
+from rehnuma import obs
 from rehnuma.llm.client import LLMError, load_dotenv
 
 
@@ -118,6 +119,16 @@ class OpenAICompatVision:
         return sorted(m["id"] for m in self._request("models")["data"])
 
     def read(self, system: str, prompt: str, image: bytes, mime: str) -> str:
+        # the photo itself is never traced - only its type and size
+        with obs.observe("vision", as_type="generation", model=self.model,
+                         input={"system": system, "prompt": prompt,
+                                "image": f"<{mime}, {len(image)} bytes - not recorded>"}) as gen:
+            data = self._read(system, prompt, image, mime)
+            text = data["choices"][0]["message"]["content"]
+            gen.update(output=text, usage_details=obs.usage(data))
+            return text
+
+    def _read(self, system: str, prompt: str, image: bytes, mime: str) -> dict:
         b64 = base64.b64encode(image).decode("ascii")
         body = {
             "model": self.model, "temperature": 0, "max_tokens": self.max_tokens,
@@ -129,4 +140,4 @@ class OpenAICompatVision:
                 ]},
             ],
         }
-        return self._request("chat/completions", body)["choices"][0]["message"]["content"]
+        return self._request("chat/completions", body)

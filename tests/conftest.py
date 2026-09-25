@@ -2,11 +2,21 @@ from pathlib import Path
 
 import pytest
 
+from rehnuma import obs
 from rehnuma.loader import load_bills
 from rehnuma.schema import Bill
 
 ROOT = Path(__file__).resolve().parents[1]
 REAL_DIR = ROOT / "data" / "labels" / "real"
+
+
+@pytest.fixture(autouse=True)
+def no_tracing():
+    """Tests never send traces, even with Langfuse keys in your .env (a test that needs
+    tracing installs its own in-memory client)."""
+    obs.set_client(None)
+    yield
+    obs.set_client(None)
 
 
 @pytest.fixture(scope="session")

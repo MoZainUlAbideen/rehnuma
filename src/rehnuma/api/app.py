@@ -29,6 +29,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, Field
 
+from rehnuma import obs
 from rehnuma.api.limits import DailyLimiter, client_key, seconds_to_midnight_utc
 from rehnuma.api.views import bill_view, extraction_view, reply_view, sample_card
 from rehnuma.assistant.assistant import ask
@@ -167,7 +168,9 @@ def create_app(state: State | None = None) -> FastAPI:
             raise HTTPException(503, detail="photo reading is not configured on this server")
         _limit(s, request, "upload")
         bill_id = f"upload-{uuid.uuid4().hex[:8]}"
-        res = extract_bill(data, vision, bill_id, mime=file.content_type)
+        with obs.observe("api.extract", metadata={"mime": file.content_type,
+                                                  "bytes": len(data)}):
+            res = extract_bill(data, vision, bill_id, mime=file.content_type)
         del data                                     # the photo is never stored
         if res.quota_exhausted:
             raise HTTPException(503, detail="Photo reading has used up today's free quota. "
@@ -192,12 +195,16 @@ def create_app(state: State | None = None) -> FastAPI:
                 raise HTTPException(410, detail="that uploaded bill has expired - upload again")
         key = (body.sample_id, _normalise(body.question), body.lang) if body.sample_id or \
             not body.bill_token else None
+        meta = {"sample_id": body.sample_id, "upload": bool(body.bill_token), "lang": body.lang}
         if key and key in s.answer_cache:
-            return {**s.answer_cache[key], "cached": True}
+            with obs.observe("api.ask", input=body.question, metadata={**meta, "cached": True}):
+                return {**s.answer_cache[key], "cached": True}
         _limit(s, request, "ask")
-        reply = ask(body.question, s.index, s.llm_factory(), bill=bill, lang=body.lang,
-                    docs=s.docs)
-        out = reply_view(reply)
+        with obs.observe("api.ask", input=body.question, metadata={**meta, "cached": False}) as sp:
+            reply = ask(body.question, s.index, s.llm_factory(), bill=bill, lang=body.lang,
+                        docs=s.docs)
+            out = reply_view(reply)
+            sp.update(output=out["text"], metadata={"route": out["route"]})
         if key and not _degraded(out):
             s.answer_cache[key] = out
         return {**out, "cached": False}

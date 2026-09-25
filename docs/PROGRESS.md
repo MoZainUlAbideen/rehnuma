@@ -134,12 +134,15 @@
 - [ ] Solar planner: PVGIS yield + 2026 net billing (buyback at national average energy purchase price) vs grandfathered net metering
 
 ## Milestone 6 — LLMOps
-- [ ] Langfuse tracing across extraction, summary and policy answers
+- [x] Langfuse tracing (optional `obs` extra): api -> assistant -> bill/policy answer -> retrieve -> each LLM/vision call, with the critic's problems per draft on the span (docs/OPERATIONS.md)
+- [x] Tracing can't hurt the product: off without keys, failures swallowed, 10+ digit numbers masked, photo bytes never sent, tests never trace - 6 tests with the real SDK and an in-memory exporter
+- [x] Found while testing: the SDK keeps one client per public key - a second test's exporter silently got no spans; fixed with a fresh key per test
 - [x] `rehnuma-ci-evals`: every no-API eval in one gate (auditor, template summaries, retrieval lexical + production rewrites replayed from a frozen file, router) - 18 metrics, fails if any drops below `data/eval/ci_thresholds.json`
 - [x] Fixed (found by the gate's first run): a floor rounded UP (15/16 -> 0.938) failed on its own value - floors are rounded down, a test guards it
 - [x] Renamed or missing metrics fail the gate (a metric can't silently stop being checked)
 - [x] GitHub Actions (`.github/workflows/ci.yml`): ruff + pytest + eval gate + web lint/build on every push - first run green (backend 18 s, web 28 s)
-- [ ] Policy watcher: scheduled `fetch`, CHANGED documents open a review task (a human approves every rule change)
+- [x] Policy watcher: `rehnuma-policy watch` re-downloads the NEPRA PDFs and compares with the lock (read only); weekly GitHub workflow opens a `policy-watch` issue on a change (exit 3) and goes red when NEPRA is unreachable for every file (exit 4) - a blind run must not look like "no change"
+- [ ] First scheduled watch run on GitHub (does nepra.org.pk answer GitHub's runners?)
 
 ## Milestone 7 — Live product (in progress)
 Decisions: backend on Render (Docker, free tier; Hugging Face Docker Spaces now need PRO); frontend on Vercel; sample bills free, live uploads/questions rate-limited per visitor (5 uploads, 20 questions a day) so the free Groq/Gemini quota survives strangers.

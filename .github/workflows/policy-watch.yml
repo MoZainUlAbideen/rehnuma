@@ -1,0 +1,43 @@
+   # Weekly: have NEPRA's documents changed? Opens a "policy-watch" issue on a change,
+   # goes red if NEPRA can't be reached at all. Never updates anything by itself.
+   name: Policy watch
+
+   on:
+     schedule:
+       - cron: "0 4 * * 1"        # Mondays 04:00 UTC = 09:00 in Pakistan
+     workflow_dispatch:           # "Run workflow" button on the Actions tab
+
+   permissions:
+     contents: read
+     issues: write
+
+   jobs:
+     watch:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - uses: astral-sh/setup-uv@v6
+         - run: uv sync --frozen
+         - name: Compare NEPRA's documents with the lock
+           id: watch
+           run: |
+             set +e
+             uv run rehnuma-policy watch --report watch.md
+             code=$?
+             cat watch.md >> "$GITHUB_STEP_SUMMARY"
+             echo "code=$code" >> "$GITHUB_OUTPUT"
+             if [ "$code" = "4" ]; then echo "NEPRA unreachable - the watcher is blind"; exit 1; fi
+             if [ "$code" != "0" ] && [ "$code" != "3" ]; then exit "$code"; fi
+         - name: Open or update the review issue
+           if: steps.watch.outputs.code == '3'
+           env:
+             GH_TOKEN: ${{ github.token }}
+           run: |
+             gh label create policy-watch --color D93F0B --description "A NEPRA document changed" --force
+             open=$(gh issue list --label policy-watch --state open --json number --jq '.[0].number')
+             if [ -n "$open" ]; then
+               gh issue comment "$open" --body-file watch.md
+             else
+               gh issue create --title "NEPRA document changed ($(date -u +%Y-%m-%d))" \
+                 --label policy-watch --body-file watch.md
+             fi

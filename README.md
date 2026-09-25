@@ -64,6 +64,8 @@ uv run rehnuma-eval-route                        # does each question reach the 
 uv run rehnuma-ci-evals                          # all no-API evals vs their floors (what CI runs)
 uv run rehnuma-forecast data/labels/real/iesco-2021-01.json --lang en --table   # next 12 months
 uv run rehnuma-eval-forecast                     # backtest, seasonality, engine check
+uv run rehnuma-policy watch                      # have NEPRA's PDFs changed? (exit 3 = yes)
+uv sync --extra api --extra obs                  # + Langfuse tracing (keys in .env; see docs/OPERATIONS.md)
 uv sync --extra api; uv run rehnuma-api          # live API on http://localhost:7860/docs
 cd web; npm install; npm run dev                # website on http://localhost:3000
 ```

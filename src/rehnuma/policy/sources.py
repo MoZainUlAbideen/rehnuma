@@ -91,3 +91,56 @@ def fetch(docs: list[Document], force: bool = False, lock_path: Path = LOCK) -> 
         report.append(f"{status:<10} {d.id} ({d.path.stat().st_size // 1024} KB)")
     lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
     return report
+
+
+# --- the policy watcher -----------------------------------------------------------------
+@dataclass(frozen=True)
+class WatchResult:
+    doc_id: str
+    status: str                  # same | changed | new | unreachable | not_pdf
+    detail: str = ""
+    old_sha: str | None = None
+    new_sha: str | None = None
+
+
+def watch(docs: list[Document], lock_path: Path = LOCK) -> list[WatchResult]:
+    """Download every document and compare it with the committed lock - read only: nothing
+    is written, the index is not rebuilt. A changed document is a question for a human
+    (what changed, which answers cite it), never an automatic update."""
+    lock = json.loads(lock_path.read_text(encoding="utf-8")) if lock_path.exists() else {}
+    out = []
+    for d in docs:
+        old = lock.get(d.id, {}).get("sha256")
+        try:
+            data = _download(d.url)
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            out.append(WatchResult(d.id, "unreachable", str(e)[:200], old))
+            continue
+        if not data.startswith(b"%PDF"):
+            out.append(WatchResult(d.id, "not_pdf", f"got {data[:40]!r}", old))
+            continue
+        new = hashlib.sha256(data).hexdigest()
+        status = "new" if old is None else ("same" if new == old else "changed")
+        out.append(WatchResult(d.id, status, f"{len(data) // 1024} KB", old, new))
+        time.sleep(1)                                   # be polite to nepra.org.pk
+    return out
+
+
+def watch_report(results: list[WatchResult], docs: list[Document]) -> str:
+    """Markdown for the GitHub issue the scheduled workflow opens."""
+    by_id = {d.id: d for d in docs}
+    changed = [r for r in results if r.status == "changed"]
+    lines = ["## NEPRA policy watch", ""]
+    if changed:
+        lines += ["**A document Rehnuma answers from has changed.** Nothing was updated "
+                  "automatically. To review:", "",
+                  "1. Open the new PDF and compare it with the old one (what changed?).",
+                  "2. `uv run rehnuma-policy fetch --force` then `uv run rehnuma-policy ingest`.",
+                  "3. `uv run rehnuma-eval-policy` and `uv run rehnuma-ci-evals`: did answers "
+                  "move?",
+                  "4. Commit the new `sources.lock.json` with a note on what changed.", ""]
+    lines += ["| Document | Status | Detail |", "|---|---|---|"]
+    for r in results:
+        d = by_id[r.doc_id]
+        lines.append(f"| [{d.short}]({d.url}) | **{r.status}** | {r.detail} |")
+    return "\n".join(lines) + "\n"

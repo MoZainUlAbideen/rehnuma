@@ -18,6 +18,8 @@ import urllib.request
 from pathlib import Path
 from typing import Protocol
 
+from rehnuma import obs
+
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 DEFAULT_MODEL = "openai/gpt-oss-120b"   # available on Groq as of Sep-2026
 
@@ -74,6 +76,17 @@ class GroqClient:
         return body
 
     def complete(self, system: str, user: str) -> str:
+        with obs.observe("llm", as_type="generation", model=self.model,
+                         model_parameters={"temperature": self.temperature,
+                                           "max_tokens": self.max_tokens},
+                         input=[{"role": "system", "content": system},
+                                {"role": "user", "content": user}]) as gen:
+            data = self._complete(system, user)
+            gen.update(output=data["choices"][0]["message"]["content"],
+                       usage_details=obs.usage(data))
+            return data["choices"][0]["message"]["content"]
+
+    def _complete(self, system: str, user: str) -> dict:
         body = json.dumps(self.payload(system, user)).encode("utf-8")
         for attempt in range(self.max_retries + 1):
             req = urllib.request.Request(GROQ_URL, data=body, method="POST", headers={
@@ -83,8 +96,7 @@ class GroqClient:
             })
             try:
                 with urllib.request.urlopen(req, timeout=self.timeout) as resp:
-                    data = json.loads(resp.read().decode("utf-8"))
-                return data["choices"][0]["message"]["content"]
+                    return json.loads(resp.read().decode("utf-8"))
             except urllib.error.HTTPError as e:
                 detail = e.read().decode("utf-8", "replace")[:300]
                 if e.code == 429 and attempt < self.max_retries:      # rate limited: back off

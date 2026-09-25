@@ -29,6 +29,8 @@ rehnuma-eval-forecast = "rehnuma.evals.forecast_eval:main"
 api = ["fastapi>=0.115", "uvicorn>=0.30", "python-multipart>=0.0.9"]
 # Dense multilingual retrieval (HF embeddings) - optional: pulls torch (CPU build)
 dense = ["sentence-transformers>=3.0"]
+# Tracing (milestone 6): uv sync --extra obs, then set LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY
+obs = ["langfuse>=4.0"]
 
 [dependency-groups]
 dev = [

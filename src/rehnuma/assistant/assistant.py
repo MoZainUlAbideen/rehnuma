@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from rehnuma import obs
 from rehnuma.assistant.bill_answer import BillAnswer, bill_answer
 from rehnuma.assistant.route import BILL, BOTH, NEEDS_BILL, POLICY, Route, classify, route
 from rehnuma.explain.story import build_story
@@ -60,10 +61,15 @@ class Reply:
 def ask(question: str, index: PolicyIndex, client: LLMClient | None, bill: Bill | None = None,
         lang: str | None = None, rewritten: str | None = None, docs=None) -> Reply:
     lang = lang or detect_lang(question)
-    r = route(question, has_bill=bill is not None)
-    reply = Reply(question, lang, r)
-    if r.kind in (BILL, BOTH):
-        reply.bill = bill_answer(question, build_story(bill), client, lang)
-    if r.kind in (POLICY, BOTH):
-        reply.policy = answer(question, index, client, lang=lang, rewritten=rewritten, docs=docs)
-    return reply
+    with obs.observe("assistant.ask", as_type="agent", input=question,
+                     metadata={"lang": lang, "has_bill": bill is not None,
+                               "llm": getattr(client, "name", None)}) as span:
+        r = route(question, has_bill=bill is not None)
+        reply = Reply(question, lang, r)
+        if r.kind in (BILL, BOTH):
+            reply.bill = bill_answer(question, build_story(bill), client, lang)
+        if r.kind in (POLICY, BOTH):
+            reply.policy = answer(question, index, client, lang=lang, rewritten=rewritten,
+                                  docs=docs)
+        span.update(output=reply.render(), metadata={"route": r.kind})
+        return reply

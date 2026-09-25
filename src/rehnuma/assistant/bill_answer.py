@@ -12,6 +12,7 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass, field
 
+from rehnuma import obs
 from rehnuma.explain.faithfulness import numbers_in
 from rehnuma.explain.llm_summary import facts_payload
 from rehnuma.explain.quality import urdu_share
@@ -69,6 +70,17 @@ def template_answer(story: BillStory, lang: str) -> str:
 
 def bill_answer(question: str, story: BillStory, client: LLMClient | None, lang: str = "ur",
                 max_attempts: int = 2) -> BillAnswer:
+    with obs.observe("bill.answer", as_type="chain", input=question,
+                     metadata={"bill": story.bill_id, "lang": lang}) as span:
+        ans = _bill_answer(question, story, client, lang, max_attempts)
+        span.update(output=ans.text, metadata={
+            "source": ans.source, "drafts": [{"problems": p} for _, p in ans.drafts]},
+            level="WARNING" if ans.source == "template_fallback" else "DEFAULT")
+        return ans
+
+
+def _bill_answer(question: str, story: BillStory, client: LLMClient | None, lang: str,
+                 max_attempts: int) -> BillAnswer:
     start = time.perf_counter()
     if client is None:
         return BillAnswer(template_answer(story, lang), "template")

@@ -3,6 +3,7 @@
   uv run rehnuma-policy fetch                 # download the PDFs listed in sources.json
   uv run rehnuma-policy fetch --force         # re-download; reports CHANGED files
   uv run rehnuma-policy ingest                # PDFs -> data/policy/chunks.jsonl (+ report)
+  uv run rehnuma-policy watch --report w.md   # compare with the lock; exit 3 changed, 4 blind
   uv run rehnuma-policy search "can my solar be bigger than my sanctioned load"
   uv run rehnuma-policy search "کیا میرا سولر منظور شدہ لوڈ سے بڑا ہو سکتا ہے" --method hybrid+dense
   uv run rehnuma-policy ask "میرا نیٹ میٹرنگ 2026 سے پہلے لگا تھا، اب یونٹ کس ریٹ پر گنے جائیں گے؟"
@@ -13,10 +14,11 @@ from __future__ import annotations
 import argparse
 import sys
 from collections import Counter
+from pathlib import Path
 
 from rehnuma.policy.parse import CHUNKS, extract_pages, load_chunks, parse_document, save_chunks
 from rehnuma.policy.retrieve import ALL_METHODS, PolicyIndex
-from rehnuma.policy.sources import fetch, load_sources
+from rehnuma.policy.sources import fetch, load_sources, watch, watch_report
 
 
 def _top_level(chunks) -> str:
@@ -56,6 +58,8 @@ def main(argv: list[str] | None = None) -> int:
     f = sub.add_parser("fetch")
     f.add_argument("--force", action="store_true")
     sub.add_parser("ingest")
+    w = sub.add_parser("watch", help="re-download and compare with the lock; exit 3 if changed")
+    w.add_argument("--report", default=None, help="write the markdown report here")
     a = sub.add_parser("ask", help="cited answer in the question's language (needs GROQ_API_KEY)")
     a.add_argument("question")
     a.add_argument("--show-drafts", action="store_true")
@@ -73,6 +77,19 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.cmd == "ingest":
         return ingest()
+    if args.cmd == "watch":
+        docs = load_sources()
+        results = watch(docs)
+        report = watch_report(results, docs)
+        print(report)
+        if args.report:
+            Path(args.report).write_text(report, encoding="utf-8")
+        if any(r.status == "changed" for r in results):
+            return 3                     # the workflow opens an issue on this exit code
+        if all(r.status in ("unreachable", "not_pdf") for r in results):
+            print("Could not reach NEPRA at all - the watcher is blind this run.")
+            return 4                     # a red run, so a silent outage gets noticed
+        return 0
     if args.cmd == "ask":
         from rehnuma.llm.client import GroqClient
         from rehnuma.policy.answer import answer

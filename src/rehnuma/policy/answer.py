@@ -24,6 +24,7 @@ import re
 import time
 from dataclasses import dataclass, field
 
+from rehnuma import obs
 from rehnuma.llm.client import LLMClient, LLMError
 from rehnuma.policy.parse import Chunk
 from rehnuma.policy.query import needs_rewrite, rewrite, search_queries
@@ -372,6 +373,20 @@ def answer(question: str, index: PolicyIndex, client: LLMClient, lang: str | Non
            k: int = K, max_attempts: int = 2, rewritten: str | None = None,
            docs: dict[str, Document] | None = None) -> Answer:
     """Answer `question` from the index. `rewritten` skips the rewrite call (eval replay)."""
+    with obs.observe("policy.answer", as_type="chain", input=question) as span:
+        ans = _answer(question, index, client, lang, k, max_attempts, rewritten, docs)
+        span.update(output=ans.text, metadata={
+            "status": ans.status, "lang": ans.lang, "rewrite": ans.rewrite,
+            "cited": [s.label for s in ans.cited], "calls": ans.calls,
+            # the critic's verdict on every draft - why an answer fell back is visible
+            "drafts": [{"problems": probs} for _, probs in ans.drafts]},
+            level="DEFAULT" if ans.status in ("answered", "refused") else "WARNING")
+        return ans
+
+
+def _answer(question: str, index: PolicyIndex, client: LLMClient, lang: str | None,
+            k: int, max_attempts: int, rewritten: str | None,
+            docs: dict[str, Document] | None) -> Answer:
     start = time.perf_counter()
     lang = lang or detect_lang(question)
     docs = docs or {d.id: d for d in load_sources()}
@@ -380,8 +395,11 @@ def answer(question: str, index: PolicyIndex, client: LLMClient, lang: str | Non
         rewritten, _err = rewrite(question, client, mode="all")
         calls += 1
     primary, also = search_queries(question, rewritten)
-    sources = make_sources([h.chunk for h in index.search(primary, k=k, also=also)], docs,
-                           corpus=index.chunks)
+    with obs.observe("retrieve", as_type="retriever",
+                     input={"query": primary, "also": list(also)}) as ret:
+        sources = make_sources([h.chunk for h in index.search(primary, k=k, also=also)], docs,
+                               corpus=index.chunks)
+        ret.update(output=[s.label for s in sources])
     ans = Answer(question, lang, "fallback", "", sources, [], rewritten)
     if client is None:               # no LLM (no key / offline): the clauses, honestly labelled
         # an Urdu question cannot be rewritten without the LLM and matches no English clause:

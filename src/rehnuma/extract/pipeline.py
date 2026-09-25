@@ -21,6 +21,7 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
+from rehnuma import obs
 from rehnuma.engine import Status, audit_bill
 from rehnuma.extract.prompt import SYSTEM, build_prompt
 from rehnuma.extract.vision_client import QuotaExhausted, VisionClient, mime_for
@@ -127,6 +128,18 @@ def extract_bill(image_path: str | Path | bytes, client: VisionClient, bill_id: 
                  mime: str | None = None) -> ExtractionResult:
     """`image_path` may be raw bytes (an upload: the photo never touches disk) - then
     `mime` is required."""
+    with obs.observe("extract_bill", as_type="chain",
+                     metadata={"verify": verify, "max_attempts": max_attempts}) as span:
+        res = _extract_bill(image_path, client, bill_id, verify, max_attempts, mime)
+        span.update(output={"verified": res.verified, "attempts": len(res.attempts),
+                            "failed_checks": res.failed_checks,
+                            "quota_exhausted": res.quota_exhausted},
+                    level="WARNING" if res.bill is None else "DEFAULT")
+        return res
+
+
+def _extract_bill(image_path: str | Path | bytes, client: VisionClient, bill_id: str,
+                  verify: bool, max_attempts: int, mime: str | None) -> ExtractionResult:
     start = time.perf_counter()
     if isinstance(image_path, bytes):
         if not mime:
