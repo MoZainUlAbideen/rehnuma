@@ -12,11 +12,11 @@ import { Nav } from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: {
-    default: "Rehnuma · رہنما — your electricity bill, checked and explained",
+    default: "Rehnuma · رہنما — understand your electricity bill, plan what comes next",
     template: "%s · Rehnuma",
   },
   description:
-    "An AI copilot for Pakistani electricity bills: audits every calculation, explains the bill in Urdu or English, and answers NEPRA rule questions with citations to the official documents.",
+    "An AI copilot for Pakistani electricity bills: audits every calculation, explains the bill in Urdu or English, answers NEPRA rule questions with citations, and looks ahead - the next 12 months and, for solar homes, what the 2026 rules mean.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

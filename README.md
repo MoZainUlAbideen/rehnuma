@@ -1,5 +1,7 @@
 # Rehnuma (رہنما) — an AI copilot for Pakistani electricity bills
 
+**Understand your electricity bill. Plan what comes next.** · *بجلی کے بل سے سولر تک — نیپرا کے قواعد کے مطابق، آسان اردو میں*
+
 [![CI](https://github.com/MoZainUlAbideen/rehnuma/actions/workflows/ci.yml/badge.svg)](https://github.com/MoZainUlAbideen/rehnuma/actions/workflows/ci.yml)
 
 **[Live demo](https://rehnuma-kappa.vercel.app)** · [API docs](https://rehnuma-api-3e5t.onrender.com/docs)

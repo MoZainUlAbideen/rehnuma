@@ -27,14 +27,19 @@ function Hero() {
     <section className="hero">
       <div className="wrap">
         <div className="hero-copy">
-          <span className="eyebrow">For Pakistani electricity bills · Solar and regular</span>
-          <h1>Your electricity bill, checked and explained</h1>
+          <span className="eyebrow">Bill checks · Plain Urdu · NEPRA rules, cited · Solar &amp; 12-month outlook</span>
+          <h1>
+            Understand your electricity bill.
+            <br />
+            Plan what comes next.
+          </h1>
           <p className="hero-urdu urdu" dir="rtl">
-            اپنا بجلی کا بل سمجھیں — آسان اردو میں، ہر حساب کی جانچ کے ساتھ
+            بجلی کے بل سے سولر تک — نیپرا کے قواعد کے مطابق، آسان اردو میں
           </p>
           <p className="hero-sub">
-            Rehnuma re-does every calculation on your bill, tells you what it means in plain Urdu or
-            English, and answers questions about NEPRA rules with the clause and page it came from.
+            Rehnuma checks every calculation on your bill and explains it in plain Urdu or English,
+            answers NEPRA rule questions with the clause and page they come from, and looks ahead:
+            your next 12 months and, for solar homes, what the 2026 rules mean for you.
           </p>
           <div className="hero-cta">
             <OpenChatButton className="btn btn-dark" sampleId="pesco-2026-09">
