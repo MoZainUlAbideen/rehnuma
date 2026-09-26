@@ -15,6 +15,7 @@ questions can refer to it by token.
 
 from __future__ import annotations
 
+import logging
 import os
 import re
 import time
@@ -25,8 +26,9 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from pydantic import BaseModel, Field
 
 from rehnuma import obs
@@ -44,7 +46,12 @@ from rehnuma.schema import Bill
 SAMPLES_DIR = Path("data/labels/real")
 MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp"}
+# A photo gets at most 2 reads (the second one told which checks failed) and one short
+# rate-limit retry per read: a person is waiting, and Gemini Flash takes ~30-60 s a read
+UPLOAD_ATTEMPTS = 2
+UPLOAD_VISION_RETRIES = 1
 UPLOAD_TTL_S = 3600
+log = logging.getLogger("rehnuma.api")
 MAX_UPLOADS_KEPT = 200
 
 
@@ -126,6 +133,19 @@ def create_app(state: State | None = None) -> FastAPI:
     app = FastAPI(title="Rehnuma API", version="0.1.0",
                   description="Pakistani electricity bills: audit, plain-language summary "
                               "and cited NEPRA rules, in Urdu or English.")
+
+    @app.middleware("http")
+    async def json_errors(request: Request, call_next):
+        # Registered before CORS, so it sits INSIDE it: an unexpected error becomes a JSON
+        # 500 that still carries the CORS header. Without this the browser only sees a
+        # header-less 500 and the site can say nothing better than "could not reach".
+        try:
+            return await call_next(request)
+        except Exception:
+            log.exception("unhandled error on %s", request.url.path)
+            return JSONResponse(status_code=500, content={
+                "detail": "Something went wrong on the server. Please try again."})
+
     app.add_middleware(CORSMiddleware, allow_origins=cors_origins(),
                        allow_methods=["GET", "POST"], allow_headers=["*"])
     app.state.rehnuma = state or State.load()
@@ -167,19 +187,12 @@ def create_app(state: State | None = None) -> FastAPI:
         if vision is None:
             raise HTTPException(503, detail="photo reading is not configured on this server")
         _limit(s, request, "upload")
-        bill_id = f"upload-{uuid.uuid4().hex[:8]}"
-        with obs.observe("api.extract", metadata={"mime": file.content_type,
-                                                  "bytes": len(data)}):
-            res = extract_bill(data, vision, bill_id, mime=file.content_type)
-        del data                                     # the photo is never stored
-        if res.quota_exhausted:
-            raise HTTPException(503, detail="Photo reading has used up today's free quota. "
-                                "Try again tomorrow - the sample bills still work.")
-        if res.bill is None:
-            last = res.attempts[-1].error if res.attempts else "no output"
-            raise HTTPException(502, detail=f"could not read the bill: {last}")
-        return {"bill_token": s.keep_upload(res.bill), "extraction": extraction_view(res),
-                **bill_view(res.bill, list(s.samples.values()))}
+        if hasattr(vision, "max_retries"):
+            vision.max_retries = min(vision.max_retries, UPLOAD_VISION_RETRIES)
+        # Reading a photo blocks for 30-60 s+ (urllib + retry sleeps). Run in a worker thread:
+        # called directly, it froze the event loop, /api/health stopped answering, and Render
+        # restarted the instance mid-read (seen live: every upload failed as "could not reach")
+        return await run_in_threadpool(_read_upload, s, data, vision, file.content_type)
 
     @app.post("/api/ask")
     def ask_endpoint(body: AskBody, request: Request):
@@ -210,6 +223,21 @@ def create_app(state: State | None = None) -> FastAPI:
         return {**out, "cached": False}
 
     return app
+
+
+def _read_upload(s: State, data: bytes, vision, mime: str | None) -> dict:
+    bill_id = f"upload-{uuid.uuid4().hex[:8]}"
+    with obs.observe("api.extract", metadata={"mime": mime, "bytes": len(data)}):
+        res = extract_bill(data, vision, bill_id, mime=mime, max_attempts=UPLOAD_ATTEMPTS)
+    del data                                     # the photo is never stored
+    if res.quota_exhausted:
+        raise HTTPException(503, detail="Photo reading has used up today's free quota. "
+                            "Try again tomorrow - the sample bills still work.")
+    if res.bill is None:
+        last = res.attempts[-1].error if res.attempts else "no output"
+        raise HTTPException(502, detail=f"could not read the bill: {last}")
+    return {"bill_token": s.keep_upload(res.bill), "extraction": extraction_view(res),
+            **bill_view(res.bill, list(s.samples.values()))}
 
 
 def _degraded(out: dict) -> bool:

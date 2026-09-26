@@ -10,6 +10,7 @@ Configure in `.env`:
 from __future__ import annotations
 
 import base64
+import http.client
 import json
 import os
 import re
@@ -111,7 +112,7 @@ class OpenAICompatVision:
                     raise QuotaExhausted(f"{self.name} still rate-limited after "
                                          f"{self.max_retries} retries: {message}") from e
                 raise LLMError(f"{self.name} HTTP {e.code}: {message}") from e
-            except (urllib.error.URLError, TimeoutError) as e:
+            except (OSError, http.client.HTTPException) as e:   # URLError, timeouts, resets
                 raise LLMError(f"{self.name} unreachable: {e}") from e
         raise LLMError(f"{self.name}: retries exhausted")
 
@@ -124,7 +125,10 @@ class OpenAICompatVision:
                          input={"system": system, "prompt": prompt,
                                 "image": f"<{mime}, {len(image)} bytes - not recorded>"}) as gen:
             data = self._read(system, prompt, image, mime)
-            text = data["choices"][0]["message"]["content"]
+            try:
+                text = data["choices"][0]["message"]["content"]
+            except (KeyError, IndexError, TypeError) as e:
+                raise LLMError(f"{self.name}: unexpected response shape") from e
             gen.update(output=text, usage_details=obs.usage(data))
             return text
 

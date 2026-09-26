@@ -43,7 +43,10 @@ def solar_view(bill: Bill, others: list[Bill]) -> dict | None:
     """Last 12 months of a net-metering account + the renewal comparison (no LLM)."""
     if bill.connection_type != ConnectionType.NET_METERING:
         return None
-    o = solar_outlook(bill, others)
+    try:
+        o = solar_outlook(bill, others)
+    except ValueError as e:
+        return {"available": False, "reason": str(e)}
     if not o.amounts:
         return {"available": False, "reason": "the bill history has no consecutive months"}
     r = o.renewal
@@ -66,6 +69,8 @@ def outlook_view(bill: Bill) -> dict:
         o = outlook(bill)
     except NotSupported as e:
         return {"available": False, "reason": str(e)}
+    except ValueError as e:        # e.g. a photo with gaps in its history: skip the outlook
+        return {"available": False, "reason": f"not enough history on this bill ({e})"}
     return {
         "available": True,
         "total": rs(o.total),

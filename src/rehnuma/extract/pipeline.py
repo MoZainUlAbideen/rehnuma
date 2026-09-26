@@ -33,6 +33,9 @@ JSON_BLOCK = re.compile(r"\{.*\}", re.DOTALL)
 
 def parse_json(text: str) -> dict:
     """Models sometimes wrap JSON in ``` fences or add a sentence; take the outer object."""
+    if not isinstance(text, str) or not text.strip():
+        # e.g. a thinking model spent its whole token budget and returned no content
+        raise ValueError("the model returned no text")
     m = JSON_BLOCK.search(text)
     if not m:
         raise ValueError("no JSON object in model output")

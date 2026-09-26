@@ -209,3 +209,75 @@ def test_solar_sample_comes_with_last_12_months_and_renewal(api):
     assert s["renewal"]["months"] == ["2026-07", "2026-08", "2026-09"]
     assert s["renewal"]["actual"] == -13824 and s["renewal"]["renewal_low"] > 40000
     assert client.get("/api/samples/iesco-2021-01").json()["solar"] is None
+
+
+def test_a_slow_photo_read_does_not_freeze_the_server(api):
+    """Seen live: the read ran on the event loop, /api/health went silent for ~45 s, Render
+    restarted the instance mid-read and every upload failed as 'could not reach'."""
+    import asyncio
+    import time
+
+    import httpx
+
+    _, state, _ = api
+    inner = state.vision_factory()
+
+    class Slow:
+        name = "slow"
+
+        def read(self, *a):
+            time.sleep(1.5)                       # blocking, like urllib + retry sleeps
+            return inner.read(*a)
+
+    state.vision_factory = lambda: Slow()
+    app = create_app(state)
+
+    async def run():
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),
+                                     base_url="http://t") as c:
+            up = asyncio.create_task(c.post("/api/bills/extract", files={
+                "file": ("bill.jpg", b"\xff\xd8fake-jpeg", "image/jpeg")}))
+            await asyncio.sleep(0.2)
+            t = time.perf_counter()
+            health = await c.get("/api/health")
+            waited = time.perf_counter() - t
+            assert not up.done()                  # the read is still going...
+            return health, waited, await up
+
+    health, waited, up = asyncio.run(run())
+    assert health.status_code == 200 and waited < 0.5     # ...and health answered anyway
+    assert up.status_code == 200 and up.json()["bill_token"]
+
+
+def test_an_unexpected_error_is_json_with_the_cors_header(api):
+    """A bare 500 has no CORS header, so the browser hides it as a network error."""
+    _, state, _ = api
+
+    class Broken:
+        name = "broken"
+
+        def read(self, *a):
+            raise RuntimeError("something nobody planned for")
+
+    state.vision_factory = lambda: Broken()
+    client = TestClient(create_app(state), raise_server_exceptions=False)
+    r = client.post("/api/bills/extract", headers={"Origin": "http://localhost:3000"},
+                    files={"file": ("bill.jpg", b"\xff\xd8fake-jpeg", "image/jpeg")})
+    assert r.status_code == 500 and "try again" in r.json()["detail"]
+    assert r.headers["access-control-allow-origin"] == "http://localhost:3000"
+
+
+def test_a_read_with_no_text_is_a_clear_502(api):
+    """A thinking model can spend its whole budget and return content=None."""
+    client, state, _ = api
+
+    class Empty:
+        name = "empty"
+
+        def read(self, *a):
+            return None
+
+    state.vision_factory = lambda: Empty()
+    r = client.post("/api/bills/extract",
+                    files={"file": ("bill.jpg", b"\xff\xd8fake-jpeg", "image/jpeg")})
+    assert r.status_code == 502 and "no text" in r.json()["detail"]

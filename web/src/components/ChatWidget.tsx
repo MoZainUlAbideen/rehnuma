@@ -29,7 +29,7 @@ const T = {
     change: "بل بدلیں",
     placeholder: "اپنا سوال لکھیں…",
     thinking: "سوچ رہا ہوں…",
-    reading: "بل پڑھ رہا ہوں… (30 سے 60 سیکنڈ)",
+    reading: "بل پڑھ رہا ہوں… (2 منٹ تک لگ سکتے ہیں)",
     waking: "سرور جاگ رہا ہے — مفت سرور خالی وقت میں سو جاتا ہے، ایک منٹ تک لگ سکتا ہے۔",
     checks: (p: number, f: number) =>
       f ? `${p} حسابات درست، ${f} میں فرق` : `${p} حسابات چیک کیے، سب درست`,
@@ -56,7 +56,7 @@ const T = {
     change: "Change bill",
     placeholder: "Ask a question…",
     thinking: "Thinking…",
-    reading: "Reading your bill… (30–60 s)",
+    reading: "Reading your bill… (can take up to 2 minutes)",
     waking: "Waking the server up - the free server sleeps when idle, this can take a minute.",
     checks: (p: number, f: number) =>
       f ? `${p} checks passed, ${f} mismatch${f > 1 ? "es" : ""}` : `${p} checks passed, all correct`,
