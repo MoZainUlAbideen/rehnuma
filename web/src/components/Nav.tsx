@@ -5,9 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { GITHUB_URL } from "@/lib/content";
-
-import { IconGithub, IconMenu, IconX } from "./icons";
+import { IconMenu, IconX } from "./icons";
 import { OpenChatButton } from "./OpenChat";
 
 const LINKS = [
@@ -35,9 +33,6 @@ export function Nav() {
           ))}
         </nav>
         <div className="nav-actions">
-          <a className="btn btn-light btn-sm" href={GITHUB_URL} target="_blank" rel="noreferrer">
-            <IconGithub size={16} /> GitHub
-          </a>
           <OpenChatButton className="btn btn-primary btn-sm">Try it free</OpenChatButton>
         </div>
         <button
@@ -55,9 +50,6 @@ export function Nav() {
             {l.label}
           </Link>
         ))}
-        <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-          GitHub
-        </a>
       </div>
     </header>
   );

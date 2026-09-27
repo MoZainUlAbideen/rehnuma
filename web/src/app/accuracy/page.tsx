@@ -376,7 +376,7 @@ export default function Accuracy() {
           </ul>
           <div className="hero-cta" style={{ justifyContent: "flex-start", marginTop: 36 }}>
             <a className="btn btn-dark" href={GITHUB_URL} target="_blank" rel="noreferrer">
-              <IconGithub size={16} /> Code and tests on GitHub
+              <IconGithub size={16} /> Read the code on GitHub
             </a>
             <a className="btn btn-light" href={doc("POLICY_EVAL.md")} target="_blank" rel="noreferrer">
               Full policy eval report <IconArrow size={16} />

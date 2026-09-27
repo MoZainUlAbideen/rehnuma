@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { GITHUB_URL } from "@/lib/content";
-
 export function Footer() {
   return (
     <footer className="footer">
@@ -14,9 +12,6 @@ export function Footer() {
         <div className="footer-links">
           <Link href="/">What it does</Link>
           <Link href="/accuracy">Accuracy</Link>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
         </div>
       </div>
     </footer>
